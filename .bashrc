@@ -97,3 +97,12 @@ fi
 if [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
+
+export EDITOR=vim
+source ~/django-trunk/extras/django_bash_completion
+
+export WORKON_HOME=$HOME/env
+source /usr/local/bin/virtualenvwrapper_bashrc
+
+alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
+alias update_all='svn up ~/django-trunk; svn up ~/suds-trunk; sudo apt-get update; sudo apt-get upgrade -y'
