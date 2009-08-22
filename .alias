@@ -1,0 +1,3 @@
+alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
+alias update_all='svn up ~/django-trunk; svn up ~/suds-trunk; sudo apt-get update; sudo apt-get upgrade -y'
+
