@@ -107,3 +107,8 @@ if [ -f /usr/local/bin/virtualenvwrapper_bashrc ]; then
     export WORKON_HOME=$HOME/env
     source /usr/local/bin/virtualenvwrapper_bashrc
 fi
+
+if [ -f ~/.alias ]; then
+    source ~/.alias
+fi
+
