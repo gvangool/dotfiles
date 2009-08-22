@@ -7,3 +7,6 @@ and copied while roaming the web.
 I am in NO way responsible for what it does to your PC or what you lose because of it.
 
 > Always be aware when copying code you find online!
+
+## Used sources ##
+<http://github.com/bitprophet/dotfiles/>
