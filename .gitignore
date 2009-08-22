@@ -1,0 +1,47 @@
+# Could just force-add these files and leave this as '*', but this way I have a
+# nice explicit list for documentation's sake.
+
+# Ignore everything by default.
+*
+
+# Bash stuff (profile just sources bashrc, since it's the only thing sourced
+# when a shell is a login shell).
+!.bashrc
+!.profile
+
+# Git aliases, identification info
+!.gitconfig
+# The gitignore of this repository itself (!)
+!.gitignore
+
+# Mercurial config
+!.hgrc
+
+# IPython config (need directory here so gitignore works correctly.
+# This won't actually pull in the other contetns of the dir, though.
+# Which is good as all I care about is the...
+!.ipython
+# ipythonrc file!
+!.ipython/ipythonrc
+
+# IRb config
+!.irbrc
+
+# Vim plugins, ftplugins, syntax etc etc
+!.vim
+!.vim/*
+!.vim/autoload/*
+!.vim/doc/*
+!.vim/ftplugin/*
+!.vim/plugin/*
+!.vim/syntax/*
+# Vim settings
+!.vimrc
+
+# Bin files (few and far between)
+!bin
+!bin/*
+
+# Screen RCfile
+!.screenrc
+
