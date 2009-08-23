@@ -4,7 +4,7 @@ runtime! debian.vim
 
 syntax on
 set background=dark
-colorscheme darkblue
+colorscheme evening
 
 if has("autocmd")
     " Filetype based indent rules
@@ -20,7 +20,7 @@ set showmatch		" Show matching brackets.
 set hlsearch
 set ignorecase		" Do case insensitive matching
 set smartcase		" Do smart case matching
-set incsearch		" Incremental search
+"set incsearch		" Incremental search
 
 set smartindent
 
