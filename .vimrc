@@ -32,6 +32,8 @@ autocmd FileType mkd setlocal ai comments=n:>
 autocmd FileType rest setlocal ai comments=n:> tabstop=2 softtabstop=2 shiftwidth=2
 " YAML
 autocmd FileType yaml setlocal tabstop=2 shiftwidth=2 softtabstop=2
+" HTML
+autocmd Filetype html setlocal tabstop=4 shiftwidth=4 noexpandtab
 " defaults (Python)
 set tabstop=4
 set shiftwidth=4
