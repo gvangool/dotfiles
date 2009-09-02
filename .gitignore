@@ -9,6 +9,8 @@
 !.bashrc
 !.alias
 !.profile
+# SSH agent starter
+!.ssh-agent
 
 # Git aliases, identification info
 !.gitconfig

@@ -20,3 +20,8 @@ fi
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
+
+if [ -f "$HOME/.ssh-agent" ] ; then
+	. "$HOME/.ssh-agent"
+fi
+
