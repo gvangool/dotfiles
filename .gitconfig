@@ -1,0 +1,12 @@
+[user]
+    name = Gert Van Gool
+    email = gertvangool@gmail.com
+[color]
+    diff = auto
+    status = auto
+    branch = auto
+[alias]
+    ci = commit -a
+    st = status
+    co = checkout
+    ba = branch -a
