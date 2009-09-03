@@ -22,6 +22,6 @@ if [ -d "$HOME/bin" ] ; then
 fi
 
 if [ -f "$HOME/.ssh-agent" ] ; then
-	. "$HOME/.ssh-agent"
+	. "$HOME/.ssh-agent" > /dev/null
 fi
 
