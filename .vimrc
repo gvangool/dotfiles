@@ -51,3 +51,14 @@ inoremap <down> <C-R>=pumvisible() ? "\<lt>up>" : "\<lt>C-o>gj"<Enter>
 " Writing used commands to .viminfo
 set viminfo='10,\"100,:20,%,n~/.viminfo
 
+" Remove trailing whitespaces
+func! DeleteTrailingWS()
+    exe "normal mz"
+    %s/\s\+$//ge
+    exe "normal `z"
+endfunc
+" on saving of python file
+autocmd BufWrite *.py :call DeleteTrailingWS()
+" on saving of html file
+autocmd BufWrite *.html :call DeleteTrailingWS()
+
