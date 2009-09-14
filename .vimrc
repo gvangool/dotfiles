@@ -8,7 +8,8 @@ colorscheme evening
 
 if has("autocmd")
     " Filetype based indent rules
-    filetype indent plugin on
+    filetype plugin on
+    au BufRead,BufNewFile *.html set filetype=html
     " Jump to last known location in file
     au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
 endif
@@ -33,7 +34,7 @@ autocmd FileType rest setlocal ai comments=n:> tabstop=2 softtabstop=2 shiftwidt
 " YAML
 autocmd FileType yaml setlocal tabstop=2 shiftwidth=2 softtabstop=2
 " HTML
-autocmd Filetype html setlocal tabstop=4 shiftwidth=4 noexpandtab
+autocmd FileType html setlocal tabstop=4 shiftwidth=4 noexpandtab
 " defaults (Python)
 set tabstop=4
 set shiftwidth=4
@@ -49,4 +50,15 @@ inoremap <down> <C-R>=pumvisible() ? "\<lt>up>" : "\<lt>C-o>gj"<Enter>
 
 " Writing used commands to .viminfo
 set viminfo='10,\"100,:20,%,n~/.viminfo
+
+" Remove trailing whitespaces
+func! DeleteTrailingWS()
+    exe "normal mz"
+    %s/\s\+$//ge
+    exe "normal `z"
+endfunc
+" on saving of python file
+autocmd BufWrite *.py :call DeleteTrailingWS()
+" on saving of html file
+autocmd BufWrite *.html :call DeleteTrailingWS()
 
