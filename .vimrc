@@ -23,6 +23,8 @@ set ignorecase		" Do case insensitive matching
 set smartcase		" Do smart case matching
 "set incsearch		" Incremental search
 
+" Indentation
+set autoindent
 set smartindent
 
 " File specific stuff (tabs, indentation)
@@ -50,6 +52,7 @@ inoremap <down> <C-R>=pumvisible() ? "\<lt>up>" : "\<lt>C-o>gj"<Enter>
 
 " Writing used commands to .viminfo
 set viminfo='10,\"100,:20,%,n~/.viminfo
+" Error handling
 set noerrorbells
 set visualbell
 
