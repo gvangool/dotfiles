@@ -15,6 +15,7 @@ if has("autocmd")
 endif
 
 set number
+set numberwidth=4   " for up to 9999 lines
 set showmatch		" Show matching brackets.
 
 " Search options
@@ -23,12 +24,10 @@ set ignorecase		" Do case insensitive matching
 set smartcase		" Do smart case matching
 "set incsearch		" Incremental search
 
+" File specific stuff (tabs, indentation)
 " Indentation
 set autoindent
 set smartindent
-
-" File specific stuff (tabs, indentation)
-
 " Markdown
 autocmd FileType mkd setlocal ai comments=n:>
 " ReST
@@ -74,3 +73,22 @@ autocmd BufWrite *.py :call DeleteTrailingWS()
 " on saving of html file
 autocmd BufWrite *.html :call DeleteTrailingWS()
 
+" Extra Vim behaviour
+set laststatus=2 " always show the status line
+set lazyredraw   " do not redraw while running macros
+set ruler        " always show current positions along the bottom
+set scrolloff=10 " keep 10 lines (top/bottom) for scope
+set showcmd      " show the command being typed
+set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%]--(%l,%v)
+"               | | | | |  |     |    |  |       |  |
+"               | | | | |  |     |    |  |       |  + current column
+"               | | | | |  |     |    |  |       +-- current line
+"               | | | | |  |     |    |  +-- current % into file
+"               | | | | |  |     |    +-- current syntax in square brackets
+"               | | | | |  |     +-- current fileformat
+"               | | | | |  +-- number of lines
+"               | | | | +-- preview flag in square brackets
+"               | | | +-- help flag in square brackets
+"               | | +-- readonly flag in square brackets
+"               | +-- modified flag in square brackets
+"               +-- full path to file in the buffer
