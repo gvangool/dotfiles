@@ -14,7 +14,7 @@ def update():
         run(vcs_update['git'])
     if exists('.svn'):
         run(vcs_update['svn'])
-    if exists('.svnrepos'):
+    if exists('.repos'):
         # read the file and find all the existing repositories
         get('~/.repos', '/tmp/repos')
         f = open('/tmp/repos')
