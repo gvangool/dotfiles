@@ -35,6 +35,10 @@
 !.vim/ftplugin/*
 !.vim/plugin/*
 !.vim/syntax/*
+# Vim directory for swap files
+!.vim/tmp/.gitignore
+# Vim directory for backup files
+!.vim/backup/.gitignore
 # Vim settings
 !.vimrc
 

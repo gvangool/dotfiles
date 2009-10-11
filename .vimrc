@@ -56,6 +56,13 @@ set viminfo='10,\"100,:20,%,n~/.viminfo
 set noerrorbells
 set visualbell
 
+" Modify the backup/swap file behaviour (no annoying sync behaviour in
+" DropBox)
+set backup " make backup files
+set backupdir=~/.vim/backup " location of backup files
+set swapfile " make swap files
+set directory=~/.vim/tmp " location of swap files
+
 " Remove trailing whitespaces
 func! DeleteTrailingWS()
     exe "normal mz"
