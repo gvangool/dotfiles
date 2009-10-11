@@ -11,3 +11,4 @@ I am in NO way responsible for what it does to your PC or what you lose because 
 ## Used sources ##
 - <http://github.com/bitprophet/dotfiles/>
 - <http://amix.dk/vim/vimrc.html>
+- <http://github.com/robertmeta/vim-files>
