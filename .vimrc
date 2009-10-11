@@ -50,6 +50,8 @@ inoremap <down> <C-R>=pumvisible() ? "\<lt>up>" : "\<lt>C-o>gj"<Enter>
 
 " Writing used commands to .viminfo
 set viminfo='10,\"100,:20,%,n~/.viminfo
+set noerrorbells
+set visualbell
 
 " Remove trailing whitespaces
 func! DeleteTrailingWS()
