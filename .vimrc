@@ -10,6 +10,7 @@ if has("autocmd")
     " Filetype based indent rules
     filetype plugin on
     au BufRead,BufNewFile *.html set filetype=html
+    au BufRead,BufNewFile *.wsgi set filetype=python
     " Jump to last known location in file
     au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
 endif
