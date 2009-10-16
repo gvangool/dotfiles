@@ -65,9 +65,9 @@ def create_generic_python_env(env_name='generic'):
 
 def install_nginx():
     ''' Install nginx as a webserver or reverse proxy '''
-    version = '0.7.61'
+    version = '0.7.62'
     run('wget http://sysoev.ru/nginx/nginx-%s.tar.gz' % version)
-    run('tar xf nginx-0.7.61.tar.gz')
+    run('tar xf nginx-%s.tar.gz' % version)
     # requirements for nginx
     _install('libc6', 'libpcre3', 'libpcre3-dev', 'libpcrecpp0', 'libssl0.9.8', 'libssl-dev', 'zlib1g', 'zlib1g-dev', 'lsb-base')
     with cd('nginx-%s' % version):
