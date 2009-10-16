@@ -85,6 +85,19 @@ def install_apache2():
     sudo('cd /etc/apache2/sites-available/; a2dissite default;', pty=True)
     #restart_webserver()
 
+def install_mysql():
+    ''' Install MySQL as database '''
+    install_mysql_server()
+    install_mysql_client()
+
+def install_mysql_server():
+    ''' Install MySQL server '''
+    _install('mysql-server-5.0')
+
+def install_mysql_client():
+    ''' Install MySQL client '''
+    _install('mysql-client-5.0')
+
 def install_latex():
     ''' Install LaTeX '''
     _install('texlive', 'texlive-font*', 'texlive-latex*')
