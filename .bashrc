@@ -80,6 +80,8 @@ fi
 if [ -f /usr/local/bin/virtualenvwrapper_bashrc ]; then
     export WORKON_HOME=$HOME/env
     source /usr/local/bin/virtualenvwrapper_bashrc
+    # http://pip.openplans.org/#using-pip-with-virtualenvwrapper
+    export PIP_VIRTUALENV_BASE=$WORKON_HOME
 fi
 
 if [ -f ~/.alias ]; then
