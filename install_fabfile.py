@@ -55,13 +55,18 @@ def install_python():
     # needed for PIL
     _install('libfreetype6-dev', 'libjpeg-dev')
 
-#@depends('install_python')
-def create_generic_python_env(env_name='generic'):
-    ''' Create a simple virtualenv with some usefull tools in '''
+def create_python_env(env_name='generic', requirements_file=None):
+    '''
+    Create a python virtualenv, based on the given requirements file.
+    If no requirements file is given, initialize it we some convenient packages
+    '''
     py_env = '~/env/%s' % env_name
-    run('pip install -E %s ipython suds pygments httplib2 textile markdown simplejson django' % py_env)
-    run('pip install -E %s http://effbot.org/downloads/Imaging-1.1.6.tar.gz' % py_env)
-    run('pip install -E %s MySQL-python' % py_env)
+    if requirements_file is None:
+        run('pip install -E %s ipython suds pygments httplib2 textile markdown simplejson django' % py_env)
+        run('pip install -E %s http://effbot.org/downloads/Imaging-1.1.6.tar.gz' % py_env)
+        run('pip install -E %s MySQL-python' % py_env)
+    else:
+        run('pip install -E %s -r %s' % (py_env, requirements_file))
 
 def install_nginx():
     ''' Install nginx as a webserver or reverse proxy '''
