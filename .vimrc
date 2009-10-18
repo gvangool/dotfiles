@@ -9,8 +9,10 @@ colorscheme evening
 if has("autocmd")
     " Filetype based indent rules
     filetype plugin on
+    " extra syntax rules
     au BufRead,BufNewFile *.html set filetype=html
     au BufRead,BufNewFile *.wsgi set filetype=python
+    au BufRead,BufNewFile /etc/apache2/* set syntax=apache
     " Jump to last known location in file
     au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
 endif
@@ -73,6 +75,10 @@ endfunc
 autocmd BufWrite *.py :call DeleteTrailingWS()
 " on saving of html file
 autocmd BufWrite *.html :call DeleteTrailingWS()
+
+" Remap Q to something useful
+"   gq -> split line on char 80
+noremap Q gq
 
 " Extra Vim behaviour
 set laststatus=2 " always show the status line
