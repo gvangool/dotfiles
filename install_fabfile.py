@@ -22,7 +22,7 @@ def update():
             line = line.strip()
             parts = line.split(' ')
             with cd(parts[1]):
-                run(vcs_update[parts[0]]
+                run(vcs_update[parts[0]])
 
 def _install(*args):
     ''' Wrapper function to install something, will make it easier to port to a different platform '''
