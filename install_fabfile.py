@@ -68,6 +68,13 @@ def create_python_env(env_name='generic', requirements_file=None):
     else:
         run('pip install -E %s -r %s' % (py_env, requirements_file))
 
+def install_duplicity(env_name='backup'):
+    '''Install the duplicity backup tool (http://duplicity.nongnu.org/)'''
+    py_env = '~/env/%s' % env_name
+    _install('python', 'python-setuptools', 'python-dev', 'build-essential', 'librsync-dev')
+    run('pip install -E %s boto' % py_env)
+    run('pip install -E %s http://code.launchpad.net/duplicity/0.6-series/0.6.05/+download/duplicity-0.6.05.tar.gz' % py_env)
+
 def install_nginx():
     ''' Install nginx as a webserver or reverse proxy '''
     version = '0.7.62'
