@@ -90,12 +90,15 @@ def install_nginx():
         run('make')
         sudo('make install')
 
-def install_apache2():
+def install_apache2(type='python'):
     ''' Install Apache2 as a application backend '''
-    _install('apache2', 'libapache2-mod-wsgi')
-    # we want rid of the defult apache config
-    sudo('cd /etc/apache2/sites-available/; a2dissite default;', pty=True)
-    #restart_webserver()
+    _install('apache2')
+    if type == 'python':
+        _install('libapache2-mod-wsgi')
+    elif type == 'php5':
+        _install('libapache2-mod-php5', 'php5-mysql')
+    # we want rid of the default apache config
+    sudo('a2dissite default; /etc/init.d/apache2 restart', pty=True)
 
 def install_mysql():
     ''' Install MySQL as database '''
