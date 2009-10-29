@@ -9,9 +9,12 @@ colorscheme evening
 if has("autocmd")
     " Filetype based indent rules
     filetype plugin on
-    " extra syntax rules
+    " extra filetypes
     au BufRead,BufNewFile *.html set filetype=html
     au BufRead,BufNewFile *.wsgi set filetype=python
+    au BufRead,BufNewFile *.md set filetype=mkd
+    au BufRead,BufNewFile *.mkd set filetype=mkd
+    " extra syntax rules
     au BufRead,BufNewFile /etc/apache2/* set syntax=apache
     " Jump to last known location in file
     au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
