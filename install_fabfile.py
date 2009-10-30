@@ -117,3 +117,7 @@ def install_latex():
     if getattr(env, 'editor', 'vim') == 'vim':
         _install('vim-latexsuite')
 
+def install_vlc():
+    '''Install VLC media player'''
+    _install('vlc', 'mozilla-plugin-vlc', 'videolan-doc')
+
