@@ -45,8 +45,6 @@ def install_vcs():
 def install_python():
     ''' Install Python stuff '''
     _install('python', 'python-setuptools', 'python-dev', 'build-essential')
-    if getattr(env, 'editor', 'vim') == 'vim':
-        _install('vim-python')
     sudo('easy_install pip')
     sudo('pip install virtualenv virtualenvwrapper')
     # extra's to build certain python packages
