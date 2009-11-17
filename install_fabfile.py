@@ -7,8 +7,8 @@ env.editor = 'vim'
 
 def update():
     ''' Update all '''
-    sudo('apt-get update')
-    sudo('apt-get upgrade -y')
+    _update()
+    _upgrade()
     vcs_update = {'git': 'git pull', 'hg': 'hg update', 'svn': 'svn up'}
     if exists('.git'):
         run(vcs_update['git'])
@@ -24,15 +24,24 @@ def update():
             with cd(parts[1]):
                 run(vcs_update[parts[0]])
 
-def _install(*args):
+def _update():
+    sudo('apt-get update -q')
+
+def _upgrade():
+    sudo('apt-get upgrade -yq')
+
+def _install(*args, allow_unauthenticated=False):
     ''' Wrapper function to install something, will make it easier to port to a different platform '''
     if len(args) == 0:
         return
     else:
         package_list = args
 
+    options = '-yq'
+    if allow_unauthenticated:
+        options += ' --allow-unauthenticated'
     package_list = ' '.join(package_list)
-    sudo('apt-get install -y %s' % package_list)
+    sudo('apt-get install %s %s' % (options, package_list,))
 
 def install_default_packages():
     ''' Install some default packages '''
