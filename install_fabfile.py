@@ -130,6 +130,15 @@ def install_vlc():
     '''Install VLC media player'''
     _install('vlc', 'mozilla-plugin-vlc', 'videolan-doc')
 
+def install_dvdripper():
+    if not exists('/etc/apt/sources.list.d/medibuntu.list'):
+        sudo('wget http://www.medibuntu.org/sources.list.d/$(lsb_release -cs).list --output-document=/etc/apt/sources.list.d/medibuntu.list')
+        _update()
+        _install('medibuntu-keyring', allow_unauthenticated=True)
+        _update()
+    _install('libdvdcss2')
+    _install('k9copy')
+
 # package combinations for certain roles (webserver, database, desktop)
 def setup_desktop():
     update()
