@@ -30,7 +30,7 @@ def _update():
 def _upgrade():
     sudo('apt-get upgrade -yq')
 
-def _install(*args, allow_unauthenticated=False):
+def _install(*args, **kwargs):
     ''' Wrapper function to install something, will make it easier to port to a different platform '''
     if len(args) == 0:
         return
@@ -38,7 +38,7 @@ def _install(*args, allow_unauthenticated=False):
         package_list = args
 
     options = '-yq'
-    if allow_unauthenticated:
+    if kwargs.get('allow_unauthenticated', False):
         options += ' --allow-unauthenticated'
     package_list = ' '.join(package_list)
     sudo('apt-get install %s %s' % (options, package_list,))
