@@ -121,3 +121,24 @@ def install_vlc():
     '''Install VLC media player'''
     _install('vlc', 'mozilla-plugin-vlc', 'videolan-doc')
 
+# package combinations for certain roles (webserver, database, desktop)
+def setup_desktop():
+    update()
+    install_default_packages()
+    install_vcs()
+    install_python()
+    install_vlc()
+    install_duplicity()
+
+def setup_webserver(type='python'):
+    update()
+    install_default_packages()
+    install_vcs()
+    install_python()
+    install_apache2(type)
+    install_mysql_client()
+
+def setup_database():
+    update()
+    install_mysql()
+
