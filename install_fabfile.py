@@ -130,7 +130,25 @@ def install_vlc():
     '''Install VLC media player'''
     _install('vlc', 'mozilla-plugin-vlc', 'videolan-doc')
 
+def install_cdripper():
+    '''
+    Installl RubyRipper to convert audio cd to MP3/OGG/Flac/...
+
+    Website: http://wiki.hydrogenaudio.org/index.php?title=Rubyripper
+    '''
+    version = '0.5.7'
+    _install('cd-discid', 'cdparanoia', 'flac', 'lame', 'mp3gain', 'normalize-audio', 'ruby-gnome2', 'ruby', 'vorbisgain')
+    with cd('/tmp'):
+        run('wget http://rubyripper.googlecode.com/files/rubyripper-%s.tar.bz2' % version)
+        run('bzip2 -d rubyripper-%s.tar.bz2' % version)
+        run('tar xf rubyripper-%s.tar' % version)
+        with cd('rubyripper-%s' % version):
+            # default options: gui + command line
+            run('./configure --enable-lang-all --enable-gtk2 --enable-cli')
+            sudo('make install')
+
 def install_dvdripper():
+    '''Install k9copy as DVD ripper'''
     if not exists('/etc/apt/sources.list.d/medibuntu.list'):
         sudo('wget http://www.medibuntu.org/sources.list.d/$(lsb_release -cs).list --output-document=/etc/apt/sources.list.d/medibuntu.list')
         _update()
