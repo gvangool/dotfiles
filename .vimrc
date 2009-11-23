@@ -79,9 +79,13 @@ autocmd BufWrite *.py :call DeleteTrailingWS()
 " on saving of html file
 autocmd BufWrite *.html :call DeleteTrailingWS()
 
-" Remap Q to something useful
-"   gq -> split line on char 80
+" Remap Q to gq -> format line (default: split line on char 80)
 noremap Q gq
+" Formatting
+if filereadable("/usr/bin/xml_pp")
+    " XML pretty printing
+    autocmd FileType xml setlocal formatprg=xml_pp
+endif
 
 " Extra Vim behaviour
 set laststatus=2 " always show the status line
