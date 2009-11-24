@@ -16,6 +16,9 @@ if has("autocmd")
     au BufRead,BufNewFile *.mkd set filetype=mkd
     " extra syntax rules
     au BufRead,BufNewFile /etc/apache2/* set syntax=apache
+    if filereadable("manage.py") || filereadable("../manage.py")
+        autocmd FileType html setlocal syntax=htmldjango
+    endif
     " Jump to last known location in file
     au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
 endif
