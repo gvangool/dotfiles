@@ -82,7 +82,7 @@ autocmd BufWrite *.py :call DeleteTrailingWS()
 " on saving of html file
 autocmd BufWrite *.html :call DeleteTrailingWS()
 " in normal mode, set nohlsearch to remove previous search
-nnoremap <esc> :noh<return><esc>
+nnoremap  :noh<return>
 
 " Remap Q to gq -> format line (default: split line on char 80)
 noremap Q gq
