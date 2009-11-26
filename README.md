@@ -12,3 +12,4 @@ I am in NO way responsible for what it does to your PC or what you lose because 
 - <http://github.com/bitprophet/dotfiles/>
 - <http://amix.dk/vim/vimrc.html>
 - <http://github.com/robertmeta/vim-files>
+- <http://svn.collab.net/repos/svn/trunk/tools/client-side/change-svn-wc-format.py>
