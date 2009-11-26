@@ -3,17 +3,22 @@
 # change-svn-wc-format.py: Change the format of a Subversion working copy.
 #
 # ====================================================================
-# Copyright (c) 2007-2008 CollabNet.  All rights reserved.
+#    Licensed to the Subversion Corporation (SVN Corp.) under one
+#    or more contributor license agreements.  See the NOTICE file
+#    distributed with this work for additional information
+#    regarding copyright ownership.  The SVN Corp. licenses this file
+#    to you under the Apache License, Version 2.0 (the
+#    "License"); you may not use this file except in compliance
+#    with the License.  You may obtain a copy of the License at
 #
-# This software is licensed as described in the file COPYING, which
-# you should have received as part of this distribution.  The terms
-# are also available at http://subversion.tigris.org/license-1.html.
-# If newer versions of this license are posted there, you may use a
-# newer version instead, at your option.
+#      http://www.apache.org/licenses/LICENSE-2.0
 #
-# This software consists of voluntary contributions made by many
-# individuals.  For exact contribution history, see the revision
-# history and logs, available at http://subversion.tigris.org/.
+#    Unless required by applicable law or agreed to in writing,
+#    software distributed under the License is distributed on an
+#    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+#    KIND, either express or implied.  See the License for the
+#    specific language governing permissions and limitations
+#    under the License.
 # ====================================================================
 
 import sys
@@ -24,13 +29,6 @@ try:
 except AttributeError:
   my_getopt = getopt.getopt
 
-# Pretend we have true booleans on older python versions
-try:
-  True
-except:
-  True = 1
-  False = 0
-
 ### The entries file parser in subversion/tests/cmdline/svntest/entry.py
 ### handles the XML-based WC entries file format used by Subversion
 ### 1.3 and lower.  It could be rolled into this script.
@@ -38,6 +36,8 @@ except:
 LATEST_FORMATS = { "1.4" : 8,
                    "1.5" : 9,
                    "1.6" : 10,
+                   # Do NOT add format 11 here.  See comment in must_retain_fields
+                   # for why.
                  }
 
 def usage_and_exit(error_msg=None):
@@ -49,8 +49,8 @@ def usage_and_exit(error_msg=None):
 
   stream = error_msg and sys.stderr or sys.stdout
   if error_msg:
-    print >> stream, "ERROR: %s\n" % error_msg
-  print >> stream, """\
+    stream.write("ERROR: %s\n\n" % error_msg)
+  stream.write("""\
 usage: %s WC_PATH SVN_VERSION [--verbose] [--force] [--skip-unknown-format]
        %s --help
 
@@ -58,7 +58,9 @@ Change the format of a Subversion working copy to that of SVN_VERSION.
 
   --skip-unknown-format    : skip directories with unknown working copy
                              format and continue the update
-""" % (progname, progname)
+
+""" % (progname, progname))
+  stream.flush()
   sys.exit(error_msg and 1 or 0)
 
 def get_adm_dir():
@@ -87,39 +89,51 @@ class WCFormatConverter:
 
     # Process the entries file for this versioned directory.
     if self.verbosity:
-      print "Processing directory '%s'" % dirname
+      print("Processing directory '%s'" % dirname)
     entries = Entries(os.path.join(dirname, get_adm_dir(), "entries"))
-
+    entries_parsed = True
     if self.verbosity:
-      print "Parsing file '%s'" % entries.path
+      print("Parsing file '%s'" % entries.path)
     try:
       entries.parse(self.verbosity)
     except UnrecognizedWCFormatException, e:
       if self.error_on_unrecognized:
         raise
-      print >>sys.stderr, "%s, skipping" % (e,)
+      sys.stderr.write("%s, skipping\n" % e)
+      sys.stderr.flush()
+      entries_parsed = False
+
+    if entries_parsed:
+      format = Format(os.path.join(dirname, get_adm_dir(), "format"))
+      if self.verbosity:
+        print("Updating file '%s'" % format.path)
+      format.write_format(format_nbr, self.verbosity)
+    else:
+      if self.verbosity:
+        print("Skipping file '%s'" % format.path)
 
     if self.verbosity:
-      print "Checking whether WC format can be converted"
+      print("Checking whether WC format can be converted")
     try:
       entries.assert_valid_format(format_nbr, self.verbosity)
     except LossyConversionException, e:
       # In --force mode, ignore complaints about lossy conversion.
       if self.force:
-        print "WARNING: WC format conversion will be lossy. Dropping "\
-              "field(s) %s " % ", ".join(e.lossy_fields)
+        print("WARNING: WC format conversion will be lossy. Dropping "\
+              "field(s) %s " % ", ".join(e.lossy_fields))
       else:
         raise
 
     if self.verbosity:
-      print "Writing WC format"
+      print("Writing WC format")
     entries.write_format(format_nbr)
 
   def change_wc_format(self, format_nbr):
     """Walk all paths in a WC tree, and change their format to
     FORMAT_NBR.  Throw LossyConversionException or NotImplementedError
     if the WC format should not be converted, or is unrecognized."""
-    os.path.walk(self.root_path, self.write_dir_format, format_nbr)
+    for dirpath, dirs, files in os.walk(self.root_path):
+      self.write_dir_format(format_nbr, dirpath, dirs + files)
 
 class Entries:
   """Represents a .svn/entries file.
@@ -210,16 +224,16 @@ class Entries:
 
   def assert_valid_format(self, format_nbr, verbosity=0):
     if verbosity >= 2:
-      print "Validating format for entries file '%s'" % self.path
+      print("Validating format for entries file '%s'" % self.path)
     for entry in self.entries:
       if verbosity >= 3:
-        print "Validating format for entry '%s'" % entry.get_name()
+        print("Validating format for entry '%s'" % entry.get_name())
       try:
         entry.assert_valid_format(format_nbr)
       except LossyConversionException:
         if verbosity >= 3:
-          print >> sys.stderr, "Offending entry:"
-          print >> sys.stderr, str(entry)
+          sys.stderr.write("Offending entry:\n%s\n" % entry)
+          sys.stderr.flush()
         raise
 
   def parse_entry(self, input, verbosity=0):
@@ -240,7 +254,7 @@ class Entries:
 
     if entry is not None and verbosity >= 3:
       sys.stdout.write(str(entry))
-      print "-" * 76
+      print("-" * 76)
     return entry
 
   def write_format(self, format_nbr):
@@ -267,6 +281,14 @@ class Entry:
       8  : (30, 31, 33, 34, 35),
       # Not in 1.5: tree-conflicts, file-externals
       9  : (34, 35),
+      10 : (),
+      # Downgrading from format 11 (1.7-dev) to format 10 is not possible,
+      # because 11 does not use has-props and cachable-props (but 10 does).
+      # Naively downgrading in that situation causes properties to disappear
+      # from the wc.
+      #
+      # Downgrading from the 1.7 SQLite-based format to format 10 is not
+      # implemented.
       }
 
   def __init__(self):
@@ -301,6 +323,25 @@ class Entry:
       rep += "[%s] %s\n" % (Entries.entry_fields[i], self.fields[i])
     return rep
 
+class Format:
+  """Represents a .svn/format file."""
+
+  def __init__(self, path):
+    self.path = path
+
+  def write_format(self, format_nbr, verbosity=0):
+    format_string = '%d\n'
+    if os.path.exists(self.path):
+      if verbosity >= 1:
+        print("%s will be updated." % self.path)
+      os.chmod(self.path,0600)
+    else:
+      if verbosity >= 1:
+        print("%s does not exist, creating it." % self.path)
+    format = open(self.path, "w")
+    format.write(format_string % format_nbr)
+    format.close()
+    os.chmod(self.path, 0400)
 
 class LocalException(Exception):
   """Root of local exception class hierarchy."""
@@ -319,7 +360,8 @@ class UnrecognizedWCFormatException(LocalException):
     self.format = format
     self.path = path
   def __str__(self):
-    return "Unrecognized WC format %d in '%s'" % (self.format, self.path)
+    return ("Unrecognized WC format %d in '%s'; "
+            "only formats 8, 9, and 10 can be supported") % (self.format, self.path)
 
 
 def main():
@@ -358,18 +400,20 @@ def main():
   try:
     new_format_nbr = LATEST_FORMATS[svn_version]
   except KeyError:
-    usage_and_exit("Unsupported version number '%s'" % svn_version)
+    usage_and_exit("Unsupported version number '%s'; "
+                   "only 1.4, 1.5, and 1.6 can be supported" % svn_version)
 
   try:
     converter.change_wc_format(new_format_nbr)
   except LocalException, e:
     if debug:
       raise
-    print >> sys.stderr, str(e)
+    sys.stderr.write("%s\n" % e)
+    sys.stderr.flush()
     sys.exit(1)
 
-  print "Converted WC at '%s' into format %d for Subversion %s" % \
-        (converter.root_path, new_format_nbr, svn_version)
+  print("Converted WC at '%s' into format %d for Subversion %s" % \
+        (converter.root_path, new_format_nbr, svn_version))
 
 if __name__ == "__main__":
   main()
