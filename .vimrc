@@ -4,7 +4,7 @@ runtime! debian.vim
 
 syntax on
 set background=dark
-colorscheme evening
+colorscheme fnaqevan
 
 if has("autocmd")
     " Filetype based indent rules

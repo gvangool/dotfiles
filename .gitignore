@@ -38,6 +38,7 @@
 !.vim/ftplugin/*
 !.vim/plugin/*
 !.vim/syntax/*
+!.vim/colors/*
 # Vim directory for swap files
 !.vim/tmp/.gitignore
 # Vim directory for backup files
