@@ -165,6 +165,7 @@ def setup_desktop():
     install_python()
     install_vlc()
     install_duplicity()
+    _install('unrar', 'nautilus-open-terminal', 'p7zip-full')
 
 def setup_webserver(type='python'):
     update()
