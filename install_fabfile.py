@@ -157,6 +157,10 @@ def install_dvdripper():
     _install('libdvdcss2')
     _install('k9copy')
 
+def install_wine():
+    '''Install wine'''
+    _install('wine')
+
 # package combinations for certain roles (webserver, database, desktop)
 def setup_desktop():
     update()
