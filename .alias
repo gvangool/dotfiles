@@ -5,9 +5,9 @@ if [ -x /usr/bin/dircolors ]; then
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
 
-    #alias grep='grep --color=auto'
-    #alias fgrep='fgrep --color=auto'
-    #alias egrep='egrep --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
 fi
 
 # some more ls aliases
@@ -23,6 +23,6 @@ alias dir="ls"
 alias cls="clear"
 
 # django i18n aliases
-alias create_i18n="mkdir locale; django-admin.py makemessages -l nl -e txt -e py -e html; django-admin.py makemessages -l fr -e txt -e py -e html; django-admin.py compilemessages"
+alias create_i18n="mkdir -p locale; django-admin.py makemessages -l nl -e txt -e py -e html; django-admin.py makemessages -l fr -e txt -e py -e html; django-admin.py compilemessages"
 alias update_i18n="django-admin.py makemessages -a -e txt -e py -e html; django-admin.py compilemessages"
 

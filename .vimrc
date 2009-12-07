@@ -4,7 +4,7 @@ runtime! debian.vim
 
 syntax on
 set background=dark
-colorscheme evening
+colorscheme fnaqevan
 
 if has("autocmd")
     " Filetype based indent rules
@@ -16,6 +16,9 @@ if has("autocmd")
     au BufRead,BufNewFile *.mkd set filetype=mkd
     " extra syntax rules
     au BufRead,BufNewFile /etc/apache2/* set syntax=apache
+    if filereadable("manage.py") || filereadable("../manage.py")
+        autocmd FileType html setlocal syntax=htmldjango
+    endif
     " Jump to last known location in file
     au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
 endif
@@ -78,10 +81,16 @@ endfunc
 autocmd BufWrite *.py :call DeleteTrailingWS()
 " on saving of html file
 autocmd BufWrite *.html :call DeleteTrailingWS()
+" in normal mode, set nohlsearch to remove previous search
+nnoremap  :noh<return>
 
-" Remap Q to something useful
-"   gq -> split line on char 80
+" Remap Q to gq -> format line (default: split line on char 80)
 noremap Q gq
+" Formatting
+if filereadable("/usr/bin/xml_pp")
+    " XML pretty printing
+    autocmd FileType xml setlocal formatprg=xml_pp
+endif
 
 " Extra Vim behaviour
 set laststatus=2 " always show the status line
