@@ -25,10 +25,10 @@ def update():
                 run(vcs_update[parts[0]])
 
 def _update():
-    sudo('apt-get update -q')
+    sudo('export DEBIAN_FRONTEND=noninteractive; apt-get update -q')
 
 def _upgrade():
-    sudo('apt-get upgrade -yq')
+    sudo('export DEBIAN_FRONTEND=noninteractive; apt-get upgrade -yq')
 
 def _install(*args, **kwargs):
     ''' Wrapper function to install something, will make it easier to port to a different platform '''
@@ -41,7 +41,7 @@ def _install(*args, **kwargs):
     if kwargs.get('allow_unauthenticated', False):
         options += ' --allow-unauthenticated'
     package_list = ' '.join(package_list)
-    sudo('apt-get install %s %s' % (options, package_list,))
+    sudo('export DEBIAN_FRONTEND=noninteractive; apt-get install %s %s' % (options, package_list,))
 
 def install_default_packages():
     ''' Install some default packages '''
