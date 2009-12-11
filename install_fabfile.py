@@ -162,19 +162,20 @@ def install_wine():
     _install('wine')
 
 # package combinations for certain roles (webserver, database, desktop)
-def setup_desktop():
+def setup_base():
     update()
     install_default_packages()
     install_vcs()
+
+def setup_desktop():
+    setup_base()
     install_python()
     install_vlc()
     install_duplicity()
     _install('unrar', 'nautilus-open-terminal', 'p7zip-full')
 
 def setup_webserver(type='python'):
-    update()
-    install_default_packages()
-    install_vcs()
+    setup_base()
     install_python()
     install_apache2(type)
     install_mysql_client()
