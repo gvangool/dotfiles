@@ -18,6 +18,9 @@ if has("autocmd")
     au BufRead,BufNewFile /etc/apache2/* set syntax=apache
     if filereadable("manage.py") || filereadable("../manage.py")
         autocmd FileType html setlocal syntax=htmldjango
+        autocmd BufWrite *.html :call CleanDjangoTags()
+        autocmd BufRead,BufNewFile *.txt setlocal syntax=htmldjango
+        autocmd BufWrite *.txt :call CleanDjangoTags()
     endif
     " Jump to last known location in file
     au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
@@ -83,6 +86,16 @@ autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.html :call DeleteTrailingWS()
 " in normal mode, set nohlsearch to remove previous search
 nnoremap  :noh<return>
+
+" add a space after/before an opening/closing Django template tag
+func! CleanDjangoTags()
+    exe "normal mz"
+    %s/{{\([a-z]\)/{{ \1/gei
+    %s/\([a-z]\)}}/\1 }}/gei
+    %s/{%\([a-z]\)/{% \1/gei
+    %s/\([a-z]\)%}/\1 %}/gei
+    exe "normal `z"
+endfunc
 
 " Remap Q to gq -> format line (default: split line on char 80)
 noremap Q gq
