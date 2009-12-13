@@ -6,7 +6,7 @@ env.roledefs = {'desktop': ['192.168.1.117',],
 env.editor = 'vim'
 
 def update():
-    ''' Update all '''
+    '''Update all'''
     _update()
     _upgrade()
     vcs_update = {'git': 'git pull', 'hg': 'hg update', 'svn': 'svn up'}
@@ -31,7 +31,7 @@ def _upgrade():
     sudo('export DEBIAN_FRONTEND=noninteractive; apt-get upgrade -yq')
 
 def _install(*args, **kwargs):
-    ''' Wrapper function to install something, will make it easier to port to a different platform '''
+    '''Wrapper function to install something, will make it easier to port to a different platform'''
     if len(args) == 0:
         return
     else:
@@ -44,15 +44,15 @@ def _install(*args, **kwargs):
     sudo('export DEBIAN_FRONTEND=noninteractive; apt-get install %s %s' % (options, package_list,))
 
 def install_default_packages():
-    ''' Install some default packages '''
+    '''Install some default packages'''
     _install('vim', 'screen', 'lynx', 'smbfs', 'tofrodos')
 
 def install_vcs():
-    ''' Install most used VCS (svn, git, hg) '''
+    '''Install most used VCS (svn, git, hg) '''
     _install('subversion', 'git-core', 'mercurial')
 
 def install_python():
-    ''' Install Python stuff '''
+    '''Install Python stuff'''
     _install('python', 'python-setuptools', 'python-dev', 'build-essential')
     sudo('easy_install pip')
     sudo('pip install virtualenv virtualenvwrapper')
@@ -83,7 +83,7 @@ def install_duplicity(env_name='backup'):
     run('pip install -E %s http://code.launchpad.net/duplicity/0.6-series/0.6.05/+download/duplicity-0.6.05.tar.gz' % py_env)
 
 def install_nginx():
-    ''' Install nginx as a webserver or reverse proxy '''
+    '''Install nginx as a webserver or reverse proxy'''
     version = '0.7.62'
     run('wget http://sysoev.ru/nginx/nginx-%s.tar.gz' % version)
     run('tar xf nginx-%s.tar.gz' % version)
@@ -98,7 +98,7 @@ def install_nginx():
         sudo('make install')
 
 def install_apache2(type='python'):
-    ''' Install Apache2 as a application backend '''
+    '''Install Apache2 as a application backend'''
     _install('apache2')
     if type == 'python':
         _install('libapache2-mod-wsgi')
@@ -108,16 +108,16 @@ def install_apache2(type='python'):
     sudo('a2dissite default; /etc/init.d/apache2 restart', pty=True)
 
 def install_mysql():
-    ''' Install MySQL as database '''
+    '''Install MySQL as database'''
     install_mysql_server()
     install_mysql_client()
 
 def install_mysql_server():
-    ''' Install MySQL server '''
+    '''Install MySQL server'''
     _install('mysql-server-5.0')
 
 def install_mysql_client():
-    ''' Install MySQL client '''
+    '''Install MySQL client'''
     _install('mysql-client-5.0')
 
 def install_apt_cacher(admin='root@localhost'):
@@ -128,7 +128,7 @@ def install_apt_cacher(admin='root@localhost'):
     sudo('/etc/init.d/apt-cacher restart')
 
 def install_latex():
-    ''' Install LaTeX '''
+    '''Install LaTeX'''
     _install('texlive', 'texlive-font*', 'texlive-latex*')
     if getattr(env, 'editor', 'vim') == 'vim':
         _install('vim-latexsuite')
@@ -139,7 +139,7 @@ def install_vlc():
 
 def install_cdripper():
     '''
-    Installl RubyRipper to convert audio cd to MP3/OGG/Flac/...
+    Install RubyRipper to convert audio cd to MP3/OGG/Flac/...
 
     Website: http://wiki.hydrogenaudio.org/index.php?title=Rubyripper
     '''
