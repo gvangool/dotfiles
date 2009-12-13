@@ -120,6 +120,13 @@ def install_mysql_client():
     ''' Install MySQL client '''
     _install('mysql-client-5.0')
 
+def install_apt_cacher(admin='root@localhost'):
+    '''Install apt-cacher server'''
+    _install('apt-cacher')
+    sudo('echo AUTOSTART=1 >> /etc/default/apt-cacher')
+    sudo('echo \'EXTRAOPT=" admin_email=%s"\' >> /etc/default/apt-cacher' % admin)
+    sudo('/etc/init.d/apt-cacher restart')
+
 def install_latex():
     ''' Install LaTeX '''
     _install('texlive', 'texlive-font*', 'texlive-latex*')
@@ -184,3 +191,6 @@ def setup_database():
     update()
     install_mysql()
 
+def setup_apt_cacher(admin='root@localhost'):
+    update()
+    install_apt_cacher(admin)
