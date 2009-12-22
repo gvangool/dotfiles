@@ -84,7 +84,7 @@ def install_duplicity(env_name='backup'):
 
 def install_nginx():
     '''Install nginx as a webserver or reverse proxy'''
-    version = '0.7.62'
+    version = '0.7.64'
     run('wget http://sysoev.ru/nginx/nginx-%s.tar.gz' % version)
     run('tar xf nginx-%s.tar.gz' % version)
     # requirements for nginx
