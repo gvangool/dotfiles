@@ -52,4 +52,5 @@
 
 # Screen RCfile
 !.screenrc
-
+# tmux file
+!.tmux.conf
