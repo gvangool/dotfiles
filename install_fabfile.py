@@ -1,8 +1,6 @@
 from fabric.api import *
-from fabric.contrib.files import exists
+from fabric.contrib.files import exists, append
 
-env.roledefs = {'desktop': ['192.168.1.117',],
-                'server': ['127.0.0.1',],}
 env.editor = 'vim'
 
 def update():
@@ -42,6 +40,11 @@ def _install(*args, **kwargs):
         options += ' --allow-unauthenticated'
     package_list = ' '.join(package_list)
     sudo('export DEBIAN_FRONTEND=noninteractive; apt-get install %s %s' % (options, package_list,))
+
+def __validate_not_empty(value, key='value'):
+    if value.strip() == '':
+        raise Exception('Please provide a %s.' % key)
+    return value
 
 def install_default_packages():
     '''Install some default packages'''
@@ -167,6 +170,33 @@ def install_dvdripper():
 def install_wine():
     '''Install wine'''
     _install('wine')
+
+def install_moc(add_lastfm=True):
+    '''
+    Install the MOC music player (http://moc.daper.net/). It will also install
+    lastfmsubmitd (http://www.red-bean.com/decklin/lastfmsubmitd/) and set it
+    up to submit your plays
+    '''
+    apps = ['moc']
+    if add_lastfm:
+        apps += ['lastfmsubmitd']
+    _install(apps)
+
+    if add_lastfm:
+        username = prompt('Last.fm username?', validate=lambda v: __validate_not_empty(v, key='username'))
+        password = prompt('Last.fm password?', validate=lambda v: __validate_not_empty(v, key='password'))
+        # create lastfm config
+        append('[account]\nuser = %s\npassword = %s' % (username,password,), '/etc/lastfmsubmitd.conf', use_sudo=True)
+        # add user to lastfm group so we can submit
+        sudo('adduser %s lastfm' % env.user)
+        # setup moc to submit to lastfm on song change (use script from
+        # http://lukeplant.me.uk/blog/posts/moc-and-last-fm/ to only submit
+        # when we're half way through)
+        run('mkdir -p ~/.moc')
+        with cd('~/.moc'):
+            run('wget http://files.lukeplant.fastmail.fm/public/moc_submit_lastfm')
+            run('chmod a+x moc_submit_lastfm')
+            append('OnSongChange = "/home/%(user)s/.moc/moc_submit_lastfm --artist %%a --title %%t --length %%d --album %%r"' % env, 'config2')
 
 # package combinations for certain roles (webserver, database, desktop)
 def setup_base():
