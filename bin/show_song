@@ -1,0 +1,145 @@
+#!/usr/bin/env python
+
+import logging
+from optparse import OptionParser
+from subprocess import Popen, PIPE
+import time
+
+def get_info():
+    '''
+    Read and parse the mocp --info. Example:
+
+        State: PLAY
+        File: /home/gvangool/Music/Soundtrack/Watchmen/09 - Leonard Cohen - Hallelujah.mp3
+        Title: 9 Leonard Cohen - Hallelujah (Watchmen)
+        Artist: Leonard Cohen
+        SongTitle: Hallelujah
+        Album: Watchmen
+        TotalTime: 04:37
+        TimeLeft: 00:22
+        TotalSec: 277
+        CurrentTime: 04:15
+        CurrentSec: 255
+        Bitrate: 224Kbps
+        AvgBitrate: 255Kbps
+        Rate: 44KHz
+    '''
+    p = Popen(["mocp", "-i"], stdout=PIPE)
+    out, err = p.communicate()
+    lines = out.split("\n")
+    info = {}
+    for line in lines:
+        colon_loc = line.find(':')
+        if colon_loc == -1:
+            continue
+        key = line[:colon_loc]
+        value = line[colon_loc + 1:]
+        info[key] = value.strip()
+    return info
+
+def monitor_info(callback, monitor_time=False):
+    prev_info = None
+    try:
+        while True:
+            info = get_info()
+
+            run_callback = prev_info is None or \
+                           info['State'] != prev_info['State']
+            if not run_callback and info['State'] != 'STOP':
+                run_callback = info['SongTitle'] != prev_info['SongTitle'] or \
+                               info['Artist'] != prev_info['Artist'] or \
+                               info['Album'] != prev_info['Album'] or \
+                               (monitor_time and info['CurrentSec'] != prev_info['CurrentSec'])
+
+            if run_callback:
+                logging.debug('Calling callback')
+                callback(info)
+
+            prev_info = info
+            time.sleep(1)
+    except KeyboardInterrupt:
+        logging.info('KeyboardInterrupt, exiting')
+
+def main():
+    logging.debug('Starting show_song information')
+    parser = OptionParser()
+    parser.add_option('-l', '--libnotify', action='store_true', dest='libnotify')
+    parser.add_option('-c', '--curses', action='store_true', dest='curses')
+    options, args = parser.parse_args()
+
+    if options.libnotify:
+        logging.info('Starting libnotify notifier')
+        main_libnotify()
+    elif options.curses:
+        logging.info('Starting curses notifier')
+        main_curses()
+    else:
+        logging.info('Starting console notifier')
+        logging.error('FIXME create a plain console notifier')
+
+def main_libnotify():
+    try:
+        import pynotify
+    except ImportError:
+        logging.error('No pynotify installed')
+        return
+    def show_info(info):
+        if info['State'] == 'STOP':
+            title = 'MOC info'
+            msg = 'MOC is stopped...'
+        elif info['State'] == 'PAUSE':
+            title = 'MOC info'
+            msg = 'MOC is paused...'
+        else:
+            title = 'Song info'
+            msg = '%(Artist)s - %(SongTitle)s' % info
+            msg += '\n%(Album)s -- %(TotalTime)s' % info
+        n = pynotify.Notification(title, msg)
+        n.set_urgency(pynotify.URGENCY_CRITICAL)
+        n.set_timeout(4)
+        n.show()
+        logging.debug('Showed notification: %s' % msg)
+    if pynotify.init('MOC'):
+        monitor_info(show_info)
+    else:
+        logging.error('Failed to initialize pynotify')
+
+def main_curses():
+    import curses
+    from curses.wrapper import wrapper
+    def _run(stdscr):
+        curses.curs_set(0)
+        curses.use_default_colors()
+        curses.init_pair(1, curses.COLOR_BLUE, -1)
+        curses.init_pair(2, curses.COLOR_GREEN, -1)
+        curses.init_pair(3, curses.COLOR_RED, -1)
+
+        stdscr.clear()
+        stdscr.refresh()
+
+        border_win = curses.newwin(5, 78, 1, 1)
+        border_win.border()
+        border_win.addstr(2, 34, 'Loading')
+        border_win.addstr(2, 41, '...', curses.color_pair(1) | curses.A_BLINK)
+        border_win.refresh()
+
+        win = curses.newwin(3, 70, 2, 2)
+        def show_info(info):
+            win.clear()
+            if info['State'] == 'STOP':
+                win.addstr(1, 1, 'MOC is stopped...', curses.color_pair(3))
+            elif info['State'] == 'PAUSE':
+                win.addstr(1, 1, 'MOC is paused...', curses.color_pair(3))
+            else:
+                win.addstr(0, 1, '%(Artist)s - %(SongTitle)s' % info, curses.color_pair(1))
+                win.addstr(1, 1, '%(Album)s -- %(TotalTime)s' % info, curses.color_pair(2))
+            win.refresh()
+        monitor_info(show_info)
+    wrapper(_run)
+
+if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO,
+                        format='%(asctime)s %(levelname)s %(message)s',
+                        filename='/tmp/show_song.log',
+                        filemode='a')
+    main()
