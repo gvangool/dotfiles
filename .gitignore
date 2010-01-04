@@ -50,8 +50,14 @@
 !bin
 !bin/*
 
+# MOC
+!.moc
+!.moc/*
+
 # Screen RCfile
 !.screenrc
+# tmux file
+!.tmux.conf
 
 # extra files
 !install_fabfile.py
