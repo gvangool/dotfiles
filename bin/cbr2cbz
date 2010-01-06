@@ -1,0 +1,28 @@
+#bin/bash
+IFS="|"
+if test -z $1; then
+    WORKDIR="."
+else
+    WORKDIR="$1"
+fi
+
+echo "Working from directory $WORKDIR"
+for CBRFILE in $WORKDIR/*.cbr; do
+    BASENAME=`basename $CBRFILE ".cbr"`
+    echo "$CBRFILE"
+    echo "$BASENAME"
+    DIRNAME=`dirname $CBRFILE`
+    NEWBASEFILE=`echo "$BASENAME" | sed "s/ /_/g"`
+    echo "$NEWBASEFILE"
+    NEWNAME="$NEWBASEFILE.cbz"
+    echo "$NEWNAME"
+    mkdir cbr2cbztemp
+    cd cbr2cbztemp
+    echo "TEST $CBRFILE"
+    cp "../$CBRFILE" .
+    unrar e "$BASENAME.cbr"
+    zip "$NEWNAME" *
+    cp "$NEWNAME" .. #"$DIRNAME"
+    cd ..
+    rm -r cbr2cbztemp
+done
