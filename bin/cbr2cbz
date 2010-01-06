@@ -8,21 +8,22 @@ fi
 
 echo "Working from directory $WORKDIR"
 for CBRFILE in $WORKDIR/*.cbr; do
-    BASENAME=`basename $CBRFILE ".cbr"`
+    BASENAME=`basename $CBRFILE`
     echo "$CBRFILE"
     echo "$BASENAME"
     DIRNAME=`dirname $CBRFILE`
     NEWBASEFILE=`echo "$BASENAME" | sed "s/ /_/g"`
     echo "$NEWBASEFILE"
-    NEWNAME="$NEWBASEFILE.cbz"
+    NEWNAME=`echo "$NEWBASEFILE" | sed "s/cbr/cbz/"`
     echo "$NEWNAME"
     mkdir cbr2cbztemp
     cd cbr2cbztemp
     echo "TEST $CBRFILE"
     cp "../$CBRFILE" .
-    unrar e "$BASENAME.cbr"
-    zip "$NEWNAME" *
-    cp "$NEWNAME" .. #"$DIRNAME"
+    unrar e "$BASENAME" > /dev/null 2>&1
+    rm "$BASENAME"
+    zip "$NEWNAME" * > /dev/null 2>&1
+    cp "$NEWNAME" ..
     cd ..
     rm -r cbr2cbztemp
 done
