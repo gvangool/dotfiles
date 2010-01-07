@@ -117,13 +117,13 @@ def main_curses():
         stdscr.clear()
         stdscr.refresh()
 
-        border_win = curses.newwin(5, 78, 1, 1)
+        border_win = curses.newwin(5, 78, 0, 1)
         border_win.border()
         border_win.addstr(2, 34, 'Loading')
         border_win.addstr(2, 41, '...', curses.color_pair(1) | curses.A_BLINK)
         border_win.refresh()
 
-        win = curses.newwin(3, 70, 2, 2)
+        win = curses.newwin(3, 70, 1, 2)
         def show_info(info):
             win.clear()
             if info['State'] == 'STOP':
