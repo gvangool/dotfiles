@@ -106,7 +106,7 @@ def install_apache2(type='python'):
     if type == 'python':
         _install('libapache2-mod-wsgi')
     elif type == 'php5':
-        _install('libapache2-mod-php5', 'php5-mysql')
+        _install('libapache2-mod-php5', 'php5', 'php5-mysql', 'php5-gd')
     # we want rid of the default apache config
     sudo('a2dissite default; /etc/init.d/apache2 restart', pty=True)
 
