@@ -198,6 +198,9 @@ def install_moc(add_lastfm=True):
             run('chmod a+x moc_submit_lastfm')
             append('OnSongChange = "/home/%(user)s/.moc/moc_submit_lastfm --artist %%a --title %%t --length %%d --album %%r"' % env, 'config2')
 
+def install_extra_tops():
+    _install('htop', 'iotop', 'nethogs')
+
 # package combinations for certain roles (webserver, database, desktop)
 def setup_base():
     update()
