@@ -14,6 +14,7 @@ if has("autocmd")
     au BufRead,BufNewFile *.wsgi set filetype=python
     au BufRead,BufNewFile *.md set filetype=mkd
     au BufRead,BufNewFile *.mkd set filetype=mkd
+    au BufRead,BufNewFile .tmux.conf set filetype=tmux
     " extra syntax rules
     au BufRead,BufNewFile /etc/apache2/* set syntax=apache
     if filereadable("manage.py") || filereadable("../manage.py")
