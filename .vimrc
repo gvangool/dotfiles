@@ -105,6 +105,8 @@ if filereadable("/usr/bin/xml_pp")
 endif
 
 " Extra Vim behaviour
+set spell spelllang=en_us spellfile=~/.vim/spellfile.add
+set nospell
 set laststatus=2 " always show the status line
 set lazyredraw   " do not redraw while running macros
 set ruler        " always show current positions along the bottom
