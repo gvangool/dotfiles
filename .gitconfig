@@ -2,13 +2,26 @@
     name = Gert Van Gool
     email = gertvangool@gmail.com
 [color]
-    diff = auto
-    status = auto
-    branch = auto
+    ui = auto
+[color "branch"]
+    current = cyan reverse
+    local = cyan
+    remote = green
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+    whitespace = red reverse
+[color "status"]
+    added = yellow
+    changed = green
+    untracked = cyan
 [alias]
     ci = commit
     st = status
     co = checkout
     ba = branch -a
+    log1 = log --pretty=oneline --abbrev-commit
 [push]
     default = current # default value: matching
