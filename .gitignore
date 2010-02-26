@@ -32,7 +32,7 @@
 
 # Vim plugins, ftplugins, syntax etc etc
 !.vim
-!.vim/*
+!.vim/spellfile.add
 !.vim/autoload/*
 !.vim/doc/*
 !.vim/ftplugin/*
