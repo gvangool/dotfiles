@@ -88,17 +88,19 @@ def install_duplicity(env_name='backup'):
 def install_nginx():
     '''Install nginx as a webserver or reverse proxy'''
     version = '0.7.64'
-    run('wget http://sysoev.ru/nginx/nginx-%s.tar.gz' % version)
-    run('tar xf nginx-%s.tar.gz' % version)
-    # requirements for nginx
-    _install('libc6', 'libpcre3', 'libpcre3-dev', 'libpcrecpp0', 'libssl0.9.8', 'libssl-dev', 'zlib1g', 'zlib1g-dev', 'lsb-base')
-    with cd('nginx-%s' % version):
-        run('''./configure --with-http_ssl_module \\
-               --sbin-path=/usr/local/sbin \\
-               --with-http_gzip_static_module \\
-               --with-sha1=/usr/lib''')
-        run('make')
-        sudo('make install')
+    run('mkdir -p src')
+    with cd('src'):
+        run('wget http://sysoev.ru/nginx/nginx-%s.tar.gz' % version)
+        run('tar xf nginx-%s.tar.gz' % version)
+        # requirements for nginx
+        _install('libc6', 'libpcre3', 'libpcre3-dev', 'libpcrecpp0', 'libssl0.9.8', 'libssl-dev', 'zlib1g', 'zlib1g-dev', 'lsb-base')
+        with cd('nginx-%s' % version):
+            run('''./configure --with-http_ssl_module \\
+                   --sbin-path=/usr/local/sbin \\
+                   --with-http_gzip_static_module \\
+                   --with-sha1=/usr/lib''')
+            run('make')
+            sudo('make install')
 
 def install_apache2(type='python'):
     '''Install Apache2 as a application backend'''
@@ -148,7 +150,8 @@ def install_cdripper():
     '''
     version = '0.5.7'
     _install('cd-discid', 'cdparanoia', 'flac', 'lame', 'mp3gain', 'normalize-audio', 'ruby-gnome2', 'ruby', 'vorbisgain')
-    with cd('/tmp'):
+    run('mkdir -p src')
+    with cd('src'):
         run('wget http://rubyripper.googlecode.com/files/rubyripper-%s.tar.bz2' % version)
         run('bzip2 -d rubyripper-%s.tar.bz2' % version)
         run('tar xf rubyripper-%s.tar' % version)
