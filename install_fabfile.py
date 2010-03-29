@@ -78,6 +78,18 @@ def create_python_env(env_name='generic', requirements_file=None):
     else:
         run('pip install -E %s -r %s' % (py_env, requirements_file))
 
+def install_ruby():
+    _install('ruby1.8', 'libbluecloth-ruby', 'libopenssl-ruby1.8', 'ruby1.8-dev', 'ri', 'rdoc', 'irb')
+    sudo('ln -s /usr/bin/ruby1.8 /usr/bin/ruby')
+    # gem install
+    run('mkdir -p src')
+    with cd('src'):
+        run('wget http://rubyforge.org/frs/download.php/69365/rubygems-1.3.6.tgz')
+        run('tar xvzf rubygems-1.3.6.tgz')
+        with cd('rubygems-1.3.6'):
+            sudo('ruby setup.rb')
+            sudo('ln -s /usr/bin/gem1.8 /usr/bin/gem')
+
 def install_duplicity(env_name='backup'):
     '''Install the duplicity backup tool (http://duplicity.nongnu.org/)'''
     py_env = '~/env/%s' % env_name
@@ -109,6 +121,9 @@ def install_apache2(type='python'):
         _install('libapache2-mod-wsgi')
     elif type == 'php5':
         _install('libapache2-mod-php5', 'php5', 'php5-mysql', 'php5-gd')
+    elif type == 'ruby':
+        install_ruby()
+        _install('libapache2-mod-passenger')
     # we want rid of the default apache config
     sudo('a2dissite default; /etc/init.d/apache2 restart', pty=True)
 
