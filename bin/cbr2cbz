@@ -1,4 +1,4 @@
-#bin/bash
+#!/bin/bash
 IFS="|"
 if test -z $1; then
     WORKDIR="."
