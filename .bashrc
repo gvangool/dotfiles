@@ -89,3 +89,4 @@ if [ -f ~/.alias ]; then
     source ~/.alias
 fi
 
+export GREP_OPTIONS='--exclude-dir=.svn --exclude-dir=.git --exclude-dir=.hg'
