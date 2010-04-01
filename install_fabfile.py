@@ -214,7 +214,7 @@ def install_moc(add_lastfm=True):
         with cd('~/.moc'):
             run('wget http://files.lukeplant.fastmail.fm/public/moc_submit_lastfm')
             run('chmod a+x moc_submit_lastfm')
-            append('OnSongChange = "/home/%(user)s/.moc/moc_submit_lastfm --artist %%a --title %%t --length %%d --album %%r"' % env, 'config2')
+            append('OnSongChange = "/home/%(user)s/.moc/moc_submit_lastfm --artist %%a --title %%t --length %%d --album %%r"' % env, 'config')
 
 def install_extra_tops():
     _install('htop', 'iotop', 'nethogs')
