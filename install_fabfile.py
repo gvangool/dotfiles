@@ -198,7 +198,7 @@ def install_moc(add_lastfm=True):
     apps = ['moc']
     if add_lastfm:
         apps += ['lastfmsubmitd']
-    _install(apps)
+    _install(*apps)
 
     if add_lastfm:
         username = prompt('Last.fm username?', validate=lambda v: __validate_not_empty(v, key='username'))
