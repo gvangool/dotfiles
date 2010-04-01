@@ -219,6 +219,54 @@ def install_moc(add_lastfm=True):
 def install_extra_tops():
     _install('htop', 'iotop', 'nethogs')
 
+def install_memcached():
+    'Install memcached server'
+    _install('libevent-dev')
+    run('mkdir -p src')
+    with cd('src'):
+        run('wget http://memcached.googlecode.com/files/memcached-1.4.4.tar.gz')
+        run('tar xf memcached-1.4.4.tar.gz')
+        with cd('memcached-1.4.4'):
+            args = ['--prefix=', '--exec-prefix=/usr', '--datarootdir=/usr']
+            if getattr(env, 'is_64bit', False):
+                args.append('--enable-64bit')
+            run('./configure %s' % ' '.join(args))
+            run('make')
+            sudo('make install')
+            sudo('cp scripts/memcached-init /etc/init.d/memcached')
+            sudo('mkdir -p /usr/share/memcached')
+            sudo('cp -R scripts /usr/share/memcached')
+    install_memcached_client()
+
+def install_memcached_client():
+    'Install libmemcached as client library for memcached'
+    _install('libevent-dev', 'build-essential')
+    run('mkdir -p src')
+    with cd('src'):
+        run('wget http://download.tangent.org/libmemcached-0.38.tar.gz')
+        run('tar xf libmemcached-0.38.tar.gz')
+        with cd('libmemcached-0.38'):
+            run('./configure')
+            run('make')
+            sudo('make install')
+
+def install_memcached_client_python():
+    'Install pylibmc (and thus libmemcached) as client libraries for memcached'
+    install_memcached_client()
+    _install('python', 'python-setuptools', 'python-dev', 'build-essential')
+    run('mkdir -p src')
+    with cd('src'):
+        run('wget http://pypi.python.org/packages/source/p/pylibmc/pylibmc-1.0.tar.gz#md5=182d95a6d493f3cbb7bc83ae7e275816')
+        run('tar xf pylibmc-1.0.tar.gz')
+        with cd('pylibmc-1.0'):
+            if hasattr(env, 'virtual_env'):
+                run('. %(virtual_env)s/bin/activate; python setup.py install --with-libmemcached=/usr/local/lib' % env)
+            else:
+                sudo('python setup.py install --with-libmemcached=/usr/local/lib' % env)
+        if not exists('/etc/ld.so.conf.d/local_lib'):
+            append('/usr/local/lib/', '/etc/ld.so.conf.d/local_lib', use_sudo=True)
+            sudo('ldconfig')
+
 # package combinations for certain roles (webserver, database, desktop)
 def setup_base():
     update()
