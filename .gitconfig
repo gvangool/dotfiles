@@ -26,4 +26,4 @@
 [push]
     default = current # default value: matching
 [core]
-	autocrlf = input
+    autocrlf = input
