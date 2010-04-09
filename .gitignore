@@ -59,6 +59,10 @@
 !.moc
 !.moc/*
 
+# Python's virtual envs
+!env
+!env/postactivate
+
 # Screen RCfile
 !.screenrc
 # tmux file
