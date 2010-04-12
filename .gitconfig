@@ -27,3 +27,6 @@
     default = current # default value: matching
 [core]
     autocrlf = input
+[branch]
+    autosetupmerge = true
+
