@@ -50,20 +50,20 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 # colors
-BRIGHT="`tput bold`"
-DIM="`tput dim`"
-GREEN="`tput setaf 2 sgr0`"
+BRIGHT="\[`tput bold`\]"
+DIM="\[`tput dim`\]"
+GREEN="\[`tput setaf 2 sgr0`\]"
 BGREEN="${BRIGHT}${GREEN}"
-RED="`tput setaf 1 sgr0`"
+RED="\[`tput setaf 1 sgr0`\]"
 BRED="${BRIGHT}${RED}"
-BLUE="`tput setaf 4 sgr0`"
+BLUE="\[`tput setaf 4 sgr0`\]"
 BBLUE="${BRIGHT}${BLUE}"
-CYAN="`tput setaf 6 sgr0`"
-DEFAULT="`tput sgr0`"
+CYAN="\[`tput setaf 6 sgr0`\]"
+DEFAULT="\[`tput sgr0`\]"
 NORMAL="${DIM}${DEFAULT}"
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}${BGREEN}\u@\h${NORMAL}:${BBLUE}\w${NORMAL}\$ '
+    PS1="${debian_chroot:+($debian_chroot)}${BGREEN}\u${NORMAL}@${BRED}\h${NORMAL}:${BBLUE}\w${NORMAL}\$ "
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
