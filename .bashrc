@@ -74,6 +74,13 @@ fi
 
 export EDITOR=vim
 set -o vi
+
+# git stuff
+__git_branch(){
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1 /';
+}
+
+# python/django
 if [ -f ~/django-trunk/extras/django_bash_completion ]; then
     source ~/django-trunk/extras/django_bash_completion
 fi
@@ -85,6 +92,7 @@ if [ -f /usr/local/bin/virtualenvwrapper_bashrc ]; then
     export PIP_VIRTUALENV_BASE=$WORKON_HOME
 fi
 
+# more aliases
 if [ -f ~/.alias ]; then
     source ~/.alias
 fi
