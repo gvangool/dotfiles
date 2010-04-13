@@ -249,10 +249,14 @@ def install_memcached_client():
             run('./configure')
             run('make')
             sudo('make install')
+    if not exists('/etc/ld.so.conf.d/local_lib'):
+        append('/usr/local/lib/', '/etc/ld.so.conf.d/local_lib', use_sudo=True)
+        sudo('ldconfig')
 
 def install_memcached_client_python():
     'Install pylibmc (and thus libmemcached) as client libraries for memcached'
-    install_memcached_client()
+    if not exist('/usr/local/lib/libmemcached.so'):
+        install_memcached_client()
     _install('python', 'python-setuptools', 'python-dev', 'build-essential')
     run('mkdir -p src')
     with cd('src'):
@@ -263,9 +267,6 @@ def install_memcached_client_python():
                 run('. %(virtual_env)s/bin/activate; python setup.py install --with-libmemcached=/usr/local/lib' % env)
             else:
                 sudo('python setup.py install --with-libmemcached=/usr/local/lib' % env)
-        if not exists('/etc/ld.so.conf.d/local_lib'):
-            append('/usr/local/lib/', '/etc/ld.so.conf.d/local_lib', use_sudo=True)
-            sudo('ldconfig')
 
 # package combinations for certain roles (webserver, database, desktop)
 def setup_base():
