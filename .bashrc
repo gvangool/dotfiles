@@ -49,8 +49,21 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+# colors
+BRIGHT="\[`tput bold`\]"
+DIM="\[`tput dim`\]"
+GREEN="\[`tput setaf 2 sgr0`\]"
+BGREEN="${BRIGHT}${GREEN}"
+RED="\[`tput setaf 1 sgr0`\]"
+BRED="${BRIGHT}${RED}"
+BLUE="\[`tput setaf 4 sgr0`\]"
+BBLUE="${BRIGHT}${BLUE}"
+CYAN="\[`tput setaf 6 sgr0`\]"
+DEFAULT="\[`tput sgr0`\]"
+NORMAL="${DIM}${DEFAULT}"
+
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1="${debian_chroot:+($debian_chroot)}${BGREEN}\u${NORMAL}@${BRED}\h${NORMAL}:${BBLUE}\w${NORMAL}\$ "
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -74,6 +87,13 @@ fi
 
 export EDITOR=vim
 set -o vi
+
+# git stuff
+__git_branch(){
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1 /';
+}
+
+# python/django
 if [ -f ~/django-trunk/extras/django_bash_completion ]; then
     source ~/django-trunk/extras/django_bash_completion
 fi
@@ -85,7 +105,9 @@ if [ -f /usr/local/bin/virtualenvwrapper_bashrc ]; then
     export PIP_VIRTUALENV_BASE=$WORKON_HOME
 fi
 
+# more aliases
 if [ -f ~/.alias ]; then
     source ~/.alias
 fi
 
+export GREP_OPTIONS='--exclude-dir=.svn --exclude-dir=.git --exclude-dir=.hg'
