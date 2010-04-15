@@ -123,7 +123,10 @@ def install_apache2(type='python'):
         _install('libapache2-mod-php5', 'php5', 'php5-mysql', 'php5-gd')
     elif type == 'ruby':
         install_ruby()
-        _install('libapache2-mod-passenger')
+        _install('apache2-dev')
+        sudo('gem install passenger')
+        sudo('passenger-install-apache2-module')
+        sudo('a2enmod passenger')
     # we want rid of the default apache config
     sudo('a2dissite default; /etc/init.d/apache2 restart', pty=True)
 
