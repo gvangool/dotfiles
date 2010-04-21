@@ -23,6 +23,8 @@
     co = checkout
     ba = branch -a
     log1 = log --pretty=oneline --abbrev-commit
+    edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; $EDITOR `f`"
+    add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
 [push]
     default = tracking
 [core]
