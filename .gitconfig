@@ -1,34 +1,34 @@
 [user]
-    name = Gert Van Gool
-    email = gertvangool@gmail.com
+	name = Gert Van Gool
+	email = gertvangool@gmail.com
 [color]
-    ui = auto
+	ui = auto
 [color "branch"]
-    current = cyan reverse
-    local = cyan
-    remote = green
+	current = cyan reverse
+	local = cyan
+	remote = green
 [color "diff"]
-    meta = yellow bold
-    frag = magenta bold
-    old = red bold
-    new = green bold
-    whitespace = red reverse
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
 [color "status"]
-    added = yellow
-    changed = green
-    untracked = cyan
+	added = yellow
+	changed = green
+	untracked = cyan
 [alias]
-    ci = commit
-    st = status
-    co = checkout
-    ba = branch -a
-    log1 = log --pretty=oneline --abbrev-commit
-    edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; $EDITOR `f`"
-    add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
+	ci = commit
+	st = status
+	co = checkout
+	ba = branch -a
+	log1 = log --pretty=oneline --abbrev-commit
+	edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; $EDITOR `f`"
+	add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
 [push]
-    default = tracking
+	default = tracking
 [core]
-    autocrlf = input
+	autocrlf = input
 [branch]
-    autosetupmerge = true
+	autosetupmerge = true
 
