@@ -49,6 +49,10 @@ autocmd FileType rest setlocal ai comments=n:> tabstop=2 softtabstop=2 shiftwidt
 autocmd FileType yaml setlocal tabstop=2 shiftwidth=2 softtabstop=2
 " HTML
 autocmd FileType html setlocal tabstop=4 shiftwidth=4 noexpandtab
+" GIT config
+autocmd FileType gitconfig setlocal tabstop=4 shiftwidth=4 noexpandtab
+autocmd FileType gitconfig :call DeleteTrailingWS()
+autocmd BufWrite .gitconfig :call DeleteTrailingWS()
 " defaults (Python)
 set tabstop=4
 set shiftwidth=4
