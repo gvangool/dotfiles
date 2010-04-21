@@ -24,7 +24,7 @@
     ba = branch -a
     log1 = log --pretty=oneline --abbrev-commit
 [push]
-    default = current # default value: matching
+    default = tracking
 [core]
     autocrlf = input
 [branch]
