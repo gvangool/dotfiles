@@ -23,11 +23,12 @@
 	co = checkout
 	ba = branch -a
 	log1 = log --pretty=oneline --abbrev-commit
+	graphviz = "!f() { echo 'digraph git {' ; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
 	edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; $EDITOR `f`"
 	add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
 	add-empty-dirs = "!f() { for dir in `find $@ -type d -empty`; do echo \"*\n!.gitignore\" > $dir/.gitignore; git add $dir/.gitignore; done }; f"
 [push]
-	default = tracking
+	default = current
 [core]
 	autocrlf = input
 [branch]
