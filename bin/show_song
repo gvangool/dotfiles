@@ -77,6 +77,7 @@ def main():
         logging.info('Starting console notifier')
         logging.error('FIXME create a plain console notifier')
 
+n = None
 def main_libnotify():
     try:
         import pynotify
@@ -94,6 +95,9 @@ def main_libnotify():
             title = 'Song info'
             msg = '%(Artist)s - %(SongTitle)s' % info
             msg += '\n%(Album)s -- %(TotalTime)s' % info
+        global n
+        if n is not None:
+            n.close()
         n = pynotify.Notification(title, msg)
         n.set_urgency(pynotify.URGENCY_CRITICAL)
         n.set_timeout(4)
