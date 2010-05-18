@@ -97,9 +97,14 @@ def install_duplicity(env_name='backup'):
     run('pip install -E %s boto' % py_env)
     run('pip install -E %s http://code.launchpad.net/duplicity/0.6-series/0.6.05/+download/duplicity-0.6.05.tar.gz' % py_env)
 
-def install_nginx():
+def install_nginx(stable=True):
     '''Install nginx as a webserver or reverse proxy'''
-    version = '0.7.64'
+    if stable:
+        version = '0.7.65'
+    else:
+        version = '0.8.37'
+    _install('nginx') # install it to get initial version/config
+    stop('nginx')
     run('mkdir -p src')
     with cd('src'):
         run('wget http://sysoev.ru/nginx/nginx-%s.tar.gz' % version)
@@ -108,11 +113,18 @@ def install_nginx():
         _install('libc6', 'libpcre3', 'libpcre3-dev', 'libpcrecpp0', 'libssl0.9.8', 'libssl-dev', 'zlib1g', 'zlib1g-dev', 'lsb-base')
         with cd('nginx-%s' % version):
             run('''./configure --with-http_ssl_module \\
-                   --sbin-path=/usr/local/sbin \\
+                   --with-sha1=/usr/lib \\
                    --with-http_gzip_static_module \\
-                   --with-sha1=/usr/lib''')
+                   --with-http_stub_status_module \\
+                   --without-http_fastcgi_module \\
+                   --sbin-path=/usr/sbin \\
+                   --conf-path=/etc/nginx/nginx.conf \\
+                   --prefix=/etc/nginx \\
+                   --error-log-path=/var/log/nginx/error.log \\
+                   ''')
             run('make')
             sudo('make install')
+    start('nginx')
 
 def install_apache2(type='python'):
     '''Install Apache2 as a application backend'''
