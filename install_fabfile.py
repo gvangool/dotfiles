@@ -137,11 +137,11 @@ def install_mysql():
 
 def install_mysql_server():
     '''Install MySQL server'''
-    _install('mysql-server-5.0')
+    _install('mysql-server-5.1')
 
 def install_mysql_client():
     '''Install MySQL client'''
-    _install('mysql-client-5.0')
+    _install('mysql-client-5.1')
 
 def install_apt_cacher(admin='root@localhost'):
     '''Install apt-cacher server'''
