@@ -150,6 +150,16 @@ def install_apt_cacher(admin='root@localhost'):
     sudo('echo \'EXTRAOPT=" admin_email=%s"\' >> /etc/default/apt-cacher' % admin)
     sudo('/etc/init.d/apt-cacher restart')
 
+def install_tmux():
+    '''Get and install the latest tmux (1.2)'''
+    _install('build-essential' 'libevent-dev', 'ncurses-dev')
+    run('mkdir -p src')
+    with cd('src'):
+        run('wget http://downloads.sourceforge.net/project/tmux/tmux/tmux-1.2/tmux-1.2.tar.gz?use_mirror=heanet')
+        run('tar xf tmux-1.2.tar.gz')
+        run('./configure')
+        run('make')
+
 def install_latex():
     '''Install LaTeX'''
     _install('texlive', 'texlive-font*', 'texlive-latex*')
