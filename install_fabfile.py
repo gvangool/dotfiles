@@ -268,7 +268,7 @@ def install_memcached_client():
 
 def install_memcached_client_python():
     'Install pylibmc (and thus libmemcached) as client libraries for memcached'
-    if not exist('/usr/local/lib/libmemcached.so'):
+    if not exists('/usr/local/lib/libmemcached.so'):
         install_memcached_client()
     _install('python', 'python-setuptools', 'python-dev', 'build-essential')
     run('mkdir -p src')
