@@ -293,6 +293,12 @@ def setup_desktop():
     install_vlc()
     _install('unrar', 'nautilus-open-terminal', 'p7zip-full')
 
+def setup_developer_desktop():
+    setup_desktop()
+    install_mysql()
+    install_memcached()
+    install_memcached_client_python()
+
 def setup_webserver(type='python'):
     setup_base()
     install_python()
