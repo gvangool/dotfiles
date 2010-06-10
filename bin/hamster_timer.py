@@ -58,10 +58,12 @@ def main():
         msg = 'Worked 8 hours today? %s\n\n' % ('Yes' if total_day_time >= datetime.timedelta(hours=8) else 'No')
         msg += 'Worked 40 hours this week? %s' % ('Yes' if total_week_time >= datetime.timedelta(hours=40) else 'No')
         n = pynotify.Notification(title, msg)
-        if total_day_time >= datetime.timedelta(hours=7, minutes=30) or total_week_time >= datetime.timedelta(hours=39, minutes=30):
-            n = pynotify.Notification(title, msg, 'dialog-warning')
-        if total_day_time >= datetime.timedelta(hours=8, minutes=30) or total_week_time >= datetime.timedelta(hours=40, minutes=30):
+        if total_day_time >= datetime.timedelta(hours=8, minutes=00) or total_week_time >= datetime.timedelta(hours=40, minutes=00):
             n = pynotify.Notification(title, msg, 'dialog-error')
+        elif total_day_time >= datetime.timedelta(hours=7, minutes=45) or total_week_time >= datetime.timedelta(hours=39, minutes=45):
+            n = pynotify.Notification(title, msg, 'dialog-warning')
+        elif total_day_time >= datetime.timedelta(hours=7, minutes=30) or total_week_time >= datetime.timedelta(hours=39, minutes=30):
+            n = pynotify.Notification(title, msg, 'dialog-info')
         n.set_urgency(pynotify.URGENCY_CRITICAL)
         n.set_timeout(4)
         n.show()
