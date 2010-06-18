@@ -53,21 +53,22 @@ def main():
     while True:
         if n is not None:
             n.close()
-        title = 'How much did I work?'
+        title = 'Time Tracker'
         total_day_time = total_time_of()
         total_week_time = total_time_for_this_week()
-        msg = 'Worked 8 hours today? %s\n\n' % ('Yes' if total_day_time >= datetime.timedelta(hours=8) else 'No')
-        msg += 'Worked 40 hours this week? %s' % ('Yes' if total_week_time >= datetime.timedelta(hours=40) else 'No')
-        n = pynotify.Notification(title, msg)
-        if total_day_time >= datetime.timedelta(hours=8, minutes=00) or total_week_time >= datetime.timedelta(hours=40, minutes=00):
-            n = pynotify.Notification(title, msg, 'dialog-error')
-        elif total_day_time >= datetime.timedelta(hours=7, minutes=45) or total_week_time >= datetime.timedelta(hours=39, minutes=45):
-            n = pynotify.Notification(title, msg, 'dialog-warning')
-        elif total_day_time >= datetime.timedelta(hours=7, minutes=30) or total_week_time >= datetime.timedelta(hours=39, minutes=30):
-            n = pynotify.Notification(title, msg, 'dialog-info')
-        n.set_urgency(pynotify.URGENCY_CRITICAL)
-        n.set_timeout(4)
-        n.show()
+        if total_day_time is not None:
+            if total_day_time >= datetime.timedelta(hours=8, minutes=0) or total_week_time >= datetime.timedelta(hours=40, minutes=0):
+                n = pynotify.Notification(title, 'Go home!', 'dialog-error')
+            elif total_day_time >= datetime.timedelta(hours=7, minutes=45) or total_week_time >= datetime.timedelta(hours=39, minutes=45):
+                n = pynotify.Notification(title, 'Don\'t forget to finish everyting...', 'dialog-warning')
+            elif total_day_time >= datetime.timedelta(hours=7, minutes=30) or total_week_time >= datetime.timedelta(hours=39, minutes=30):
+                msg = 'Worked hours today? <b>%dh</b>\n\n' % (total_day_time.seconds / (60*60),)
+                msg += 'Worked hours this week? <b>%dh</b>' % (total_week_time.seconds / (60*60),)
+                n = pynotify.Notification(title, msg, 'hamster-applet')
+            if n is not None:
+                n.set_urgency(pynotify.URGENCY_CRITICAL)
+                n.set_timeout(4 * 1000)
+                n.show()
         time.sleep(options.sleep_time)
 
 if __name__ == '__main__':
