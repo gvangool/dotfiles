@@ -37,7 +37,7 @@ def total_time_for_this_week():
         t = total_time_of(d)
         if total_time is None:
             total_time = t
-        else:
+        elif t is not None:
             total_time += t
     return total_time
 
@@ -47,6 +47,7 @@ def main():
     parser = OptionParser()
     parser.add_option('-d', '--delay', type='int', action='store', dest='sleep_time', help='How long must we sleep before checking again?', default=60)
     options, args = parser.parse_args()
+    options.sleep_time = max(options.sleep_time, 60) # at least 60 seconds
 
     n = None
     while True:
