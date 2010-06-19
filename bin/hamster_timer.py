@@ -63,7 +63,7 @@ def main():
                 n = pynotify.Notification(title, 'Don\'t forget to finish everyting...', 'dialog-warning')
             elif total_day_time >= datetime.timedelta(hours=7, minutes=30) or total_week_time >= datetime.timedelta(hours=39, minutes=30):
                 msg = 'Worked hours today? <b>%dh</b>\n\n' % (total_day_time.seconds / (60*60),)
-                msg += 'Worked hours this week? <b>%dh</b>' % (total_week_time.seconds / (60*60),)
+                msg += 'Worked hours this week? <b>%dh</b>' % (total_week_time.days * 24 + total_week_time.seconds / (60*60),)
                 n = pynotify.Notification(title, msg, 'hamster-applet')
             if n is not None:
                 n.set_urgency(pynotify.URGENCY_CRITICAL)
