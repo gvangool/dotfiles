@@ -97,9 +97,11 @@ endfunc
 " extra rules for Django templates
 if filereadable("manage.py") || filereadable("../manage.py")
     autocmd FileType html setlocal syntax=htmldjango
+    autocmd FileType html setlocal expandtab
     autocmd BufWrite *.html :call CleanDjangoTags()
     autocmd BufRead,BufNewFile *.txt setlocal syntax=htmldjango
     autocmd BufWrite *.txt :call CleanDjangoTags()
+    autocmd BufWrite *.txt :call DeleteTrailingWS()
 endif
 
 " Remap Q to gq -> format line (default: split line on char 80)
