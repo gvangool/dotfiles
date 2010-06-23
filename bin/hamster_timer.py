@@ -46,8 +46,17 @@ def main():
         return
     parser = OptionParser()
     parser.add_option('-d', '--delay', type='int', action='store', dest='sleep_time', help='How long must we sleep before checking again?', default=60)
+    parser.add_option('-t', '--hours-a-day', type='int', action='store', dest='hours_a_day', help='How many hours a day should you work?', default=8)
+    parser.add_option('-w', '--hours-a-week', type='int', action='store', dest='hours_a_week', help='How many hours a week do you work?', default=40)
     options, args = parser.parse_args()
     options.sleep_time = max(options.sleep_time, 60) # at least 60 seconds
+
+    hours_a_day = {'error': datetime.timedelta(hours=options.hours_a_day),
+                   'warning': datetime.timedelta(hours=options.hours_a_day) - datetime.timedelta(minutes=15),
+                   'info': datetime.timedelta(hours=options.hours_a_day) - datetime.timedelta(minutes=30)}
+    hours_a_week = {'error': datetime.timedelta(hours=options.hours_a_week),
+                    'warning': datetime.timedelta(hours=options.hours_a_week) - datetime.timedelta(minutes=15),
+                    'info': datetime.timedelta(hours=options.hours_a_week) - datetime.timedelta(minutes=30)}
 
     n = None
     while True:
@@ -57,11 +66,11 @@ def main():
         total_day_time = total_time_of()
         total_week_time = total_time_for_this_week()
         if total_day_time is not None:
-            if total_day_time >= datetime.timedelta(hours=8, minutes=0) or total_week_time >= datetime.timedelta(hours=40, minutes=0):
+            if total_day_time >= hours_a_day['error'] or total_week_time >= hours_a_week['error']:
                 n = pynotify.Notification(title, 'Go home!', 'dialog-error')
-            elif total_day_time >= datetime.timedelta(hours=7, minutes=45) or total_week_time >= datetime.timedelta(hours=39, minutes=45):
+            elif total_day_time >= hours_a_day['warning'] or total_week_time >= hours_a_week['warning']:
                 n = pynotify.Notification(title, 'Don\'t forget to finish everyting...', 'dialog-warning')
-            elif total_day_time >= datetime.timedelta(hours=7, minutes=30) or total_week_time >= datetime.timedelta(hours=39, minutes=30):
+            elif total_day_time >= hours_a_day['info'] or total_week_time >= hours_a_week['info']:
                 msg = 'Worked hours today? <b>%dh</b>\n\n' % (total_day_time.seconds / (60*60),)
                 msg += 'Worked hours this week? <b>%dh</b>' % (total_week_time.days * 24 + total_week_time.seconds / (60*60),)
                 n = pynotify.Notification(title, msg, 'hamster-applet')
