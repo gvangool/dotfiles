@@ -42,8 +42,6 @@ def total_time_for_this_week():
     return total_time
 
 def main():
-    if not pynotify.init('Work monitor'):
-        return
     parser = OptionParser()
     parser.add_option('-d', '--delay', type='int', action='store', dest='sleep_time', help='How long must we sleep before checking again?', default=60)
     parser.add_option('-t', '--hours-a-day', type='int', action='store', dest='hours_a_day', help='How many hours a day should you work?', default=8)
@@ -58,23 +56,27 @@ def main():
                     'warning': datetime.timedelta(hours=options.hours_a_week) - datetime.timedelta(minutes=15),
                     'info': datetime.timedelta(hours=options.hours_a_week) - datetime.timedelta(minutes=30)}
 
-    n = None
+    if not pynotify.init('Work monitor'):
+        return
     while True:
-        if n is not None:
-            n.close()
         title = 'Time Tracker'
+        msg = ''
         total_day_time = total_time_of()
         total_week_time = total_time_for_this_week()
         if total_day_time is not None:
             if total_day_time >= hours_a_day['error'] or total_week_time >= hours_a_week['error']:
-                n = pynotify.Notification(title, 'Go home!', 'dialog-error')
+                msg = 'Go home!'
+                icon = 'dialog-error'
             elif total_day_time >= hours_a_day['warning'] or total_week_time >= hours_a_week['warning']:
-                n = pynotify.Notification(title, 'Don\'t forget to finish everyting...', 'dialog-warning')
+                msg = 'Don\'t forget to finish everyting...'
+                icon = 'dialog-warning'
             elif total_day_time >= hours_a_day['info'] or total_week_time >= hours_a_week['info']:
                 msg = 'Worked hours today? <b>%dh</b>\n\n' % (total_day_time.seconds / (60*60),)
                 msg += 'Worked hours this week? <b>%dh</b>' % (total_week_time.days * 24 + total_week_time.seconds / (60*60),)
-                n = pynotify.Notification(title, msg, 'hamster-applet')
-            if n is not None:
+                icon = 'hamster-applet'
+
+            if msg != '':
+                n = pynotify.Notification(title, msg, icon)
                 n.set_urgency(pynotify.URGENCY_CRITICAL)
                 n.set_timeout(4 * 1000)
                 n.show()
