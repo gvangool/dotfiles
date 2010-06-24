@@ -80,7 +80,10 @@ def main():
                 n.set_urgency(pynotify.URGENCY_CRITICAL)
                 n.set_timeout(4 * 1000)
                 n.show()
-        time.sleep(options.sleep_time)
+        try:
+            time.sleep(options.sleep_time)
+        except KeyboardInterrupt:
+            break
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO,
