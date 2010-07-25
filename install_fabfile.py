@@ -317,7 +317,7 @@ def setup_webserver(type='python'):
     install_mysql_client()
 
 def setup_database():
-    update()
+    setup_base()
     install_mysql()
 
 def setup_apt_cacher(admin='root@localhost'):
