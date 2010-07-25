@@ -99,32 +99,31 @@ def install_duplicity(env_name='backup'):
 
 def install_nginx(stable=True):
     '''Install nginx as a webserver or reverse proxy'''
-    if stable:
-        version = '0.7.65'
-    else:
-        version = '0.8.37'
-    _install('nginx') # install it to get initial version/config
-    stop('nginx')
-    run('mkdir -p src')
-    with cd('src'):
-        run('wget http://sysoev.ru/nginx/nginx-%s.tar.gz' % version)
-        run('tar xf nginx-%s.tar.gz' % version)
-        # requirements for nginx
-        _install('libc6', 'libpcre3', 'libpcre3-dev', 'libpcrecpp0', 'libssl0.9.8', 'libssl-dev', 'zlib1g', 'zlib1g-dev', 'lsb-base')
-        with cd('nginx-%s' % version):
-            run('''./configure --with-http_ssl_module \\
-                   --with-sha1=/usr/lib \\
-                   --with-http_gzip_static_module \\
-                   --with-http_stub_status_module \\
-                   --without-http_fastcgi_module \\
-                   --sbin-path=/usr/sbin \\
-                   --conf-path=/etc/nginx/nginx.conf \\
-                   --prefix=/etc/nginx \\
-                   --error-log-path=/var/log/nginx/error.log \\
-                   ''')
-            run('make')
-            sudo('make install')
-    start('nginx')
+    if not stable:
+        version = '0.8.46'
+    _install('nginx') # install it to get stable version and initial config
+    if not stable:
+        stop('nginx')
+        run('mkdir -p src')
+        with cd('src'):
+            run('wget http://sysoev.ru/nginx/nginx-%s.tar.gz' % version)
+            run('tar xf nginx-%s.tar.gz' % version)
+            # requirements for nginx
+            _install('libc6', 'libpcre3', 'libpcre3-dev', 'libpcrecpp0', 'libssl0.9.8', 'libssl-dev', 'zlib1g', 'zlib1g-dev', 'lsb-base')
+            with cd('nginx-%s' % version):
+                run('''./configure --with-http_ssl_module \\
+                       --with-sha1=/usr/lib \\
+                       --with-http_gzip_static_module \\
+                       --with-http_stub_status_module \\
+                       --without-http_fastcgi_module \\
+                       --sbin-path=/usr/sbin \\
+                       --conf-path=/etc/nginx/nginx.conf \\
+                       --prefix=/etc/nginx \\
+                       --error-log-path=/var/log/nginx/error.log \\
+                       ''')
+                run('make')
+                sudo('make install')
+        start('nginx')
 
 def install_apache2(type='python'):
     '''Install Apache2 as a application backend'''
