@@ -1,4 +1,4 @@
-.\" $Id: tmux.1,v 1.237 2010/03/08 15:02:07 tcunha Exp $
+.\" $Id: tmux.1,v 1.264 2010/07/17 14:39:01 tcunha Exp $
 .\"
 .\" Copyright (c) 2007 Nicholas Marriott <nicm@users.sourceforge.net>
 .\"
@@ -14,7 +14,7 @@
 .\" IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
 .\" OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 .\"
-.Dd $Mdocdate: March 2 2010 $
+.Dd $Mdocdate: July 15 2010 $
 .Dt TMUX 1
 .Os
 .Sh NAME
@@ -131,10 +131,6 @@ commands which are executed in sequence when the server is first started.
 If a command in the configuration file fails,
 .Nm
 will report an error and exit without executing further commands.
-.It Fl l
-Behave as a login shell.
-This flag currently has no effect and is for compatibility with other shells
-when using tmux as a login shell.
 .It Fl L Ar socket-name
 .Nm
 stores the server socket in a directory under
@@ -155,6 +151,10 @@ If the socket is accidentally removed, the
 signal may be sent to the
 .Nm
 server process to recreate it.
+.It Fl l
+Behave as a login shell.
+This flag currently has no effect and is for compatibility with other shells
+when using tmux as a login shell.
 .It Fl q
 Set the
 .Ic quiet
@@ -213,32 +213,110 @@ prefix key,
 .Ql C-b
 (Ctrl-b) by default, followed by a command key.
 .Pp
-Some of the default key bindings are:
+The default command key bindings are:
 .Pp
-.Bl -tag -width Ds -offset indent -compact
+.Bl -tag -width "XXXXXXXXXX" -offset indent -compact
+.It C-b
+Send the prefix key (C-b) through to the application.
+.It C-o
+Rotate the panes in the current window forwards.
+.It C-z
+Suspend the
+.Nm
+client.
+.It !
+Break the current pane out of the window.
+.It \&"
+Split the current pane into two, top and bottom.
+.It #
+List all paste buffers.
+.It %
+Split the current pane into two, left and right.
+.It &
+Kill the current window.
+.It '
+Prompt for a window index to select.
+.It ,
+Rename the current window.
+.It -
+Delete the most recently copied buffer of text.
+.It .
+Prompt for an index to move the current window.
+.It 0 to 9
+Select windows 0 to 9.
+.It :
+Enter the
+.Nm
+command prompt.
+.It =
+Choose which buffer to paste interactively from a list.
+.It \&?
+List all key bindings.
+.It D
+Choose a client to detach.
+.It \&[
+Enter copy mode to copy text or view the history.
+.It \&]
+Paste the most recently copied buffer of text.
 .It c
 Create a new window.
 .It d
 Detach the current client.
+.It f
+Prompt to search for text in open windows.
+.It i
+Display some information about the current window.
 .It l
 Move to the previously selected window.
 .It n
 Change to the next window.
+.It o
+Select the next pane in the current window.
 .It p
 Change to the previous window.
-.It &
-Kill the current window.
-.It ,
-Rename the current window.
-.It \&?
-List all key bindings.
+.It q
+Briefly display pane indexes.
+.It r
+Force redraw of the attached client.
+.It s
+Select a new session for the attached client interactively.
+.It t
+Show the time.
+.It w
+Choose the current window interactively.
+.It x
+Kill the current pane.
+.It {
+Swap the current pane with the previous pane.
+.It }
+Swap the current pane with the next pane.
+.It ~
+Show previous messages from
+.Nm ,
+if any.
+.It Page Up
+Enter copy mode and scroll one page up.
+.It Up, Down
+.It Left, Right
+Change to the pane above, below, to the left, or to the right of the current
+pane.
+.It M-1 to M-5
+Arrange panes in one of the five preset layouts: even-horizontal,
+even-vertical, main-horizontal, main-vertical, or tiled.
+.It M-n
+Move to the next window with a bell or activity marker.
+.It M-o
+Rotate the panes in the current window backwards.
+.It M-p
+Move to the previous window with a bell or activity marker.
+.It C-Up, C-Down
+.It C-Left, C-Right
+Resize the current pane in steps of one cell.
+.It M-Up, M-Down
+.It M-Left, M-Right
+Resize the current pane in steps of five cells.
 .El
 .Pp
-A complete list may be obtained with the
-.Ic list-keys
-command (bound to
-.Ql \&?
-by default).
 Key bindings may be changed with the
 .Ic bind-key
 and
@@ -336,6 +414,11 @@ If neither a colon nor period appears,
 first attempts to use the argument as a pane index; if that fails, it is looked
 up as for
 .Ar target-window .
+A
+.Ql +
+or
+.Ql -
+indicate the next or previous pane index, respectively.
 One of the strings
 .Em top ,
 .Em bottom ,
@@ -346,6 +429,18 @@ One of the strings
 .Em bottom-left or
 .Em bottom-right
 may be used instead of a pane index.
+.Pp
+The special characters
+.Ql +
+and
+.Ql -
+may be followed by an offset, for example:
+.Bd -literal -offset indent
+select-window -t:+2
+.Ed
+.Pp
+When dealing with a session that doesn't contain sequential window indexes,
+they will be correctly skipped.
 .Pp
 .Ar shell-command
 arguments are
@@ -368,7 +463,6 @@ bind-key F1 set-window-option force-width 81
 .Pp
 Or if using
 .Xr sh 1 :
-.Pp
 .Bd -literal -offset indent
 $ tmux bind-key F1 set-window-option force-width 81
 .Ed
@@ -396,13 +490,12 @@ new-window ; split-window -d
 .Pp
 Or from
 .Xr sh 1 :
-.Pp
 .Bd -literal -offset indent
 $ tmux kill-window -t :1
 
-$ tmux new-window \\; split-window -d
+$ tmux new-window \e; split-window -d
 
-$ tmux new-session -d 'vi /etc/passwd' \\; split-window -d \\; attach
+$ tmux new-session -d 'vi /etc/passwd' \e; split-window -d \e; attach
 .Ed
 .Sh CLIENTS AND SESSIONS
 The
@@ -475,17 +568,15 @@ List the syntax of all commands supported by
 .It Ic list-sessions
 .D1 (alias: Ic ls )
 List all sessions managed by the server.
-.It Xo Ic lock-client
-.Op Fl t Ar target-client
-.Xc
+.It Ic lock-client Op Fl t Ar target-client
+.D1 (alias: Ic lockc )
 Lock
 .Ar target-client ,
 see the
 .Ic lock-server
 command.
-.It Xo Ic lock-session
-.Op Fl t Ar target-session
-.Xc
+.It Ic lock-session Op Fl t Ar target-session
+.D1 (alias: Ic locks )
 Lock all clients attached to
 .Ar target-session .
 .It Xo Ic new-session
@@ -583,14 +674,8 @@ A
 .Nm
 window may be in one of several modes.
 The default permits direct access to the terminal attached to the window.
-The others are:
-.Bl -tag -width Ds
-.It Em output mode
-This is entered when a command which produces output, such as
-.Ic list-keys ,
-is executed from a key binding.
-.It Em copy mode
-This permits a section of a window or its history to be copied to a
+The other is copy mode, which permits a section of a window or its
+history to be copied to a
 .Em paste buffer
 for later insertion into another window.
 This mode is entered with the
@@ -598,14 +683,16 @@ This mode is entered with the
 command, bound to
 .Ql \&[
 by default.
-.El
+It is also entered when a command that produces output, such as
+.Ic list-keys ,
+is executed from a key binding.
 .Pp
 The keys available depend on whether emacs or vi mode is selected
 (see the
 .Ic mode-keys
 option).
 The following keys are supported as appropriate for the mode:
-.Bl -column "FunctionXXXXXXXXXXXXXX" "viXXXXXXXXXX" "emacs" -offset indent
+.Bl -column "FunctionXXXXXXXXXXXXXXXXX" "viXXXXXXXXXX" "emacs" -offset indent
 .It Sy "Function" Ta Sy "vi" Ta Sy "emacs"
 .It Li "Back to indentation" Ta "^" Ta "M-m"
 .It Li "Bottom of history" Ta "G" Ta "M-<"
@@ -624,6 +711,10 @@ The following keys are supported as appropriate for the mode:
 .It Li "Go to line" Ta ":" Ta "g"
 .It Li "Half page down" Ta "C-d" Ta "M-Down"
 .It Li "Half page up" Ta "C-u" Ta "M-Up"
+.It Li "Jump forward" Ta "f" Ta "f"
+.It Li "Jump backward" Ta "F" Ta "F"
+.It Li "Jump again" Ta ";" Ta ";"
+.It Li "Jump again in reverse" Ta "," Ta ","
 .It Li "Next page" Ta "C-f" Ta "Page down"
 .It Li "Next space" Ta "W" Ta ""
 .It Li "Next space, end of word" Ta "E" Ta ""
@@ -661,6 +752,18 @@ next word and previous word to the start of the previous word.
 The three next and previous space keys work similarly but use a space alone as
 the word separator.
 .Pp
+The jump commands enable quick movement within a line.
+For instance, typing
+.Ql f
+followed by
+.Ql /
+will move the cursor to the next
+.Ql /
+character on the current line.
+A
+.Ql \&;
+will then jump to the next occurrence.
+.Pp
 Commands in copy mode may be prefaced by an optional repeat count.
 With vi key bindings, a prefix is entered using the number keys; with
 emacs, the Alt (meta) key and a number begins prefix entry.
@@ -680,7 +783,7 @@ and
 .Em emacs-choice
 for keys used when choosing from lists (such as produced by the
 .Ic choose-window
-command) or in output mode; and
+command); and
 .Em vi-copy
 and
 .Em emacs-copy
@@ -695,7 +798,9 @@ and
 The paste buffer key pastes the first line from the top paste buffer on the
 stack.
 .Pp
-The mode commands are as follows:
+The synopsis for the
+.Ic copy-mode
+command is:
 .Bl -tag -width Ds
 .It Xo Ic copy-mode
 .Op Fl u
@@ -727,10 +832,8 @@ command (bound to
 and
 .Ql C-right
 by default), the current pane may be changed with the
-.Ic up-pane
-and
-.Ic down-pane
-commands and the
+.Ic select-pane
+command and the
 .Ic rotate-window
 and
 .Ic swap-pane
@@ -769,7 +872,28 @@ bottom along the right.
 See the
 .Em main-pane-width
 window option.
+.It Ic tiled
+Panes are spread out as evenly as possible over the window in both rows and
+columns.
 .El
+.Pp
+In addition,
+.Ic select-layout
+may be used to apply a previously used layout - the
+.Ic list-windows
+command displays the layout of each window in a form suitable for use with
+.Ic select-layout .
+For example:
+.Bd -literal -offset indent
+$ tmux list-windows
+0: ksh [159x48]
+    layout: bb62,159x48,0,0{79x48,0,0,79x48,80,0}
+$ tmux select-layout bb62,159x48,0,0{79x48,0,0,79x48,80,0}
+.Ed
+.Nm
+automatically adjusts the size of the layout for the current window size.
+Note that a layout cannot be applied to a window with more panes than that
+from which the layout was originally defined.
 .Pp
 Commands related to windows and panes are as follows:
 .Bl -tag -width Ds
@@ -859,9 +983,6 @@ While the indicator is on screen, a pane may be selected with the
 to
 .Ql 9
 keys.
-.It Ic down-pane Op Fl t Ar target-pane
-.D1 (alias: Ic downp )
-Change the active pane to the next pane (higher index).
 .It Xo Ic find-window
 .Op Fl t Ar target-window
 .Ar match-string
@@ -948,7 +1069,7 @@ List the panes in the current window or in
 List windows in the current session or in
 .Ar target-session .
 .It Xo Ic move-window
-.Op Fl d
+.Op Fl dk
 .Op Fl s Ar src-window
 .Op Fl t Ar dst-window
 .Xc
@@ -960,13 +1081,22 @@ except the window at
 is moved to
 .Ar dst-window .
 .It Xo Ic new-window
-.Op Fl dk
+.Op Fl adk
 .Op Fl n Ar window-name
 .Op Fl t Ar target-window
 .Op Ar shell-command
 .Xc
 .D1 (alias: Ic neww )
 Create a new window.
+With
+.Fl a ,
+the new window is inserted at the next index up from the specified
+.Ar target-window ,
+moving windows up if necessary,
+otherwise
+.Ar target-window
+is the new window location.
+.Pp
 If
 .Fl d
 is given, the session does not make the new window the current window.
@@ -1024,6 +1154,11 @@ A pane may only be piped to one command at a time, any existing pipe is
 closed before
 .Ar shell-command
 is executed.
+The
+.Ar shell-command
+string may contain the special character sequences supported by the
+.Ic status-left
+command.
 If no
 .Ar shell-command
 is given, the current pipe (if any) is closed.
@@ -1033,8 +1168,13 @@ The
 option only opens a new pipe if no previous pipe exists, allowing a pipe to
 be toggled with a single key, for example:
 .Bd -literal -offset indent
-bind-key C-p pipe-pane -o 'cat >>~/output'
+bind-key C-p pipe-pane -o 'cat >>~/output.#I-#P'
 .Ed
+.It Xo Ic previous-layout
+.Op Fl t Ar target-window
+.Xc
+.D1 (alias: Ic prevl )
+Move to the previous layout in the session.
 .It Xo Ic previous-window
 .Op Fl a
 .Op Fl t Ar target-session
@@ -1098,17 +1238,28 @@ or downward (numerically higher).
 .Op Fl t Ar target-window
 .Op Ar layout-name
 .Xc
-.D1 (alias: selectl )
+.D1 (alias: Ic selectl )
 Choose a specific layout for a window.
 If
 .Ar layout-name
-is not given, the last layout used (if any) is reapplied.
-.It Ic select-pane Op Fl t Ar target-pane
+is not given, the last preset layout used (if any) is reapplied.
+.It Xo Ic select-pane
+.Op Fl DLRU
+.Op Fl t Ar target-pane
+.Xc
 .D1 (alias: Ic selectp )
 Make pane
 .Ar target-pane
 the active pane in window
 .Ar target-window .
+If one of
+.Fl D ,
+.Fl L ,
+.Fl R ,
+or
+.Fl U
+is used, respectively the pane below, to the left, to the right, or above the
+target pane is used.
 .It Ic select-window Op Fl t Ar target-window
 .D1 (alias: Ic selectw )
 Select the window at
@@ -1121,7 +1272,7 @@ Select the window at
 .Op Fl t Ar target-pane
 .Op Ar shell-command
 .Xc
-.D1 (alias: splitw )
+.D1 (alias: Ic splitw )
 Create a new pane by splitting
 .Ar target-pane :
 .Fl h
@@ -1184,9 +1335,6 @@ if
 .Fl k
 is specified and the window is linked to only one session, it is unlinked and
 destroyed.
-.It Ic up-pane Op Fl t Ar target-pane
-.D1 (alias: Ic upp )
-Change the active pane to the previous pane (lower index).
 .El
 .Sh KEY BINDINGS
 .Nm
@@ -1233,7 +1381,7 @@ or
 keys, quotation marks are necessary, for example:
 .Bd -literal -offset indent
 bind-key '"' split-window
-bind-key "'" select-prompt
+bind-key "'" new-window
 .Ed
 .Pp
 Commands related to key bindings are as follows:
@@ -1427,6 +1575,11 @@ Available window options are listed under
 .Pp
 Available server options are:
 .Bl -tag -width Ds
+.It Ic detach-on-destroy
+If on (the default), the client is detached when the session it is attached to
+is destroyed.
+If off, the client is switched to the most recently active of the remaining
+sessions.
 .It Ic escape-time
 Set the time in milliseconds for which
 .Nm
@@ -1491,7 +1644,8 @@ is used as a login shell.
 .It Ic default-path Ar path
 Set the default working directory for processes created from keys, or
 interactively from the prompt.
-The default is the current working directory when the server is started.
+The default is empty, which means to use the working directory of the shell
+from which the server was started if it is available or the user's home if not.
 .It Ic default-terminal Ar terminal
 Set the default terminal for new windows created in this session - the
 default value of the
@@ -1557,7 +1711,7 @@ This has no effect as a session option; it must be set as a global option.
 Set status line message attributes, where
 .Ar attributes
 is either
-.Ic default
+.Ic none
 or a comma-delimited list of one or more of:
 .Ic bright
 (or
@@ -1712,6 +1866,19 @@ the
 .Ic status-interval
 option: if the status line is redrawn in the meantime, the previous result is
 used.
+Shell commands are executed with the
+.Nm
+global environment set (see the
+.Sx ENVIRONMENT
+section).
+.Pp
+The window title (#T) is the title set by the program running within the window
+using the OSC title setting sequence, for example:
+.Bd -literal -offset indent
+$ printf '\e033]2;My Title\e033\e\e'
+.Ed
+.Pp
+When a window is first created, its title is the hostname.
 .Pp
 #[attributes] allows a comma-separated list of attributes to be specified,
 these may be
@@ -1957,10 +2124,8 @@ Key bindings default to emacs.
 .Op Ic on | off
 .Xc
 Mouse state in modes.
-If on,
-.Nm
-will respond to mouse clicks by moving the cursor in copy mode or selecting an
-option in choice mode.
+If on, the mouse may be used to copy a selection by dragging in copy mode, or
+to select an option in choice mode.
 .Pp
 .It Xo Ic monitor-activity
 .Op Ic on | off
@@ -1988,8 +2153,8 @@ command.
 .It Xo Ic synchronize-panes
 .Op Ic on | off
 .Xc
-Duplicate input to any pane to all other panes in the same window, except
-for panes that are not in output mode.
+Duplicate input to any pane to all other panes in the same window (only
+for panes that are not in any special mode).
 .Pp
 .It Xo Ic alternate-screen
 .Op Ic on | off
@@ -2027,6 +2192,16 @@ See the
 option for details of special character sequences available.
 The default is
 .Ql #I:#W#F .
+.Pp
+.It Ic window-status-alert-attr Ar attributes
+Set status line attributes for windows which have an alert (bell, activity
+or content).
+.Pp
+.It Ic window-status-alert-bg Ar colour
+Set status line background colour for windows with an alert.
+.Pp
+.It Ic window-status-alert-fg Ar colour
+Set status line foreground colour for windows with an alert.
 .Pp
 .It Ic window-status-current-attr Ar attributes
 Set status line attributes for the currently active window.
@@ -2271,10 +2446,6 @@ The format of
 is as for
 .Ic status-left ,
 with the exception that #() are not handled.
-.It Ic select-prompt Op Fl t Ar target-client
-Open a prompt inside
-.Ar target-client
-allowing a window index to be entered interactively.
 .El
 .Sh BUFFERS
 .Nm
@@ -2302,6 +2473,23 @@ command above).
 .Pp
 The buffer commands are as follows:
 .Bl -tag -width Ds
+.It Xo
+.Ic choose-buffer
+.Op Fl t Ar target-window
+.Op Ar template
+.Xc
+Put a window into buffer choice mode, where a buffer may be chosen
+interactively from a list.
+After a buffer is selected,
+.Ql %%
+is replaced by the buffer index in
+.Ar template
+and the result executed as a command.
+If
+.Ar template
+is not given, "paste-buffer -b '%%'" is used.
+This command works only from inside
+.Nm .
 .It Ic clear-history Op Fl t Ar target-pane
 .D1 (alias: Ic clearhist )
 Remove and free the history for the specified pane.
@@ -2336,18 +2524,23 @@ Load the contents of the specified paste buffer from
 .It Xo Ic paste-buffer
 .Op Fl dr
 .Op Fl b Ar buffer-index
-.Op Fl t Ar target-window
+.Op Fl s Ar separator
+.Op Fl t Ar target-pane
 .Xc
 .D1 (alias: Ic pasteb )
-Insert the contents of a paste buffer into the current window.
+Insert the contents of a paste buffer into the specified pane.
+If not specified, paste into the current one.
 With
 .Fl d ,
 also delete the paste buffer from the stack.
 When output, any linefeed (LF) characters in the paste buffer are replaced with
-carriage returns (CR).
-This translation may be disabled with the
-.Fl r
+a separator, by default carriage return (CR).
+A custom separator may be specified using the
+.Fl s
 flag.
+The
+.Fl r
+flag means to do no replacement (equivalent to a separator of LF).
 .It Xo Ic save-buffer
 .Op Fl a
 .Op Fl b Ar buffer-index
@@ -2398,7 +2591,7 @@ option.
 Execute
 .Ar shell-command
 in the background without creating a window.
-After it finishes, any output to stdout is displayed in output mode.
+After it finishes, any output to stdout is displayed in copy mode.
 If the command doesn't return success, the exit status is also displayed.
 .It Ic server-info
 .D1 (alias: Ic info )

@@ -1,7 +1,7 @@
 " Vim syntax file
 " Language: tmux(1) configuration file
 " Maintainer: Tiago Cunha <me@tiagocunha.org>
-" Last Change: $Date: 2009/11/19 22:35:51 $
+" Last Change: $Date: 2010/07/02 02:46:39 $
 " License: This file is placed in the public domain.
 
 if version < 600
@@ -29,7 +29,7 @@ syn keyword tmuxCmds new[-session] start[-server] kill-server setw
 syn keyword tmuxCmds set-window-option show[-options] showw show-window-options
 syn keyword tmuxCmds command-prompt setb set-buffer showb show-buffer lsb
 syn keyword tmuxCmds list-buffers deleteb delete-buffer lscm list-commands
-syn keyword tmuxCmds movew move-window select-prompt respawnw respawn-window
+syn keyword tmuxCmds movew move-window respawnw respawn-window
 syn keyword tmuxCmds source[-file] info server-info clock-mode lock[-server]
 syn keyword tmuxCmds saveb save-buffer downp down-pane killp
 syn keyword tmuxCmds kill-pane resizep resize-pane selectp select-pane swapp
@@ -41,7 +41,8 @@ syn keyword tmuxCmds clearhist clear-history selectl select-layout if[-shell]
 syn keyword tmuxCmds display[-message] setenv set-environment showenv
 syn keyword tmuxCmds show-environment choose-client displayp display-panes
 syn keyword tmuxCmds run[-shell] lockc lock-client locks lock-session lsp
-syn keyword tmuxCmds list-panes pipep pipe-pane showmsgs show-messages
+syn keyword tmuxCmds list-panes pipep pipe-pane showmsgs show-messages capturep
+syn keyword tmuxCmds capture-pane joinp join-pane choose-buffer
 
 syn keyword tmuxOptsSet prefix status status-fg status-bg bell-action
 syn keyword tmuxOptsSet default-command history-limit status-left status-right
@@ -56,7 +57,11 @@ syn keyword tmuxOptsSet status-left-fg status-right-attr status-right-bg
 syn keyword tmuxOptsSet status-right-fg update-environment base-index
 syn keyword tmuxOptsSet display-panes-colour display-panes-time default-shell
 syn keyword tmuxOptsSet set-titles-string lock-command lock-server
-syn keyword tmuxOptsSet mouse-select-pane message-limit
+syn keyword tmuxOptsSet mouse-select-pane message-limit quiet escape-time
+syn keyword tmuxOptsSet pane-active-border-bg pane-active-border-fg
+syn keyword tmuxOptsSet pane-border-bg pane-border-fg
+syn keyword tmuxOptsSet display-panes-active-colour alternate-screen
+syn keyword tmuxOptsSet detach-on-destroy
 
 syn keyword tmuxOptsSetw monitor-activity aggressive-resize force-width
 syn keyword tmuxOptsSetw force-height remain-on-exit uft8 mode-fg mode-bg
@@ -67,12 +72,13 @@ syn keyword tmuxOptsSetw main-pane-width main-pane-height monitor-content
 syn keyword tmuxOptsSetw window-status-current-attr window-status-current-bg
 syn keyword tmuxOptsSetw window-status-current-fg mode-mouse synchronize-panes
 syn keyword tmuxOptsSetw window-status-format window-status-current-format
+syn keyword tmuxOptsSetw word-separators
 
 syn keyword tmuxTodo FIXME NOTE TODO XXX contained
 
 syn match tmuxKey		/\(C-\|M-\|\^\)\p/	display
 syn match tmuxNumber 		/\d\+/			display
-syn match tmuxOptions		/\s-\a/			display
+syn match tmuxOptions		/\s-\a\+/		display
 syn match tmuxVariable		/\w\+=/			display
 syn match tmuxVariableExpansion	/\${\=\w\+}\=/		display
 
