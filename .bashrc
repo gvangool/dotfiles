@@ -88,6 +88,8 @@ fi
 export EDITOR=vim
 set -o vi
 
+export PATH="$HOME/bin:$PATH"
+
 # git stuff
 __git_branch(){
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1 /';
@@ -98,11 +100,11 @@ if [ -f ~/django-trunk/extras/django_bash_completion ]; then
     source ~/django-trunk/extras/django_bash_completion
 fi
 
-if [ -f /usr/local/bin/virtualenvwrapper_bashrc ]; then
+if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
     export WORKON_HOME=$HOME/env
-    source /usr/local/bin/virtualenvwrapper_bashrc
     # http://pip.openplans.org/#using-pip-with-virtualenvwrapper
     export PIP_VIRTUALENV_BASE=$WORKON_HOME
+    source /usr/local/bin/virtualenvwrapper.sh
 fi
 
 # more aliases

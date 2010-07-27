@@ -17,12 +17,6 @@ if has("autocmd")
     au BufRead,BufNewFile .tmux.conf set filetype=tmux
     " extra syntax rules
     au BufRead,BufNewFile /etc/apache2/* set syntax=apache
-    if filereadable("manage.py") || filereadable("../manage.py")
-        autocmd FileType html setlocal syntax=htmldjango
-        autocmd BufWrite *.html :call CleanDjangoTags()
-        autocmd BufRead,BufNewFile *.txt setlocal syntax=htmldjango
-        autocmd BufWrite *.txt :call CleanDjangoTags()
-    endif
     " Jump to last known location in file
     au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
 endif
@@ -49,6 +43,10 @@ autocmd FileType rest setlocal ai comments=n:> tabstop=2 softtabstop=2 shiftwidt
 autocmd FileType yaml setlocal tabstop=2 shiftwidth=2 softtabstop=2
 " HTML
 autocmd FileType html setlocal tabstop=4 shiftwidth=4 noexpandtab
+" GIT config
+autocmd FileType gitconfig setlocal tabstop=4 shiftwidth=4 noexpandtab
+autocmd FileType gitconfig :call DeleteTrailingWS()
+autocmd BufWrite .gitconfig :call DeleteTrailingWS()
 " defaults (Python)
 set tabstop=4
 set shiftwidth=4
@@ -88,13 +86,23 @@ autocmd BufWrite *.html :call DeleteTrailingWS()
 " in normal mode, set nohlsearch to remove previous search
 nnoremap  :noh<return>
 
+" Django config
 " add a space after/before an opening/closing Django template tag
 func! CleanDjangoTags()
     exe "normal mz"
-    %s/{\([{%#]\)\([a-z0-9]\)/{\1 \2/gei
-    %s/\([a-z0-9]\)\([}%#]\)}/\1 \2}/gei
+    %s/{\([{%#]\)\([a-z0-9"]\)/{\1 \2/gei
+    %s/\([a-z0-9"]\)\([}%#]\)}/\1 \2}/gei
     exe "normal `z"
 endfunc
+" extra rules for Django templates
+if filereadable("manage.py") || filereadable("../manage.py")
+    autocmd FileType html setlocal syntax=htmldjango
+    autocmd FileType html setlocal expandtab
+    autocmd BufWrite *.html :call CleanDjangoTags()
+    autocmd BufRead,BufNewFile *.txt setlocal syntax=htmldjango
+    autocmd BufWrite *.txt :call CleanDjangoTags()
+    autocmd BufWrite *.txt :call DeleteTrailingWS()
+endif
 
 " Remap Q to gq -> format line (default: split line on char 80)
 noremap Q gq

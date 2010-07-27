@@ -1,32 +1,39 @@
 [user]
-    name = Gert Van Gool
-    email = gertvangool@gmail.com
+	name = Gert Van Gool
+	email = gertvangool@gmail.com
 [color]
-    ui = auto
+	ui = auto
 [color "branch"]
-    current = cyan reverse
-    local = cyan
-    remote = green
+	current = cyan reverse
+	local = cyan
+	remote = green
 [color "diff"]
-    meta = yellow bold
-    frag = magenta bold
-    old = red bold
-    new = green bold
-    whitespace = red reverse
+	meta = yellow bold
+	frag = magenta bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
 [color "status"]
-    added = yellow
-    changed = green
-    untracked = cyan
+	added = yellow
+	changed = green
+	untracked = cyan
 [alias]
-    ci = commit
-    st = status
-    co = checkout
-    ba = branch -a
-    log1 = log --pretty=oneline --abbrev-commit
+	ci = commit
+	st = status
+	co = checkout
+	ba = branch -a
+	pp = "!git pull --rebase && git push"
+	log1 = log --pretty=oneline --abbrev-commit
+	graphviz = "!f() { echo 'digraph git {' ; git log --pretty='format:  %h -> { %p }' \"$@\" | sed 's/[0-9a-f][0-9a-f]*/\"&\"/g' ; echo '}'; }; f"
+	edit-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; $EDITOR `f`"
+	add-unmerged = "!f() { git ls-files --unmerged | cut -f2 | sort -u ; }; git add `f`"
+	edit-modified= "!f() { git ls-files --modified ; }; $EDITOR `f`"
+	add-modified= "!f() { git ls-files --modified ; }; git add `f`"
+	add-empty-dirs = "!f() { for dir in `find $@ -type d -empty`; do echo \"*\n!.gitignore\" > $dir/.gitignore; git add $dir/.gitignore; done }; f"
 [push]
-    default = current # default value: matching
+	default = current
 [core]
-    autocrlf = input
+	autocrlf = input
 [branch]
-    autosetupmerge = true
+	autosetupmerge = true
 
