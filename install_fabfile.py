@@ -54,16 +54,17 @@ def install_vcs():
     '''Install most used VCS (svn, git, hg) '''
     _install('subversion', 'git-core', 'mercurial')
 
-def install_python():
+def install_python(type=''):
     '''Install Python stuff'''
     _install('python', 'python-setuptools', 'python-dev', 'build-essential')
     sudo('easy_install pip')
     sudo('pip install virtualenv virtualenvwrapper')
-    # extra's to build certain python packages
-    # needed to build MySQL-python
-    _install('libmysqlclient15-dev')
-    # needed for PIL
-    _install('libfreetype6-dev', 'libjpeg-dev')
+    if type == 'dev':
+        # extra's to build certain python packages
+        # needed to build MySQL-python
+        _install('libmysqlclient15-dev')
+        # needed for PIL
+        _install('libfreetype6-dev', 'libjpeg-dev')
 
 def create_python_env(env_name='generic', requirements_file=None):
     '''
@@ -308,14 +309,14 @@ def setup_desktop():
     _install('unrar', 'nautilus-open-terminal', 'p7zip-full')
 
 def setup_developer_desktop():
-    setup_desktop()
+    setup_desktop(type='dev')
     install_mysql()
     install_memcached()
     install_memcached_client_python()
 
 def setup_webserver(type='python'):
     setup_base()
-    install_python()
+    install_python(type='dev')
     install_apache2(type)
     install_mysql_client()
 
