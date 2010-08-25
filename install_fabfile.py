@@ -253,9 +253,9 @@ def install_memcached():
     _install('libevent-dev')
     run('mkdir -p src')
     with cd('src'):
-        run('wget http://memcached.googlecode.com/files/memcached-1.4.4.tar.gz')
-        run('tar xf memcached-1.4.4.tar.gz')
-        with cd('memcached-1.4.4'):
+        run('wget http://memcached.googlecode.com/files/memcached-1.4.5.tar.gz')
+        run('tar xf memcached-1.4.5.tar.gz')
+        with cd('memcached-1.4.5'):
             args = ['--prefix=', '--exec-prefix=/usr', '--datarootdir=/usr']
             if getattr(env, 'is_64bit', False):
                 args.append('--enable-64bit')
@@ -272,9 +272,9 @@ def install_memcached_client():
     _install('libevent-dev', 'build-essential')
     run('mkdir -p src')
     with cd('src'):
-        run('wget http://download.tangent.org/libmemcached-0.38.tar.gz')
-        run('tar xf libmemcached-0.38.tar.gz')
-        with cd('libmemcached-0.38'):
+        run('wget http://launchpad.net/libmemcached/1.0/0.43/+download/libmemcached-0.43.tar.gz')
+        run('tar xf libmemcached-0.43.tar.gz')
+        with cd('libmemcached-0.43'):
             run('./configure')
             run('make')
             sudo('make install')
