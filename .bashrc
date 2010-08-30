@@ -100,6 +100,11 @@ if [ -f ~/django-trunk/extras/django_bash_completion ]; then
     source ~/django-trunk/extras/django_bash_completion
 fi
 
+# is pip installed?
+if [ ! -z `whereis pip | cut -f 2 -d " "` ]; then
+    eval "`pip completion --bash`"
+fi
+
 if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
     export WORKON_HOME=$HOME/env
     # http://pip.openplans.org/#using-pip-with-virtualenvwrapper
