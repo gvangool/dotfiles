@@ -85,9 +85,9 @@ def install_ruby():
     # gem install
     run('mkdir -p src')
     with cd('src'):
-        run('wget http://rubyforge.org/frs/download.php/69365/rubygems-1.3.6.tgz')
-        run('tar xvzf rubygems-1.3.6.tgz')
-        with cd('rubygems-1.3.6'):
+        run('wget http://production.cf.rubygems.org/rubygems/rubygems-1.3.7.tgz')
+        run('tar xvzf rubygems-1.3.7.tgz')
+        with cd('rubygems-1.3.7'):
             sudo('ruby setup.rb')
             sudo('ln -s /usr/bin/gem1.8 /usr/bin/gem')
 
