@@ -46,6 +46,16 @@ def __validate_not_empty(value, key='value'):
         raise Exception('Please provide a %s.' % key)
     return value
 
+def install_dotfiles(repo='http://github.com/gvangool/dotfiles.git'):
+    '''
+    Install the dotfiles from the given repository. If none is specified, use
+    http://github.com/gvangool/dotfiles/
+    '''
+    run('mkdir -p src')
+    run('git clone -nq %s src/dotfiles' % repo)
+    run('mv src/dotfiles/.git ~')
+    run('git checkout .')
+
 def install_default_packages():
     '''Install some default packages'''
     _install('vim', 'screen', 'lynx', 'smbfs', 'tofrodos')
