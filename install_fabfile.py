@@ -314,9 +314,9 @@ def setup_base():
     install_vcs()
     install_systools()
 
-def setup_desktop():
+def setup_desktop(type=''):
     setup_base()
-    install_python()
+    install_python(type)
     install_vlc()
     _install('unrar', 'nautilus-open-terminal', 'p7zip-full')
 
