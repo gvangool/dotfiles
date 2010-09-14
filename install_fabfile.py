@@ -244,8 +244,9 @@ def install_moc(add_lastfm=True):
             run('chmod a+x moc_submit_lastfm')
             append('OnSongChange = "/home/%(user)s/.moc/moc_submit_lastfm --artist %%a --title %%t --length %%d --album %%r"' % env, 'config')
 
-def install_extra_tops():
-    _install('htop', 'iotop', 'nethogs')
+def install_systools():
+    'Install extra system tools for convenience (htop, iostat, ...)'
+    _install('htop', 'iotop', 'sysstat', 'nethogs')
 
 def install_memcached():
     'Install memcached server'
@@ -301,6 +302,7 @@ def setup_base():
     update()
     install_default_packages()
     install_vcs()
+    install_systools()
 
 def setup_desktop():
     setup_base()
