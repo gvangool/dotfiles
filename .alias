@@ -22,7 +22,7 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 alias xclip="xclip -selection c"
 alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
-alias update_all='svn up ~/django-trunk; svn up ~/suds-trunk; sudo apt-get update; sudo apt-get upgrade -y'
+alias update_upgrade='sudo bash -c "apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y"'
 alias clean_pyc="find . -name '*pyc' -delete"
 
 # simple windows commands
