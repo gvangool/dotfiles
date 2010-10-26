@@ -63,7 +63,7 @@ DEFAULT="\[`tput sgr0`\]"
 NORMAL="${DIM}${DEFAULT}"
 
 if [ "$color_prompt" = yes ]; then
-    PS1_="${debian_chroot:+($debian_chroot)}${BGREEN}\u${NORMAL}@${BRED}\h${NORMAL}:${BBLUE}\w${NORMAL} \$ "
+    PS1_="${debian_chroot:+($debian_chroot)}${BGREEN}\u${NORMAL}@${BRED}\h${NORMAL}:${BBLUE}\w${NORMAL}\$ "
     PS1=$PS1_
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
