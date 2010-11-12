@@ -4,7 +4,7 @@ if [ -x /usr/bin/dircolors ]; then
     alias ls='ls --color=auto'
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
-    alias less='less --color=auto'
+    #alias less='less --color=auto'
 
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
@@ -16,9 +16,14 @@ fi
 #alias la='ls -A'
 #alias l='ls -CF'
 
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
 alias xclip="xclip -selection c"
 alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
-alias update_all='svn up ~/django-trunk; svn up ~/suds-trunk; sudo apt-get update; sudo apt-get upgrade -y'
+alias update_upgrade='sudo bash -c "apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y"'
+alias clean_pyc="find . -name '*pyc' -delete"
 
 # simple windows commands
 alias dir="ls"

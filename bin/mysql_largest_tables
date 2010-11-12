@@ -1,0 +1,11 @@
+#!/bin/sh
+mysql $@ --execute="SELECT \
+    concat(table_schema, '.', table_name) db_table, \
+    concat(round(table_rows/1000000,2),'M') rows, \
+    concat(round(data_length/(1024*1024*1024),2),'G') data, \
+    concat(round(index_length/(1024*1024*1024),2),'G') idx, \
+    concat(round((data_length+index_length)/(1024*1024*1024),2),'G') total_size, \
+    round(index_length/data_length,2) idxfrac \
+FROM information_schema.TABLES \
+ORDER BY data_length+index_length DESC \
+LIMIT 10;"

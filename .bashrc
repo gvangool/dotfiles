@@ -63,7 +63,8 @@ DEFAULT="\[`tput sgr0`\]"
 NORMAL="${DIM}${DEFAULT}"
 
 if [ "$color_prompt" = yes ]; then
-    PS1="${debian_chroot:+($debian_chroot)}${BGREEN}\u${NORMAL}@${BRED}\h${NORMAL}:${BBLUE}\w${NORMAL}\$ "
+    PS1_="${debian_chroot:+($debian_chroot)}${BGREEN}\u${NORMAL}@${BRED}\h${NORMAL}:${BBLUE}\w${NORMAL}\$ "
+    PS1=$PS1_
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -98,6 +99,11 @@ __git_branch(){
 # python/django
 if [ -f ~/django-trunk/extras/django_bash_completion ]; then
     source ~/django-trunk/extras/django_bash_completion
+fi
+
+# is pip installed?
+if [ ! -z `whereis pip | cut -f 2 -d " "` ]; then
+    eval "`pip completion --bash`"
 fi
 
 if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then

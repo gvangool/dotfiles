@@ -14,3 +14,5 @@ I am in NO way responsible for what it does to your PC or what you lose because 
 - <http://github.com/robertmeta/vim-files>
 - <http://svn.collab.net/repos/svn/trunk/tools/client-side/change-svn-wc-format.py>
 - <http://www.home.unix-ag.org/simon/woof.html>
+- <http://www.mysqlperformanceblog.com/2008/02/04/finding-out-largest-tables-on-mysql-server/>
+- <http://github.com/visionmedia/git-extras>
