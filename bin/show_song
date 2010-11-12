@@ -2,69 +2,45 @@
 
 import logging
 from optparse import OptionParser
-from subprocess import Popen, PIPE
+import sys
 import time
 
-def get_info():
-    '''
-    Read and parse the mocp --info. Example:
+try:
+    import simplejson as json
+except ImportError:
+    import json
 
-        State: PLAY
-        File: /home/gvangool/Music/Soundtrack/Watchmen/09 - Leonard Cohen - Hallelujah.mp3
-        Title: 9 Leonard Cohen - Hallelujah (Watchmen)
-        Artist: Leonard Cohen
-        SongTitle: Hallelujah
-        Album: Watchmen
-        TotalTime: 04:37
-        TimeLeft: 00:22
-        TotalSec: 277
-        CurrentTime: 04:15
-        CurrentSec: 255
-        Bitrate: 224Kbps
-        AvgBitrate: 255Kbps
-        Rate: 44KHz
-    '''
-    p = Popen(["mocp", "-i"], stdout=PIPE)
-    out, err = p.communicate()
-    lines = out.split("\n")
-    info = {}
-    for line in lines:
-        colon_loc = line.find(':')
-        if colon_loc == -1:
-            continue
-        key = line[:colon_loc]
-        value = line[colon_loc + 1:]
-        info[key] = value.strip()
-    return info
 
-def monitor_info(callback, monitor_time=False):
-    prev_info = None
+def monitor(cb):
+    '''
+    Monitor stdin, load the JSON object and call ``cb`` with the JSON object.
+    '''
     try:
         while True:
-            info = get_info()
-
-            run_callback = prev_info is None or \
-                           info['State'] != prev_info['State']
-            if not run_callback and info['State'] != 'STOP':
-                run_callback = info['SongTitle'] != prev_info['SongTitle'] or \
-                               info['Artist'] != prev_info['Artist'] or \
-                               info['Album'] != prev_info['Album'] or \
-                               (monitor_time and info['CurrentSec'] != prev_info['CurrentSec'])
-
-            if run_callback:
-                logging.debug('Calling callback')
-                callback(info)
-
-            prev_info = info
-            time.sleep(1)
+            l = sys.stdin.readline()
+            try:
+                cb(json.loads(l))
+            except ValueError:
+                logging.exception(l)
     except KeyboardInterrupt:
-        logging.info('KeyboardInterrupt, exiting')
+        logging.debug('Received Ctrl-C, exiting')
 
 def main():
     logging.debug('Starting show_song information')
-    parser = OptionParser()
-    parser.add_option('-l', '--libnotify', action='store_true', dest='libnotify')
-    parser.add_option('-c', '--curses', action='store_true', dest='curses')
+    help_text = '''A simple notifier to see which song is playing, reads
+information as a JSON object from STDIN. Works with mocp_show_song_info.
+Like: "mocp_show_song_info | show_song -l"'''
+    parser = OptionParser(epilog=help_text)
+    parser.add_option('-l',
+                      '--libnotify',
+                      help='A notifier based on libnotify (small pop-up window).',
+                      action='store_true',
+                      dest='libnotify')
+    parser.add_option('-c',
+                      '--curses',
+                      help='A notifier based on ncurses. It will take over your terminal and show the current song information.',
+                      action='store_true',
+                      dest='curses')
     options, args = parser.parse_args()
 
     if options.libnotify:
@@ -75,7 +51,12 @@ def main():
         main_curses()
     else:
         logging.info('Starting console notifier')
-        logging.error('FIXME create a plain console notifier')
+        def std_out(obj):
+            'Pretty-print the json object on stdout'
+            json.dump(obj, sys.stdout, sort_keys=True, indent=4)
+            sys.stdout.write('\n')
+            sys.stdout.flush()
+        monitor(std_out)
 
 n = None
 def main_libnotify():
@@ -104,7 +85,7 @@ def main_libnotify():
         n.show()
         logging.debug('Showed notification: %s' % msg)
     if pynotify.init('MOC'):
-        monitor_info(show_info)
+        monitor(show_info)
     else:
         logging.error('Failed to initialize pynotify')
 
@@ -138,12 +119,12 @@ def main_curses():
                 win.addstr(0, 1, '%(Artist)s - %(SongTitle)s' % info, curses.color_pair(1))
                 win.addstr(1, 1, '%(Album)s -- %(TotalTime)s' % info, curses.color_pair(2))
             win.refresh()
-        monitor_info(show_info)
+        monitor(show_info)
     wrapper(_run)
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s %(levelname)s %(message)s',
                         filename='/tmp/show_song.log',
-                        filemode='a')
+                        filemode='w')
     main()

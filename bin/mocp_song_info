@@ -1,0 +1,114 @@
+#!/usr/bin/env python
+
+import logging
+from optparse import OptionParser
+from subprocess import Popen, PIPE
+import sys
+import time
+
+try:
+    import simplejson as json
+except ImportError:
+    import json
+
+
+def get_info():
+    '''
+    Read and parse the current song information from mocp.
+    Example (of parsed dictionary):
+
+        {
+            "Album": "The Concert In Central Park",
+            "Artist": "Simon And Garfunkel",
+            "Bitrate": "128",
+            "CurrentSec": "102",
+            "CurrentTime": "01:42",
+            "File": "..filepath..",
+            "Rate": "44",
+            "SongTitle": "American Tune",
+            "State": "PLAY",
+            "TimeLeft": "02:51",
+            "Title": "9 Simon And Garfunkel - American Tune (The Concert ...",
+            "TotalSec": "273",
+            "TotalTime": "04:33"
+        }
+    '''
+    fmt = '{"State": "%state", "File": "%file", "Title": "%title", "Artist":' \
+          ' "%artist", "SongTitle": "%song", "Album": "%album", "TotalTime":' \
+          ' "%tt", "TimeLeft": "%tl", "TotalSec": "%ts", "CurrentTime":' \
+          ' "%ct", "CurrentSec": "%cs", "Bitrate": "%b", "Rate": "%r"}'
+
+    # sometimes json parsing fails, so we try again
+    while True:
+        p = Popen(["mocp", "-Q", "%s" % fmt], stdout=PIPE)
+        p.wait() # finish calling
+        out,err = p.communicate() # get stdout & stderr output
+        out = out.strip()
+        logging.debug('Received mocp information: %s' % out)
+        try:
+            return json.loads(out)
+        except ValueError:
+            logging.debug('JSON parsing failed, trying again in 0.1sec')
+            time.sleep(0.1)
+
+
+def monitor_info(monitor_time=False):
+    '''
+    Monitor the MOCP information to see whether we need to notify our listeners
+    on STDOUT.
+    '''
+    prev_info = None
+    try:
+        while True:
+            info = get_info()
+
+            notify = prev_info is None or \
+                     info['State'] != prev_info['State']
+            if not notify and info['State'] != 'STOP':
+                notify = info['SongTitle'] != prev_info['SongTitle'] or \
+                         info['Artist'] != prev_info['Artist'] or \
+                         info['Album'] != prev_info['Album'] or \
+                         (monitor_time and \
+                          info['CurrentSec'] != prev_info['CurrentSec'])
+
+            if notify:
+                logging.info('Data changed, passing on data')
+                sys.stdout.write(json.dumps(info))
+                sys.stdout.write('\n')
+                sys.stdout.flush()
+            else:
+                logging.debug('Nothing changed, ignoring')
+
+            prev_info = info
+            time.sleep(1)
+    except KeyboardInterrupt:
+        logging.info('KeyboardInterrupt, exiting')
+
+
+def main():
+    logging.debug('Starting show_song information')
+    help_text = '''Monitor mocp to see whether the state (playing, stopped,
+paused) or song has changed and notifies other programs about this via STDOUT.
+Output format is a JSON object with the same attributes as the default `mocp
+-i` output.'''
+    parser = OptionParser(epilog=help_text)
+    parser.add_option('-t',
+                      '--monitor-time',
+                      help='''Notify every time the current time has changed
+                              too''',
+                      action='store_true',
+                      dest='monitor_time')
+    options, args = parser.parse_args()
+
+    logging.info('Starting monitor notifier (with time monitoring %s)' % ('on' if options.monitor_time else 'off', ))
+    monitor_info(monitor_time=options.monitor_time)
+    logging.shutdown()
+
+
+if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO,
+    #logging.basicConfig(level=logging.DEBUG,
+                        format='%(asctime)s %(levelname)s %(message)s',
+                        filename='/tmp/mocp_song_info.log',
+                        filemode='w')
+    main()
