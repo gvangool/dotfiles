@@ -30,6 +30,9 @@
 # ipythonrc file!
 !.ipython/ipythonrc
 
+# GNU readline config
+!.inputrc
+
 # Vim plugins, ftplugins, syntax etc etc
 !.vim
 !.vim/spell
