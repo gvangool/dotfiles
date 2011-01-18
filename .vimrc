@@ -90,10 +90,8 @@ nnoremap  :noh<return>
 " add a space after/before an opening/closing Django template tag
 func! CleanDjangoTags()
     exe "normal mz"
-    %s/{\([{%#]\)\([a-z0-9"]\)/{\1 \2/gei
-    %s/\([a-z0-9"]\)\([}%#]\)}/\1 \2}/gei
-    %s/{\([{%#]\)  \+\([a-z0-9"]\)/{\1 \2/gei
-    %s/\([a-z0-9"]\)  \+\([}%#]\)}/\1 \2}/gei
+    %s/{\([{%#]\)\(\|  \+\)\([a-z0-9"]\)/{\1 \3/gei
+    %s/\([a-z0-9"]\)\(\|  \+\)\([}%#]\)}/\1 \3}/gei
     exe "normal `z"
 endfunc
 " extra rules for Django templates
