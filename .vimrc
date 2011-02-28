@@ -81,8 +81,10 @@ func! DeleteTrailingWS()
 endfunc
 " on saving of python file
 autocmd BufWrite *.py :call DeleteTrailingWS()
-" on saving of html file
+" on saving of html/css/js file
 autocmd BufWrite *.html :call DeleteTrailingWS()
+autocmd BufWrite *.css :call DeleteTrailingWS()
+autocmd BufWrite *.js :call DeleteTrailingWS()
 " in normal mode, set nohlsearch to remove previous search
 nnoremap  :noh<return>
 
