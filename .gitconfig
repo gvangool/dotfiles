@@ -36,4 +36,7 @@
 	autocrlf = input
 [branch]
 	autosetupmerge = true
-
+[url "https://github.com/"]
+	insteadOf = "gh:"
+[url "git@github.com:"]
+	insteadOf = "ghp:"
