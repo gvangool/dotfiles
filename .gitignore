@@ -19,6 +19,7 @@
 !.gitconfig
 # The gitignore of this repository itself (!)
 !.gitignore
+!.gitmodules
 
 # Mercurial config
 !.hgrc
