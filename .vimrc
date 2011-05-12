@@ -2,13 +2,17 @@
 " properly set to work with the Vim-related packages available in Debian.
 runtime! debian.vim
 
+call pathogen#runtime_append_all_bundles()
+" Refresh the filetype plugin to  find everything
+filetype off
+" Filetype based indent rules
+filetype plugin indent on
+
 syntax on
 set background=dark
 colorscheme fnaqevan
 
 if has("autocmd")
-    " Filetype based indent rules
-    filetype plugin on
     " extra filetypes
     au BufRead,BufNewFile *.html set filetype=html
     au BufRead,BufNewFile *.wsgi set filetype=python
