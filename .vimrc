@@ -9,8 +9,10 @@ filetype off
 filetype plugin indent on
 
 syntax on
+
 set background=dark
-colorscheme fnaqevan
+colorscheme solarized
+call togglebg#map("<F5>")
 
 if has("autocmd")
     " extra filetypes
