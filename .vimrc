@@ -112,6 +112,12 @@ if filereadable("manage.py") || filereadable("../manage.py")
     autocmd BufWrite *.txt :call DeleteTrailingWS()
 endif
 
+func! FullDjangoClean()
+    call CleanDjangoTags()
+    call DeleteTrailingWS()
+    %s/\t/    /gei
+endfunc
+
 " Remap Q to gq -> format line (default: split line on char 80)
 noremap Q gq
 " Formatting
