@@ -1,0 +1,29 @@
+#!/bin/bash
+
+usage () {
+    cat << EOF
+Notifies you when your DNS has propagated
+Usage:
+    verify_dns HOST NEW_IP
+
+If you want to get a visual alert you can use libnotify,
+    verify_dns HOST NEW_IP | alert 
+
+EOF
+};
+if [ $# -lt 2 -o $# -gt 2 ]; then
+    usage;
+    exit 1
+fi
+
+HOST=$1
+NEW_IP=$2
+echo "Testing $1 to update its IP to $2"
+
+nslookup $HOST | grep $NEW_IP
+while [ $? -gt 0 ]
+do
+    sleep 60;
+    nslookup $HOST | grep $NEW_IP;
+done;
+echo -e '\x07'
