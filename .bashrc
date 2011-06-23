@@ -119,3 +119,7 @@ if [ -f ~/.alias ]; then
 fi
 
 export GREP_OPTIONS='--exclude-dir=.svn --exclude-dir=.git --exclude-dir=.hg'
+
+export PAGER=~/bin/vimpager
+alias less=$PAGER
+alias zless=$PAGER
