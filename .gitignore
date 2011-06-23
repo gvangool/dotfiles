@@ -36,27 +36,6 @@
 
 # Vim plugins, ftplugins, syntax etc etc
 !.vim
-!.vim/spell
-!.vim/spell/*
-!.vim/spellfile.add
-!.vim/autoload
-!.vim/autoload/*
-!.vim/doc
-!.vim/doc/*
-!.vim/ftplugin
-!.vim/ftplugin/*
-!.vim/plugin
-!.vim/plugin/*
-!.vim/syntax
-!.vim/syntax/*
-!.vim/colors
-!.vim/colors/*
-!.vim/bundle
-!.vim/bundle/*
-# Vim directory for swap files
-!.vim/tmp/.gitignore
-# Vim directory for backup files
-!.vim/backup/.gitignore
 # Vim settings
 !.vimrc
 
