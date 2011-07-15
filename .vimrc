@@ -44,7 +44,10 @@ set smartindent
 " Markdown
 autocmd FileType mkd setlocal ai comments=n:>
 " ReST
-autocmd FileType rest setlocal ai comments=n:> tabstop=2 softtabstop=2 shiftwidth=2
+autocmd FileType rst setlocal ai comments=n:> tabstop=2 softtabstop=2 shiftwidth=2
+autocmd FileType rst setlocal textwidth=78 includeexpr=v:fname.'.rst'
+autocmd FileType rst :call DeleteTrailingWS()
+autocmd BufWrite *.rst :call DeleteTrailingWS()
 " YAML
 autocmd FileType yaml setlocal tabstop=2 shiftwidth=2 softtabstop=2
 " HTML
@@ -66,15 +69,25 @@ inoremap <up> <C-R>=pumvisible() ? "\<lt>up>" : "\<lt>C-o>gk"<Enter>
 map <down> gj
 inoremap <down> <C-R>=pumvisible() ? "\<lt>up>" : "\<lt>C-o>gj"<Enter>
 
-" Writing used commands to .viminfo
-set viminfo='10,\"100,:20,%,n~/.viminfo
+" Writing commands and marks to .viminfo
+set viminfo='10,f1,<500,:20,%,n~/.viminfo
+"           |   |  |    |   | |
+"           |   |  |    |   | +-- viminfo location
+"           |   |  |    |   +-- the buffer list
+"           |   |  |    +-- number of lines to save from the command line
+"           |   |  |         history
+"           |   |  +-- Maximum number of lines saved for each register, large
+"           |   |      number will slow down vim start
+"           |   +-- save global marks
+"           +-- number of marks to save
+set history=1000 " keep a lot of history!
 " Error handling
 set noerrorbells
 set visualbell
 
 " Modify the backup/swap file behaviour (no annoying sync behaviour in
 " DropBox)
-set backup " make backup files
+set nobackup " don't make backup files
 set backupdir=~/.vim/backup " location of backup files
 set swapfile " make swap files
 set directory=~/.vim/tmp " location of swap files
@@ -118,6 +131,11 @@ func! FullDjangoClean()
     %s/\t/    /gei
 endfunc
 
+" Set modeline on all files, except those in tmp and Downloads
+set modeline
+autocmd BufRead,FileReadPost */tmp/* setlocal nomodeline
+autocmd BufRead,FileReadPost */Downloads/* setlocal nomodeline
+
 " Remap Q to gq -> format line (default: split line on char 80)
 noremap Q gq
 " Formatting
@@ -125,6 +143,33 @@ if filereadable("/usr/bin/xml_pp")
     " XML pretty printing
     autocmd FileType xml setlocal formatprg=xml_pp
 endif
+
+" Macro's
+let @h = "yypVr"
+""""""""""""""""""""""""""""
+" ReST Underline shortcuts "
+""""""""""""""""""""""""""""
+" Ctrl-u 1: Parts with #'s
+noremap  <C-u>1 yyPVr#yyjp
+inoremap <C-u>1 <esc>yyPVr#yyjpA
+" Ctrl-u 2: Chapters with *'s
+noremap  <C-u>2 yyPVr*yyjp
+inoremap <C-u>2 <esc>yyPVr*yyjpA
+" Ctrl-u 3: Section Level 1 with ='s
+noremap  <C-u>3 yypVr=
+inoremap <C-u>3 <esc>yypVr=A
+" Ctrl-u 4: Section Level 2 with -'s
+noremap  <C-u>4 yypVr-
+inoremap <C-u>4 <esc>yypVr-A
+" Ctrl-u 5: Section Level 3 with ~'s
+noremap  <C-u>5 yypVr~
+inoremap <C-u>5 <esc>yypVr~A
+" Ctrl-u 6: Section Level 4 with ^'s
+noremap  <C-u>6 yypVr^
+inoremap <C-u>6 <esc>yypVr^A
+" Ctrl-u 7: Paragraph with "'s
+noremap  <C-u>7 yypVr"
+inoremap <C-u>7 <esc>yypVr"A
 
 " Extra Vim behaviour
 set spell spelllang=en_us spellfile=~/.vim/spellfile.add
@@ -134,7 +179,7 @@ set lazyredraw   " do not redraw while running macros
 set ruler        " always show current positions along the bottom
 set scrolloff=10 " keep 10 lines (top/bottom) for scope
 set showcmd      " show the command being typed
-set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%]--(%l,%v)
+set statusline=%F%m%r%h%w[%LL][%{&ff}]%y[%p%%]--(%l,%v)
 "               | | | | |  |     |    |  |       |  |
 "               | | | | |  |     |    |  |       |  + current column
 "               | | | | |  |     |    |  |       +-- current line
