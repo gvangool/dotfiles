@@ -101,6 +101,10 @@ __git_branch(){
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1 /';
 }
 
+__git_repo(){
+    echo "$(basename $(git rev-parse --show-toplevel)) ";
+}
+
 # python/django
 if [ -f ~/django-trunk/extras/django_bash_completion ]; then
     source ~/django-trunk/extras/django_bash_completion
