@@ -132,3 +132,4 @@ export GREP_OPTIONS='--exclude-dir=.svn --exclude-dir=.git --exclude-dir=.hg'
 export PAGER=~/bin/vimpager
 alias less=$PAGER
 alias zless=$PAGER
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
