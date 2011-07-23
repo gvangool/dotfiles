@@ -1,0 +1,16 @@
+[submodule ".vim/bundle/vim-colors-solarized"]
+	path = .vim/bundle/vim-colors-solarized
+	url = https://github.com/tpope/vim-colors-solarized
+	ignore = dirty
+[submodule ".vim/bundle/vim-surround"]
+	path = .vim/bundle/vim-surround
+	url = https://github.com/tpope/vim-surround.git
+[submodule ".vim/bundle/vim-git"]
+	path = .vim/bundle/vim-git
+	url = https://github.com/tpope/vim-git.git
+[submodule ".vim/bundle/vimerl"]
+	path = .vim/bundle/vimerl
+	url = https://github.com/jimenezrick/vimerl.git
+[submodule ".vim/bundle/html5-syntax"]
+	path = .vim/bundle/html5-syntax
+	url = https://github.com/othree/html5-syntax.vim.git

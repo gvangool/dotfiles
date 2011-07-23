@@ -19,6 +19,7 @@
 !.gitconfig
 # The gitignore of this repository itself (!)
 !.gitignore
+!.gitmodules
 
 # Mercurial config
 !.hgrc
@@ -30,21 +31,11 @@
 # ipythonrc file!
 !.ipython/ipythonrc
 
+# GNU readline config
+!.inputrc
+
 # Vim plugins, ftplugins, syntax etc etc
 !.vim
-!.vim/spell
-!.vim/spell/*
-!.vim/spellfile.add
-!.vim/autoload/*
-!.vim/doc/*
-!.vim/ftplugin/*
-!.vim/plugin/*
-!.vim/syntax/*
-!.vim/colors/*
-# Vim directory for swap files
-!.vim/tmp/.gitignore
-# Vim directory for backup files
-!.vim/backup/.gitignore
 # Vim settings
 !.vimrc
 

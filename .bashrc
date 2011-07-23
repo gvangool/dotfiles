@@ -28,9 +28,14 @@ if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
+if [[ "${COLORTERM}" == "gnome-terminal" && "${TERM}" == "xterm"  ]]; then
+    export TERM="gnome-256color"
+fi
+
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
     xterm-color) color_prompt=yes;;
+    gnome-256color) color_prompt=yes;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
@@ -96,6 +101,10 @@ __git_branch(){
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1 /';
 }
 
+__git_repo(){
+    echo "$(basename $(git rev-parse --show-toplevel)) ";
+}
+
 # python/django
 if [ -f ~/django-trunk/extras/django_bash_completion ]; then
     source ~/django-trunk/extras/django_bash_completion
@@ -119,3 +128,8 @@ if [ -f ~/.alias ]; then
 fi
 
 export GREP_OPTIONS='--exclude-dir=.svn --exclude-dir=.git --exclude-dir=.hg'
+
+export PAGER=~/bin/vimpager
+alias less=$PAGER
+alias zless=$PAGER
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

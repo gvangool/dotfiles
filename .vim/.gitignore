@@ -1,0 +1,21 @@
+!spell
+!spell/*
+!spellfile.add
+!autoload
+!autoload/*
+!doc
+!doc/*
+!ftplugin
+!ftplugin/*
+!plugin
+!plugin/*
+!syntax
+!syntax/*
+!colors
+!colors/*
+!bundle
+!bundle/*
+# Vim directory for swap files
+!tmp/.gitignore
+# Vim directory for backup files
+!backup/.gitignore
