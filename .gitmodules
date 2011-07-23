@@ -11,3 +11,6 @@
 [submodule ".vim/bundle/vimerl"]
 	path = .vim/bundle/vimerl
 	url = https://github.com/jimenezrick/vimerl.git
+[submodule ".vim/bundle/html5-syntax"]
+	path = .vim/bundle/html5-syntax
+	url = https://github.com/othree/html5-syntax.vim/
