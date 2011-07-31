@@ -60,3 +60,7 @@
 !.screenrc
 # tmux file
 !.tmux.conf
+
+# Fonts
+!.fonts
+!.fonts/*
