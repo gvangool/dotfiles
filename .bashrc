@@ -106,8 +106,8 @@ __git_repo(){
 }
 
 # python/django
-if [ -f ~/django-trunk/extras/django_bash_completion ]; then
-    source ~/django-trunk/extras/django_bash_completion
+if [ -f ~/dev/django/extras/django_bash_completion ]; then
+    source ~/dev/django/extras/django_bash_completion
 fi
 
 # is pip installed?
