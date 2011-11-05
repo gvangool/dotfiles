@@ -172,6 +172,16 @@ inoremap <C-u>6 <esc>yypVr^A
 noremap  <C-u>7 yypVr"
 inoremap <C-u>7 <esc>yypVr"A
 
+" Append modeline after last line in buffer.
+" Use substitute() instead of printf() to handle '%%s' modeline in LaTeX
+" files.
+function! AppendModeline()
+  let l:modeline = printf(" vim: set ts=%d sw=%d tw=%d :",
+        \ &tabstop, &shiftwidth, &textwidth)
+  let l:modeline = substitute(&commentstring, "%s", l:modeline, "")
+  call append(line("$"), l:modeline)
+endfunction
+
 " Extra Vim behaviour
 set spell spelllang=en_us spellfile=~/.vim/spellfile.add
 set nospell
