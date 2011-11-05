@@ -42,6 +42,7 @@
 # Bin files (few and far between)
 !bin
 !bin/*
+bin/*.pyc
 # Man files
 !share
 !share/man
