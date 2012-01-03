@@ -45,9 +45,7 @@
 bin/*.pyc
 # Man files
 !share
-!share/man
-!share/man/man1
-!share/man/man1/*
+!share/*
 
 # MOC
 !.moc
