@@ -11,8 +11,10 @@ filetype plugin indent on
 syntax on
 
 set background=dark
-colorscheme solarized
-call togglebg#map("<F5>")
+if &term =~ ".*256.*"
+    set t_Co=256
+endif
+colorscheme fnaqevan  " mustang solarized
 
 if has("autocmd")
     " extra filetypes
@@ -42,7 +44,7 @@ set smartcase		" Do smart case matching
 set autoindent
 set smartindent
 " Markdown
-autocmd FileType mkd setlocal ai comments=n:>
+autocmd FileType mkd setlocal ai comments=n:> textwidth=78
 " ReST
 autocmd FileType rst setlocal ai comments=n:> tabstop=2 softtabstop=2 shiftwidth=2
 autocmd FileType rst setlocal textwidth=78 includeexpr=v:fname.'.rst'
@@ -117,8 +119,7 @@ func! CleanDjangoTags()
 endfunc
 " extra rules for Django templates
 if filereadable("manage.py") || filereadable("../manage.py")
-    autocmd FileType html setlocal syntax=htmldjango
-    autocmd FileType html setlocal expandtab
+    autocmd FileType html setlocal syntax=htmldjango expandtab
     autocmd BufWrite *.html :call CleanDjangoTags()
     autocmd BufRead,BufNewFile *.txt setlocal syntax=htmldjango
     autocmd BufWrite *.txt :call CleanDjangoTags()
@@ -170,6 +171,16 @@ inoremap <C-u>6 <esc>yypVr^A
 " Ctrl-u 7: Paragraph with "'s
 noremap  <C-u>7 yypVr"
 inoremap <C-u>7 <esc>yypVr"A
+
+" Append modeline after last line in buffer.
+" Use substitute() instead of printf() to handle '%%s' modeline in LaTeX
+" files.
+function! AppendModeline()
+  let l:modeline = printf(" vim: set ts=%d sw=%d tw=%d :",
+        \ &tabstop, &shiftwidth, &textwidth)
+  let l:modeline = substitute(&commentstring, "%s", l:modeline, "")
+  call append(line("$"), l:modeline)
+endfunction
 
 " Extra Vim behaviour
 set spell spelllang=en_us spellfile=~/.vim/spellfile.add

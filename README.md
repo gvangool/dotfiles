@@ -17,3 +17,4 @@ I am in NO way responsible for what it does to your PC or what you lose because 
 - <http://www.mysqlperformanceblog.com/2008/02/04/finding-out-largest-tables-on-mysql-server/>
 - <http://github.com/visionmedia/git-extras>
 - <http://ytaniike.posterous.com/256-colors-with-tmuxs-colour-numbers> for tmux-color
+- <http://vim.wikia.com/wiki/Modeline_magic> for AppendModeline in .vimrc
