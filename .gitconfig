@@ -42,5 +42,7 @@
 	autosetupmerge = true
 [url "https://github.com/"]
 	insteadOf = "gh:"
+[url "git://github.com/"]
+	insteadOf = "ghg:"
 [url "git@github.com:"]
 	insteadOf = "ghp:"
