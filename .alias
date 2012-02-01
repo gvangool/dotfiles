@@ -33,3 +33,4 @@ alias cls="clear"
 alias create_i18n="mkdir -p locale; django-admin.py makemessages -l nl -e txt -e py -e html; django-admin.py makemessages -l fr -e txt -e py -e html; django-admin.py compilemessages"
 alias update_i18n="django-admin.py makemessages -a -e txt -e py -e html; django-admin.py makemessages -a -e txt -e py -e html -d djangojs; django-admin.py compilemessages"
 
+alias init_yubikey="setxkbmap -device $(xinput list --short 'Yubico Yubico Yubikey II' | cut -f 2 | cut -d = -f 2) us"
