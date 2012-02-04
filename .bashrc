@@ -111,7 +111,7 @@ if [ -f ~/dev/django/extras/django_bash_completion ]; then
 fi
 
 # is pip installed?
-if [ ! -z `whereis pip | cut -f 2 -d " "` ]; then
+if [ ! -z `whereis pip | cut -f 2 -d ":"` ]; then
     eval "`pip completion --bash`"
 fi
 
