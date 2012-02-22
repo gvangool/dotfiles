@@ -63,3 +63,7 @@ bin/*.pyc
 # Fonts
 !.fonts
 !.fonts/*
+
+# ZSH
+!.oh-my-zsh
+!.zshrc
