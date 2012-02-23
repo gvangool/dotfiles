@@ -91,8 +91,11 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-export EDITOR=vim
-set -o vi
+for FILE in ~/share/sh/python ~/share/sh/vim ~/.alias ~/share/sh/vimpager ; do
+    if [ -f ${FILE} ]; then
+        source ${FILE}
+    fi
+done
 
 export PATH="$HOME/bin:$PATH"
 
@@ -105,31 +108,7 @@ __git_repo(){
     echo "$(basename $(git rev-parse --show-toplevel)) ";
 }
 
-# python/django
-if [ -f ~/dev/django/extras/django_bash_completion ]; then
-    source ~/dev/django/extras/django_bash_completion
-fi
-
-# is pip installed?
-if [ ! -z `whereis pip | cut -f 2 -d ":"` ]; then
-    eval "`pip completion --bash`"
-fi
-
-if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
-    export WORKON_HOME=$HOME/env
-    # http://pip.openplans.org/#using-pip-with-virtualenvwrapper
-    export PIP_VIRTUALENV_BASE=$WORKON_HOME
-    source /usr/local/bin/virtualenvwrapper.sh
-fi
-
-# more aliases
-if [ -f ~/.alias ]; then
-    source ~/.alias
-fi
 
 export GREP_OPTIONS='--exclude-dir=.svn --exclude-dir=.git --exclude-dir=.hg'
 
-export PAGER=~/bin/vimpager
-alias less=$PAGER
-alias zless=$PAGER
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*

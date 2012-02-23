@@ -1,0 +1,5 @@
+export PAGER=~/bin/vimpager
+alias less=$PAGER
+alias zless=$PAGER
+
+# vim: set filetype=sh :
