@@ -10,6 +10,12 @@ if [[ -x /usr/bin/dircolors ]]; then
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
+if [[ "$OSTYPE" == darwin* ]]; then
+    alias ls='ls -G'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
 
 # some more ls aliases
 #alias ll='ls -l'

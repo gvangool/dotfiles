@@ -109,6 +109,9 @@ __git_repo(){
 }
 
 
-export GREP_OPTIONS='--exclude-dir=.svn --exclude-dir=.git --exclude-dir=.hg'
+if [[ "$OSTYPE" != darwin* ]] ; then
+    # this will also fail on other BSD systems
+    export GREP_OPTIONS='--exclude-dir=.svn --exclude-dir=.git --exclude-dir=.hg'
+fi
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
