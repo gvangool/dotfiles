@@ -58,7 +58,7 @@ done
 if [[ "$OSTYPE" == darwin* ]] ; then
     export PATH="$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH"
 else
-    export PATH="$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH"
+    export PATH="$HOME/bin:$PATH"
 fi
 export NODE_PATH="/usr/local/lib/node_modules"
 
