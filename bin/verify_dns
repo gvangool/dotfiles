@@ -20,10 +20,10 @@ HOST=$1
 NEW_IP=$2
 echo "Testing $1 to update its IP to $2"
 
-nslookup $HOST | grep $NEW_IP
+dig +short $HOST | grep $NEW_IP
 while [ $? -gt 0 ]
 do
     sleep 60;
-    nslookup $HOST | grep $NEW_IP;
+    dig +short $HOST | grep $NEW_IP
 done;
 echo -e '\x07'
