@@ -7,8 +7,8 @@ vimpager - less.sh replacement
 cat \f[I]some_file\f[] | vimpager
 .SH DESCRIPTION
 .PP
-A slightly more sophisticated replacement for less.sh that also
-supports being set as the PAGER environment variable.
+A slightly more sophisticated replacement for less.sh that also supports
+being set as the PAGER environment variable.
 Displays man pages, perldocs and python documentation properly.
 Works on Linux, Solaris, FreeBSD, OSX, Cygwin and msys.
 Should work on most other systems as well.
@@ -16,12 +16,14 @@ Should work on most other systems as well.
 On GitHub: <http://github.com/rkitover/vimpager>
 .PP
 To use it as as your PAGER: put these in your ~/.bashrc or ~/.zshrc
-.PP
-\f[CR]
-      export\ PAGER=~/bin/vimpager
-      alias\ less=$PAGER
-      alias\ zless=$PAGER
+.IP
+.nf
+\f[C]
+export\ PAGER=~/bin/vimpager
+alias\ less=$PAGER
+alias\ zless=$PAGER
 \f[]
+.fi
 .PP
 To use a different vimrc with vimpager, put your settings into a
 ~/.vimpagerrc or a file pointed to by the VIMPAGER_RC environment
@@ -30,19 +32,51 @@ variable.
 To disable loading plugins, put \[lq]set noloadplugins\[rq] into a
 ~/.vimpagerrc file.
 .PP
-You can also switch on the \[lq]vimpager\[rq] variable in your
-vimrc to set alternate settings for vimpager.
+You can also switch on the \[lq]vimpager\[rq] variable in your vimrc to
+set alternate settings for vimpager.
 .PP
-Put the following into your vimrc if you want to use gvim/MacVim
-for your pager window:
-.PP
-\f[CR]
-      let\ vimpager_use_gvim\ =\ 1
+Put the following into your .vimrc/.vimpagerrc if you want to use
+gvim/MacVim for your pager window:
+.IP
+.nf
+\f[C]
+let\ vimpager_use_gvim\ =\ 1
 \f[]
+.fi
+.PP
+To start vim with -X (no x11 connection, a bit faster startup) put the
+following into your .vimrc/.vimpagerrc:
+.IP
+.nf
+\f[C]
+let\ vimpager_disable_x11\ =\ 1
+\f[]
+.fi
+.PP
+The scroll offset (:help scrolloff), may be specified by placing the
+following into your .vimrc/.vimpagerrc (default = 5, disable = 0):
+.IP
+.nf
+\f[C]
+let\ vimpager_scrolloff\ =\ 5
+\f[]
+.fi
+.PP
+The process tree of vimpager is available in the
+\[lq]vimpager_ptree\[rq] variable, an example usage is as follows:
+.IP
+.nf
+\f[C]
+if\ exists("vimpager")
+\ \ if\ exists("vimpager_ptree")\ &&\ vimpager_ptree[-2]\ ==\ \[aq]wman\[aq]
+\ \ \ \ set\ ft=man
+\ \ endif
+endif
+\f[]
+.fi
 .SH CYGWIN NOTES
 .PP
-The Cygwin gvim is very buggy, vimpager works correctly with the
-native Windows gvim, just put it in your PATH.
+The Cygwin gvim is very buggy, vimpager works correctly with the native
+Windows gvim, just put it in your PATH.
 .SH AUTHORS
 Rafael Kitover <rkitover@cpan.org>.
-
