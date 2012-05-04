@@ -100,7 +100,11 @@ for FILE in ~/share/sh/python ~/share/sh/vim ~/.alias ~/share/sh/vimpager ; do
     fi
 done
 
-export PATH="$HOME/bin:$PATH"
+if [[ "$OSTYPE" == darwin* ]] ; then
+    export PATH="$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH"
+else
+    export PATH="$HOME/bin:$PATH"
+fi
 
 # git stuff
 __git_branch(){
