@@ -90,6 +90,9 @@ esac
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
+if [ -d /usr/local/etc/bash_completion.d ] && ! shopt -oq posix; then
+    source /usr/local/etc/bash_completion.d/*
+fi
 
 for FILE in ~/share/sh/python ~/share/sh/vim ~/.alias ~/share/sh/vimpager ; do
     if [ -f ${FILE} ]; then
