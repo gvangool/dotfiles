@@ -9,10 +9,10 @@
 export OMZ="$HOME/.oh-my-zsh"
 
 # Set the key mapping style to 'emacs' or 'vi'.
-zstyle ':omz:editor' keymap 'vi'
+zstyle ':omz:module:editor' keymap 'vi'
 
 # Auto convert .... to ../..
-zstyle ':omz:editor' dot-expansion 'no'
+zstyle ':omz:module:editor' dot-expansion 'no'
 
 # Set case-sensitivity for completion, history lookup, etc.
 zstyle ':omz:*:*' case-sensitive 'yes'
@@ -21,7 +21,7 @@ zstyle ':omz:*:*' case-sensitive 'yes'
 zstyle ':omz:*:*' color 'yes'
 
 # Auto set the tab and window titles.
-zstyle ':omz:terminal' auto-title 'no'
+zstyle ':omz:module:terminal' auto-title 'no'
 
 # Set the Zsh modules to load (man zshmodules).
 # zstyle ':omz:load' zmodule 'attr' 'stat'
