@@ -44,7 +44,7 @@ zstyle ':omz:module:prompt' theme 'minimal'
 source "$HOME/.oh-my-zsh/init.zsh"
 
 # Customize to your needs...
-FILES=(~/.alias ~/share/sh/python ~/share/sh/vim ~/share/sh/vimpager /usr/local/etc/bash_completion.d/git-completion.bash)
+FILES=(~/.alias ~/share/sh/python ~/share/sh/vim ~/share/sh/vimpager ~/share/sh/rvm /usr/local/etc/bash_completion.d/git-completion.bash)
 for FILE in ${FILES} ; do
     if [[ -f ${FILE} ]] ; then
         source ${FILE}
