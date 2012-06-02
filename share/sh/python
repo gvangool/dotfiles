@@ -16,4 +16,4 @@ if [[ -f /usr/local/bin/virtualenvwrapper.sh ]]; then
     source /usr/local/bin/virtualenvwrapper.sh
 fi
 
-# vim: set ts=4 sw=4 tw=0 filetype=sh syntax=sh :
+# vim: set filetype=sh :

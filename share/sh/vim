@@ -1,3 +1,5 @@
 export VISUAL=vim
 export EDITOR=vim
 set -o vi
+
+# vim: set filetype=sh :
