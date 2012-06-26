@@ -52,6 +52,16 @@ autocmd FileType rst :call DeleteTrailingWS()
 autocmd BufWrite *.rst :call DeleteTrailingWS()
 " YAML
 autocmd FileType yaml setlocal tabstop=2 shiftwidth=2 softtabstop=2
+" JSON
+augroup json_autocmd
+  autocmd!
+  autocmd FileType json set autoindent
+  autocmd FileType json set formatoptions=tcq2l
+  autocmd FileType json set textwidth=78 shiftwidth=2
+  autocmd FileType json set softtabstop=2 tabstop=8
+  autocmd FileType json set expandtab
+  autocmd FileType json set foldmethod=syntax
+augroup END
 " HTML
 autocmd FileType html setlocal tabstop=4 shiftwidth=4 noexpandtab
 " GIT config
