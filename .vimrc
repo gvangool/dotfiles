@@ -176,8 +176,8 @@ inoremap <C-u>7 <esc>yypVr"A
 " Use substitute() instead of printf() to handle '%%s' modeline in LaTeX
 " files.
 function! AppendModeline()
-  let l:modeline = printf(" vim: set ts=%d sw=%d tw=%d :",
-        \ &tabstop, &shiftwidth, &textwidth)
+  let l:modeline = printf(" vim: set ts=%d sw=%d tw=%d syntax=%s :",
+        \ &tabstop, &shiftwidth, &textwidth, &syntax)
   let l:modeline = substitute(&commentstring, "%s", l:modeline, "")
   call append(line("$"), l:modeline)
 endfunction
