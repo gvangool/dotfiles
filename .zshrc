@@ -45,7 +45,9 @@ zstyle ':omz:load' omodule \
     'python' \
     'osx' \
     'git' \
-    'node'
+    'node' \
+    'tmux' \
+    'dpkg'
 
 # Set the prompt theme to load.
 # Setting it to 'random' loads a random theme.
