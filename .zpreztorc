@@ -1,0 +1,61 @@
+# Set the key mapping style to 'emacs' or 'vi'.
+zstyle ':prezto:module:editor' keymap 'vi'
+
+# Auto convert .... to ../..
+zstyle ':prezto:module:editor' dot-expansion 'no'
+
+# Set case-sensitivity for completion, history lookup, etc.
+zstyle ':prezto:*:*' case-sensitive 'yes'
+
+# Color output (auto set to 'no' on dumb terminals).
+zstyle ':prezto:*:*' color 'yes'
+
+# Auto set the tab and window titles.
+zstyle ':prezto:module:terminal' auto-title 'no'
+
+# Set the modules to load (browse .prezto/modules).
+zstyle ':prezto:load' pmodule \
+    'environment' \
+    'terminal' \
+    'editor' \
+    'completion' \
+    'history' \
+    'directory' \
+    'spectrum' \
+    'utility' \
+    'prompt' \
+    'archive' \
+    'python' \
+    'osx' \
+    'git' \
+    'node' \
+    'tmux' \
+    'dpkg'
+
+# Set the prompt theme to load.
+zstyle ':prezto:module:prompt' theme 'minimal'
+
+# Customize to your needs...
+FILES=(~/.alias ~/share/sh/python ~/share/sh/vim ~/share/sh/vimpager ~/share/sh/rvm) # /usr/local/etc/bash_completion.d/git-completion.bash)
+for FILE in ${FILES} ; do
+    if [[ -f ${FILE} ]] ; then
+        source ${FILE}
+    fi
+done
+
+if [[ "$OSTYPE" == darwin* ]] ; then
+    export PATH="$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH"
+    # Fix tmux support :)
+    if [[ "x$TMUX" != "x" ]] ; then
+        # Only if it's installed
+        if (( $+commands[reattach-to-user-namespace] )) ; then
+            tmux set-option -g default-command "reattach-to-user-namespace -l zsh"
+        fi
+    fi
+else
+    export PATH="$HOME/bin:$PATH"
+fi
+export NODE_PATH="/usr/local/lib/node_modules"
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8

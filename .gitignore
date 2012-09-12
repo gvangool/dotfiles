@@ -65,5 +65,10 @@ bin/*.pyc
 !.fonts/*
 
 # ZSH
-!.oh-my-zsh
+!.zprezto
 !.zshrc
+!.zlogin
+!.zlogout
+!.zpreztorc
+!.zprofile
+!.zshenv
