@@ -68,6 +68,13 @@ done
 
 if [[ "$OSTYPE" == darwin* ]] ; then
     export PATH="$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH"
+    # Fix tmux support :)
+    if [[ "x$TMUX" != "x" ]] ; then
+        # Only if it's installed
+        if (( $+commands[reattach-to-user-namespace] )) ; then
+            tmux set-option -g default-command "reattach-to-user-namespace -l zsh"
+        fi
+    fi
 else
     export PATH="$HOME/bin:$PATH"
 fi
