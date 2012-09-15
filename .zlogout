@@ -1,1 +1,1 @@
-/Users/gert/.zprezto/runcoms/zlogout
+.zprezto/runcoms/zlogout
