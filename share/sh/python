@@ -1,6 +1,6 @@
 # Django
 if [[ -f ~/dev/django/extras/django_bash_completion && "$(basename ${SHELL})" == "bash" ]]; then
-    echo "settings django completion"
+    echo "Set django completion"
     source ~/dev/django/extras/django_bash_completion
 fi
 
