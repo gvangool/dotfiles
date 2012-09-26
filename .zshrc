@@ -11,7 +11,7 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
-FILES=(~/.alias ~/share/sh/python ~/share/sh/vim ~/share/sh/vimpager)# ~/share/sh/rvm) # /usr/local/etc/bash_completion.d/git-completion.bash)
+FILES=(~/.alias ~/share/sh/python ~/share/sh/vim ~/share/sh/vimpager ~/share/sh/rvm) # /usr/local/etc/bash_completion.d/git-completion.bash)
 for FILE in ${FILES} ; do
     if [[ -f ${FILE} ]] ; then
         source ${FILE}
@@ -27,10 +27,13 @@ if [[ "$OSTYPE" == darwin* ]] ; then
             tmux set-option -g default-command "reattach-to-user-namespace -l zsh"
         fi
     fi
+    if (( $+commands[node] )) ; then
+        export NODE_PATH="/usr/local/lib/node_modules"
+        export PATH="/usr/local/share/npm/bin:${PATH}"
+    fi
 else
     export PATH="$HOME/bin:$PATH"
 fi
-export NODE_PATH="/usr/local/lib/node_modules"
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
