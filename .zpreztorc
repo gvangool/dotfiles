@@ -35,6 +35,7 @@ zstyle ':prezto:load' pmodule \
     'prompt' \
     'archive' \
     'python' \
+    'ruby' \
     'osx' \
     'git' \
     'node' \
@@ -79,7 +80,12 @@ zstyle ':prezto:module:editor' keymap 'vi'
 # Set the prompt theme to load.
 # Setting it to 'random' loads a random theme.
 # Auto set to 'off' on dumb terminals.
-zstyle ':prezto:module:prompt' theme 'minimal'
+zstyle ':prezto:module:prompt' theme 'gert'
+zstyle ':prompt:gert' hostname 'yes'
+zstyle ':prompt:gert' virtualenv 'yes'
+zstyle ':prompt:gert' ruby-version 'no'
+zstyle ':prompt:gert' no-color 'no'
+zstyle ':prompt:gert' folder-depth '0'
 
 #
 # Screen

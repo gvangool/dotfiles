@@ -14,12 +14,9 @@
 [submodule ".vim/bundle/html5-syntax"]
 	path = .vim/bundle/html5-syntax
 	url = https://github.com/othree/html5-syntax.vim.git
-[submodule ".oh-my-zsh"]
-	path = .oh-my-zsh
-	url = https://github.com/sorin-ionescu/oh-my-zsh.git
 [submodule ".vim/bundle/vim-json"]
 	path = .vim/bundle/vim-json
 	url = git://github.com/elzr/vim-json.git
 [submodule ".zprezto"]
 	path = .zprezto
-	url = https://github.com/sorin-ionescu/prezto.git
+	url = git://github.com/gvangool/prezto.git
