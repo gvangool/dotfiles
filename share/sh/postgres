@@ -1,0 +1,9 @@
+# vim: set filetype=sh :
+
+if [[ -d /Applications/Postgres.app ]] ; then
+    export PATH="/Applications/Postgres.app/Contents/MacOS/bin:$PATH"
+else
+    if [[ -d ~/Applications/Postgres.app ]] ; then
+        export PATH="~/Applications/Postgres.app/Contents/MacOS/bin:$PATH"
+    fi
+fi

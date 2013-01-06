@@ -94,7 +94,7 @@ if [ -d /usr/local/etc/bash_completion.d ] && ! shopt -oq posix; then
     source /usr/local/etc/bash_completion.d/*
 fi
 
-for FILE in ~/share/sh/python ~/share/sh/vim ~/.alias ~/share/sh/vimpager ~/share/sh/rvm ; do
+for FILE in ~/share/sh/python ~/share/sh/vim ~/.alias ~/share/sh/vimpager ~/share/sh/rvm ~/share/sh/bashrc; do
     if [ -f ${FILE} ]; then
         source ${FILE}
     fi
