@@ -38,6 +38,9 @@
 [diff]
 	renames = copies
 	mnemonicprefix = true
+[diff "gpg"]
+	textconv = gpg -v
+	xfuncname = "^((pub|uid) .*)"
 [branch]
 	autosetupmerge = true
 	autosetuprebase = always

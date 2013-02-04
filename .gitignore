@@ -17,6 +17,7 @@
 
 # Git aliases, identification info
 !.gitconfig
+!.gitattributes
 # The gitignore of this repository itself (!)
 !.gitignore
 !.gitmodules
