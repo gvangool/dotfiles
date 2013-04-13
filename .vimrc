@@ -99,7 +99,8 @@ set visualbell
 
 " Modify the backup/swap file behaviour (no annoying sync behaviour in
 " DropBox)
-set nobackup " don't make backup files
+set backup
+set writebackup
 set backupdir=~/.tmp/backup " location of backup files
 set swapfile " make swap files
 set directory=~/.tmp/swap " location of swap files
