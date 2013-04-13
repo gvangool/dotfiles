@@ -5,15 +5,16 @@ if [[ -f ~/dev/django/extras/django_bash_completion && "$(basename ${SHELL})" ==
 fi
 
 # is pip installed?
-if [[ ! -z `whereis pip | cut -f 2 -d ":"` ]]; then
+if [[ ! -z $(whereis pip | cut -f 2 -d ":") ]]; then
     eval "$(pip completion --$(basename ${SHELL}))"
 fi
 
-if [[ -f /usr/local/bin/virtualenvwrapper.sh ]]; then
+WRAPPER=$(which virtualenvwrapper.sh)
+if [[ ! -z ${WRAPPER} ]]; then
     export WORKON_HOME=$HOME/env
     # http://pip.openplans.org/#using-pip-with-virtualenvwrapper
     export PIP_VIRTUALENV_BASE=$WORKON_HOME
-    source /usr/local/bin/virtualenvwrapper.sh
+    source ${WRAPPER}
 fi
 
 # vim: set filetype=sh :
