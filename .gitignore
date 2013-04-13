@@ -3,6 +3,8 @@
 
 # Ignore everything by default.
 *
+!.tmp
+!.tmp/*
 
 # README with extra information
 !README.md
