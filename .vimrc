@@ -60,14 +60,18 @@ augroup json_autocmd
   autocmd FileType json set textwidth=78 shiftwidth=2
   autocmd FileType json set softtabstop=2 tabstop=8
   autocmd FileType json set expandtab
-  autocmd FileType json set foldmethod=syntax
+  "autocmd FileType json set foldmethod=syntax
 augroup END
+autocmd FileType javascript setlocal includeexpr=v:fname.'.js'
 " HTML
 autocmd FileType html setlocal tabstop=4 shiftwidth=4 noexpandtab
 " GIT config
 autocmd FileType gitconfig setlocal tabstop=4 shiftwidth=4 noexpandtab
 autocmd FileType gitconfig :call DeleteTrailingWS()
 autocmd BufWrite .gitconfig :call DeleteTrailingWS()
+" Coffee script
+autocmd FileType coffee setlocal tabstop=2 softtabstop=2 shiftwidth=2
+autocmd BufWrite *.coffee :call DeleteTrailingWS()
 " defaults (Python)
 set tabstop=4
 set shiftwidth=4
