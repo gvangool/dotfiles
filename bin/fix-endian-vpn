@@ -1,0 +1,22 @@
+#!/bin/bash
+if [[ $USER != "root" ]] ; then
+    echo "Run as super user!"
+    exit 1
+fi
+if [[ "$OSTYPE" != darwin* ]] ; then
+    echo "Only runs on Mac OS X"
+    exit 2
+fi
+if [[ ! -d "/Applications/EndianVPNClient.app" ]] ; then
+    echo "Requires EndianVPNClient to be installed"
+    exit 3
+fi
+if [[ ! -d "/Applications/Tunnelblick.app" ]] ; then
+    echo "Requires Tunnelblick to be installed"
+    exit 3
+fi
+cd /Applications/EndianVPNClient.app/Contents/Resources/openvpn
+cp -r /Applications/Tunnelblick.app/Contents/Resources/{tap,tun}.kext .
+./owner.sh
+kextload tap.kext
+kextload tun.kext
