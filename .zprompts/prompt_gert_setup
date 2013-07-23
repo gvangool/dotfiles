@@ -1,0 +1,113 @@
+#
+# A simple theme that displays basic information (username, hostname, VCS info,
+# virtualenv).
+#
+# Authors:
+#   Gert Van Gool <gertvangool@gmail.com>
+#
+# Thanks to:
+#   Brian Tse <briankftse@gmail.com>
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
+
+function +vi-git-status() {
+  # Check for untracked files or updated submodules since vcs_info does not.
+  if [[ -n $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
+    hook_com[unstaged]='%F{red}●%f'
+  fi
+}
+
+function prompt_gert_help {
+  cat <<'EOF'
+This prompt is configurable via styles:
+
+  Context:
+    :prompt:gert
+
+  Variables:
+    hostname
+        Display the hostname. Default 'no'. Possible values:
+        - 'yes' 
+        - 'no'
+        - 'fqdn', show the fully qualified name
+    virtualenv
+        Show the current python virtual env. Default 'no'. Possible values:
+        - 'yes'
+        - 'no'
+    ruby-version 
+        Show the current ruby version. Default 'no'. Possible values:
+        - 'yes'
+        - 'no'
+    folder-depth
+        Sets the number of folders in the display (e.g. '0' for all folders,
+        '2' for the 2 latest). Default '2'.
+    no-color
+        Turns colors on and off. Default 'yes'.
+
+EOF
+}
+
+function prompt_gert_precmd {
+  vcs_info
+  if zstyle -t :prompt:gert virtualenv ; then
+      if (( $+functions[python-info] )); then
+          python-info
+      fi
+  fi
+  if zstyle -t :prompt:gert ruby-version ; then
+      if (( $+functions[ruby-info] )); then
+          ruby-info
+      fi
+  fi
+}
+
+function prompt_gert_setup {
+  setopt LOCAL_OPTIONS
+  unsetopt XTRACE KSH_ARRAYS
+  prompt_opts=(cr percent subst)
+
+  autoload -Uz add-zsh-hook
+  autoload -Uz vcs_info
+
+  add-zsh-hook precmd prompt_gert_precmd
+
+  zstyle ':vcs_info:*' enable bzr git hg svn
+  zstyle ':vcs_info:*' check-for-changes true
+  zstyle ':vcs_info:*' stagedstr '%F{green}●%f'
+  zstyle ':vcs_info:*' unstagedstr '%F{yellow}●%f'
+  zstyle ':vcs_info:*' formats ' - [%b%c%u]'
+  zstyle ':vcs_info:*' actionformats " - [%b%c%u|%F{cyan}%a%f]"
+  zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b|%F{cyan}%r%f'
+  zstyle ':vcs_info:git*+set-message:*' hooks git-status
+  zstyle ':prezto:module:python:info:virtualenv' format ' [venv:%F{cyan}%v%f]'
+  zstyle ':prezto:module:ruby:info:version' format ' [%F{green}%v%f]'
+
+  if zstyle -t :prompt:gert hostname 'fqdn' ; then
+    hostprompt='%F{cyan}%n%f@%F{red}%M%f:'
+  else
+      if zstyle -t :prompt:gert hostname ; then
+        hostprompt='%F{cyan}%n%f@%F{red}%m%f:'
+      else
+        hostprompt=''
+      fi
+  fi
+  local folder_depth
+  zstyle -s :prompt:gert folder-depth folder_depth
+  folder_depth=${folder_depth:-2}
+  dirprompt="%F{green}%${folder_depth}~%f"
+  extraprompt='${vcs_info_msg_0_}'
+  if zstyle -t :prompt:gert virtualenv ; then
+      extraprompt=${extraprompt}'${python_info[virtualenv]}'
+  fi
+  if zstyle -t :prompt:gert ruby-version ; then
+      extraprompt=${extraprompt}'${ruby_info[version]}'
+  fi
+
+  PROMPT="$hostprompt$dirprompt$extraprompt » "
+  if zstyle -T :prompt:gert no-color ; then
+    PROMPT=$(echo $PROMPT | sed -e "s/%F{[^}]*}//g" -e "s/%f//g")
+  fi
+  RPROMPT=''
+}
+
+prompt_gert_setup "$@"
