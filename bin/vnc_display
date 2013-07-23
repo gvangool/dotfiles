@@ -1,0 +1,27 @@
+#!/bin/bash
+if [[ "$OSTYPE" != darwin* ]] ; then
+    echo "Only runs on Mac OS X"
+    exit 2
+fi
+if [[ ! -d "/Applications/Chicken of the VNC.app" ]] ; then
+    echo "Requires Chicken of the VNC to be installed"
+    echo "Get it at http://sourceforge.net/projects/cotvnc/"
+    exit 3
+fi
+if [[ $# -lt 2 ]] ; then
+    echo "Usage:"
+    echo "  $0 <hostname> <host-port> [<local-port>]"
+    exit 1
+fi
+LOGFILE="${HOME}/vnc_display.log"
+SERVER=$1
+REMOTE=$2
+if [[ $# == 2 ]] ; then
+    LOCAL=$2
+else
+    LOCAL=$3
+fi
+echo "Connecting to ${SERVER}:${REMOTE} via local port ${LOCAL}" | tee -a ${LOGFILE}
+ssh ${SERVER} -L ${LOCAL}:localhost:${REMOTE} "sleep 5" >> ${LOGFILE} 2>&1 &
+sleep 1;
+/Applications/Chicken\ of\ the\ VNC.app/Contents/MacOS/Chicken\ of\ the\ VNC localhost:${LOCAL} >> ${LOGFILE} 2>&1 &
