@@ -79,3 +79,4 @@ bin/*.pyc
 # More RC files
 !.wgetrc
 !.osx
+!.slate

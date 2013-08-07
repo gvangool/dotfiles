@@ -1,0 +1,59 @@
+# All bindings refer to the current screen.
+config defaultToCurrentScreen true
+config keyboardLayout dvorak
+config modalEscapeKey esc
+
+# Nudge/resize commands refer to % of screen size.
+config nudgePercentOf screenSize
+config resizePercentOf screenSize
+
+# Aliases
+alias center      move screenOriginX+screenSizeX/2-windowSizeX/2;screenOriginY+screenSizeY/2-windowSizeY/2 windowSizeX;windowSizeY
+alias full        move screenOriginX;screenOriginY screenSizeX;screenSizeY
+alias lefthalf    move screenOriginX;screenOriginY screenSizeX/2;screenSizeY
+alias righthalf   move screenOriginX+screenSizeX/2;screenOriginY screenSizeX/2;screenSizeY
+alias topleft     corner top-left     resize:screenSizeX/2;screenSizeY/2
+alias topright    corner top-right    resize:screenSizeX/2;screenSizeY/2
+alias bottomleft  corner bottom-left  resize:screenSizeX/2;screenSizeY/2
+alias bottomright corner bottom-right resize:screenSizeX/2;screenSizeY/2
+
+alias full-size      screenSizeX;screenSizeY
+alias half-x         screenSizeX/2
+alias half-y         screenSizeY/2
+alias half-size      ${half-x};${half-y}
+alias quarter-x      screenSizeX/4
+alias quarter-y      screenSizeY/4
+alias quarter-size   ${quarter-x};${quarter-y}
+alias resize-quarter resize:${half-size}
+alias resize-full    resize:${full-size}
+
+# Move screen
+bind left:ctrl;alt          throw left
+bind right:ctrl;alt         throw right
+bind left:ctrl;alt;shift    sequence throw left  | ${full}
+bind right:ctrl;alt;shift   sequence throw right | ${full}
+# Move in the screen
+bind l:ctrl;alt;shift       push left
+bind r:ctrl;alt;shift       push right
+bind t:ctrl;alt;shift       push top
+bind b:ctrl;alt;shift       push bottom
+
+# Center on current screen:
+# * c - center (keep window size)
+# * s - center with a 1/8th margin around the edges
+# * f - full screen
+bind c:ctrl;alt;shift   ${center}
+bind s:ctrl;alt;shift   move screenOriginX+screenSizeX/8;0 screenSizeX*0.75;screenSizeY
+bind f:ctrl;alt;shift   ${full}
+
+# Bars: a/w/d/x for left/top/right/bottom, half screen
+bind a:cmd;space push left   bar-resize:screenSizeX/2
+bind w:cmd;space push top    bar-resize:screenSizeY/2
+bind d:cmd;space push right  bar-resize:screenSizeX/2
+bind x:cmd;space push bottom bar-resize:screenSizeY/2
+
+# Grid: cmd+space, space
+bind space:cmd;space grid
+
+# Relaunch
+bind f12:ctrl relaunch
