@@ -75,6 +75,8 @@ bin/*.pyc
 !.zpreztorc
 !.zprofile
 !.zshenv
+!.zprompts
+!.zprompts/*
 
 # More RC files
 !.wgetrc
