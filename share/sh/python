@@ -5,13 +5,13 @@ if [[ -f ~/dev/django/extras/django_bash_completion && "$(basename ${SHELL})" ==
 fi
 
 # is pip installed?
-if [[ $(which pip) == /* ]]; then
+if [[ -n $(which pip 2> /dev/null) ]]; then
     eval "$(pip completion --$(basename ${SHELL}))"
     export PIP_DOWNLOAD_CACHE=~/.tmp/pip
 fi
 
-WRAPPER=$(which virtualenvwrapper.sh)
-if [[ ${WRAPPER} == /* ]]; then
+WRAPPER=$(which virtualenvwrapper.sh 2> /dev/null)
+if [[ -n ${WRAPPER} ]]; then
     export WORKON_HOME=$HOME/env
     # http://pip.openplans.org/#using-pip-with-virtualenvwrapper
     export PIP_VIRTUALENV_BASE=$WORKON_HOME
