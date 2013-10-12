@@ -16,7 +16,7 @@ else
 fi
 if [[ $# -lt 2 ]] ; then
     echo "Usage:"
-    echo "  $0 <hostname> <host-port> [<local-port>]"
+    echo "  $0 [<username>@]<hostname>[:<ssh-port>] <host-port> [<local-port>]"
     exit 1
 fi
 LOGFILE="${HOME}/vnc_display.log"
@@ -27,7 +27,16 @@ if [[ $# == 2 ]] ; then
 else
     LOCAL=$3
 fi
+
+IFS=: read SSH_HOST SSH_PORT <<< $SERVER
+if [[ ${SSH_PORT} ]] ; then
+    SSH_OPTS="-P ${SSH_PORT}"
+else
+    SSH_OPTS=""
+fi
+SSH_OPTS="${SSH_OPTS} -L ${LOCAL}:localhost:${REMOTE}"
+
 echo "Connecting to ${SERVER}:${REMOTE} via local port ${LOCAL}" | tee -a ${LOGFILE}
-ssh ${SERVER} -L ${LOCAL}:localhost:${REMOTE} "sleep 5" >> ${LOGFILE} 2>&1 &
+ssh ${SSH_HOST} ${SSH_OPTS} "sleep 5" >> ${LOGFILE} 2>&1 &
 sleep 1;
 ${APP} localhost:${LOCAL} >> ${LOGFILE} 2>&1 &
