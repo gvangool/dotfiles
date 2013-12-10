@@ -82,3 +82,4 @@ bin/*.pyc
 !.wgetrc
 !.osx
 !.slate
+!Brewfile
