@@ -21,6 +21,7 @@ install xz
 # Programming tools
 install mercurial
 install go
+install node
 install python
 install python3
 install tofrodos
@@ -30,6 +31,9 @@ install nginx
 # Extras
 #install ledger
 #install packer
+# Investigate
+#install entr
+#install direnv
 
 # Link apps
 linkapps --local

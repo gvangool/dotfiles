@@ -615,3 +615,9 @@ for app in "Address Book" "Calendar" "Contacts" "Dashboard" "Dock" "Finder" \
 	killall "$app" > /dev/null 2>&1
 done
 echo "Done. Note that some of these changes require a logout/restart to take effect."
+cat << EOF
+Install Homebrew (http://brew.sh/):
+    ruby -e "\$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
+Install extra packages via homebrew:
+    brew bundle
+EOF
