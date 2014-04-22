@@ -42,3 +42,7 @@ fi
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
+
+if (( $+commands[direnv] )) ; then
+    eval "$(direnv hook $0)"
+fi

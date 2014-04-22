@@ -13,6 +13,7 @@ install mtr
 install nmap
 install mobile-shell
 # Tools
+install direnv
 install macvim
 install s3cmd
 install wget
@@ -33,7 +34,6 @@ install nginx
 #install packer
 # Investigate
 #install entr
-#install direnv
 
 # Link apps
 linkapps --local
