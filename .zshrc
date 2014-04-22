@@ -33,6 +33,9 @@ if [[ "$OSTYPE" == darwin* ]] ; then
         export NODE_PATH="/usr/local/lib/node_modules"
         export PATH="/usr/local/share/npm/bin:${PATH}"
     fi
+    if [[ -d "/usr/local/texlive/2013/bin" ]] ; then
+        export PATH="/usr/local/texlive/2013/bin/x86_64-darwin:$PATH"
+    fi
 else
     export PATH="$HOME/bin:$PATH"
 fi
