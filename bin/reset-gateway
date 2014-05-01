@@ -1,0 +1,22 @@
+#!/bin/bash
+
+###############################################################################
+# A script to reset the default gateway on OSX. Since it happens (since
+# Mavericks) that when a new tunnel is created (or you set op "Internet
+# sharing") the default gateway is not in the correct position in your
+# routing table.
+###############################################################################
+
+if [[ $USER != "root" ]] ; then
+    echo "Run as super user!"
+    exit 1
+fi
+if [[ "$OSTYPE" != darwin* ]] ; then
+    echo "Only runs on Mac OS X"
+    exit 2
+fi
+GATEWAY=$(route -n get default | grep 'gateway' | awk '{print $2}')
+echo "Removing default gateway (${GATEWAY})"
+route delete default ${GATEWAY}
+echo "Adding default gateway (${GATEWAY})"
+route add default ${GATEWAY}
