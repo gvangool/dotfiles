@@ -15,7 +15,11 @@ if [[ "$OSTYPE" != darwin* ]] ; then
     echo "Only runs on Mac OS X"
     exit 2
 fi
-GATEWAY=$(route -n get default | grep 'gateway' | awk '{print $2}')
+if [[ $# -lt 1 ]] ; then
+    GATEWAY=$(route -n get default | grep 'gateway' | awk '{print $2}')
+else
+    GATEWAY=$1
+fi
 echo "Removing default gateway (${GATEWAY})"
 route delete default ${GATEWAY}
 echo "Adding default gateway (${GATEWAY})"
