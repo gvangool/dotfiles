@@ -18,4 +18,8 @@ if [[ -n ${WRAPPER} ]]; then
     source ${WRAPPER}
 fi
 
+if [[ -x ~/.local/bin/pipsi ]] ; then
+    export PATH=~/.local/bin:$PATH
+fi
+
 # vim: set filetype=sh :
