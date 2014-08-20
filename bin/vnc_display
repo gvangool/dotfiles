@@ -28,9 +28,12 @@ else
     LOCAL=$3
 fi
 
-IFS=: read SSH_HOST SSH_PORT <<< $SERVER
-if [[ ${SSH_PORT} ]] ; then
-    SSH_OPTS="-P ${SSH_PORT}"
+SAVEIFS=$IFS
+IFS=: read SSH_HOST SSH_PORT <<< "${SERVER}"
+IFS=$SAVEIFS
+
+if [[ -n ${SSH_PORT} ]] ; then
+    SSH_OPTS="-p ${SSH_PORT}"
 else
     SSH_OPTS=""
 fi
