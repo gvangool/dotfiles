@@ -1,0 +1,21 @@
+#!/bin/bash
+file=/tmp/Brewfile
+cat << EOF
+This will generate new Brewfile with your currently installed packages and taps.
+You can find the file in ${file}
+
+This is quite slow, since it tries to generate the most minimal version
+(containing only packages on which nothing depends).
+EOF
+
+echo "# Generated with brew-brewfile-generator: $(date)" > ${file}
+echo "# Tapped taps" >> ${file}
+for t in $(brew tap) ; do
+    echo "tap ${t}" >> ${file}
+done
+echo "# Installed:" >> ${file}
+for i in $(brew list) ; do
+    if [[ -z $(brew uses --installed ${i} 2> /dev/null) ]] ; then
+        echo "install $i" >> ${file}
+    fi
+done
