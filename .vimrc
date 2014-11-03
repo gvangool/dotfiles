@@ -149,9 +149,9 @@ func! FullDjangoClean()
 endfunc
 
 " Set modeline on all files, except those in tmp and Downloads
-set modeline
-autocmd BufRead,FileReadPost */tmp/* setlocal nomodeline
-autocmd BufRead,FileReadPost */Downloads/* setlocal nomodeline
+setlocal modeline modelines=10
+autocmd BufRead,FileReadPost */tmp/* setlocal nomodeline modelines=0
+autocmd BufRead,FileReadPost */Downloads/* setlocal nomodeline modelines=0
 
 " Remap Q to gq -> format line (default: split line on char 80)
 noremap Q gq
