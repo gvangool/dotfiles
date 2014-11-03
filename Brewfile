@@ -27,17 +27,30 @@ install go --cross-compile-common
 install node
 install python
 install python3
+#install rust
 install tofrodos
 install docker
 install boot2docker
+install hub
+install entr
 # Servers
 install redis
 install nginx
 # Extras
 #install ledger
 #install packer
-# Investigate
-#install entr
+#install zmap
+# Games
+#tap Homebrew/homebrew-games
+#install gnu-go
+#install go-gui
+
+## For servo
+#install homebrew/versions/autoconf213
+#install automake libtool pkg-config
 
 # Link apps
 linkapps --local
+# Pin Python2 & Python3 to the current version
+pin python
+pin python3

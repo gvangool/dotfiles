@@ -1,0 +1,6 @@
+#!/bin/bash
+brew_commands=$(cat Brewfile | grep -v "^#")
+IFS=$'\n'
+for cmd in ${brew_commands} ; do
+    eval brew ${cmd}
+done
