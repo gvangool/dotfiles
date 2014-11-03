@@ -148,6 +148,9 @@ func! FullDjangoClean()
     %s/\t/    /gei
 endfunc
 
+" Go configuration
+let g:go_disable_autoinstall = 1
+
 " Set modeline on all files, except those in tmp and Downloads
 setlocal modeline modelines=10
 autocmd BufRead,FileReadPost */tmp/* setlocal nomodeline modelines=0

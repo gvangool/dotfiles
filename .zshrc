@@ -13,7 +13,7 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
-FILES=(~/.alias ~/share/sh/python ~/share/sh/vim ~/share/sh/vimpager ~/share/sh/rvm ~/share/sh/postgres) # /usr/local/etc/bash_completion.d/git-completion.bash)
+FILES=(~/.alias ~/share/sh/python ~/share/sh/vim ~/share/sh/vimpager ~/share/sh/rvm ~/share/sh/postgres ~/share/sh/go)
 for FILE in ${FILES} ; do
     if [[ -f ${FILE} ]] ; then
         source ${FILE}
