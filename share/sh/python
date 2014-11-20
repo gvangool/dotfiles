@@ -5,7 +5,7 @@ if [[ -f ~/dev/django/extras/django_bash_completion && "$(basename ${SHELL})" ==
 fi
 
 # is pip installed?
-if [[ $(command -v pip > /dev/null) ]]; then
+if [[ -n $(command -v pip > /dev/null) ]]; then
     eval "$(pip completion --$(basename ${SHELL}))"
     export PIP_DOWNLOAD_CACHE=~/.tmp/pip
 fi
