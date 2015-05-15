@@ -6,13 +6,9 @@ fi
 if [[ -d "/Applications/Chicken.app" ]] ; then
     APP="/Applications/Chicken.app/Contents/MacOS/Chicken"
 else
-    if [[ -d "/Applications/Chicken of the VNC.app" ]] ; then
-        APP=/Applications/Chicken\ of\ the\ VNC.app/Contents/MacOS/Chicken\ of\ the\ VNC
-    else
-        echo "Requires Chicken of the VNC to be installed"
-        echo "Get it at http://sourceforge.net/projects/chicken/"
-        exit 3
-    fi
+    echo "Requires Chicken of the VNC to be installed"
+    echo "Get it at http://sourceforge.net/projects/chicken/"
+    exit 3
 fi
 if [[ $# -lt 2 ]] ; then
     echo "Usage:"
