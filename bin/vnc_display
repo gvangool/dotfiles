@@ -3,12 +3,18 @@ if [[ "$OSTYPE" != darwin* ]] ; then
     echo "Only runs on Mac OS X"
     exit 2
 fi
-if [[ -d "/Applications/Chicken.app" ]] ; then
+if [[ -d "${HOME}/Applications/Chicken.app" ]] ; then
     APP="/Applications/Chicken.app/Contents/MacOS/Chicken"
 else
-    echo "Requires Chicken of the VNC to be installed"
-    echo "Get it at http://sourceforge.net/projects/chicken/"
-    exit 3
+    if [[ -d "/Applications/Chicken.app" ]] ; then
+        APP="/Applications/Chicken.app/Contents/MacOS/Chicken"
+    else
+        echo "Requires Chicken of the VNC to be installed"
+        echo "Get it at http://sourceforge.net/projects/chicken/"
+        echo "OR via Homebrew:"
+        echo "   brew cask install chicken"
+        exit 3
+    fi
 fi
 if [[ $# -lt 2 ]] ; then
     echo "Usage:"
