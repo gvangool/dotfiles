@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import re
 import subprocess
 import sys
@@ -24,4 +25,10 @@ def read_battery_charge():
 
 # output
 if __name__ == '__main__':
+    if len(sys.argv) > 1 and sys.argv[1] == 'emoji':
+        print u'🔋',
+    elif len(sys.argv) > 1 and sys.argv[1] == 'ascii':
+        print u' B',
+    else:
+        print ' ',
     print '%d%%' % read_battery_charge()
