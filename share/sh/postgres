@@ -1,9 +1,9 @@
 # vim: set filetype=sh :
 
 if [[ -d /Applications/Postgres.app ]] ; then
-    export PATH="/Applications/Postgres.app/Contents/Versions/9.3/bin:$PATH"
+    export PATH="/Applications/Postgres.app/Contents/Versions/9.4/bin:$PATH"
 else
     if [[ -d ~/Applications/Postgres.app ]] ; then
-        export PATH="~/Applications/Postgres.app/Contents/Versions/9.3/bin:$PATH"
+        export PATH="~/Applications/Postgres.app/Contents/Versions/9.4/bin:$PATH"
     fi
 fi
