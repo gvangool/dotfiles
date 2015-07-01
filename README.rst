@@ -17,7 +17,7 @@ Used sources
 - `<http://svn.collab.net/repos/svn/trunk/tools/client-side/change-svn-wc-format.py>`_
 - `<http://www.home.unix-ag.org/simon/woof.html>`_
 - `<http://www.mysqlperformanceblog.com/2008/02/04/finding-out-largest-tables-on-mysql-server/>`_
-- `<http://github.com/visionmedia/git-extras>`_
+- `<http://github.com/tj/git-extras>`_
 - `<http://ytaniike.posterous.com/256-colors-with-tmuxs-colour-numbers>`_ for
   tmux-color
 - `<http://vim.wikia.com/wiki/Modeline_magic>`_ for ``AppendModeline`` in
