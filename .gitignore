@@ -83,3 +83,4 @@ bin/*.pyc
 !.osx
 !.slate
 !Brewfile
+!.dockerfunc

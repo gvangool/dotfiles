@@ -1,0 +1,23 @@
+#!/bin/bash
+
+docker-untagged-images() {
+    docker images | grep "<none>" | sed "s/  */ /g" | cut -f 3 -d " "
+}
+docker-clean-images() {
+    docker rmi $(docker-untagged-images)
+}
+docker-clean-instances() {
+    docker rm $(docker ps -f status=exited -a -q)
+}
+
+papertrail-cli() {
+    docker run -e PAPERTRAIL_API_TOKEN=${PAPERTRAIL_API_TOKEN} --rm gvangool/papertrail-cli $@
+}
+
+pt() {
+    papertrail-cli $@ | perl -pe 's/^(.{15})(.)([\S]+)(.)([\S]+)/\e[1;32m\1\e[0m\2\e[34m\3\e[0m\4\e[36m\5\e[0m/g'
+}
+
+pt-default() {
+    pt -f -- "-collectd -dhcp -NetworkManager"
+}
