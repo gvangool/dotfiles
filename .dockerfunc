@@ -21,3 +21,10 @@ pt() {
 pt-default() {
     pt -f -- "-collectd -dhcp -NetworkManager"
 }
+
+htop() {
+    docker run --rm -it \
+        --pid host \
+        --name htop \
+        jess/htop
+}
