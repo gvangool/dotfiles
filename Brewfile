@@ -1,6 +1,6 @@
 # Update & upgrade install
 update
-upgrade
+upgrade -a
 
 # Base
 install git
@@ -9,45 +9,62 @@ install tmux
 install reattach-to-user-namespace
 # Network tools
 install ipcalc
+install mobile-shell
 install mtr
 install nmap
-install mobile-shell
 install homebrew/dupes/openssh --with-ldns
+install sshutle
 # Tools
+install entr
 install direnv
 install macvim
 install s3cmd
 install unrar
-install wget
 install visionmedia-watch
+install wget
 install xz
 # Programming tools
-install mercurial
 install go --cross-compile-common
 install node
 install python
 install python3
-#install rust
-install tofrodos
-install docker
-install boot2docker
-install hub
-install entr
-# Servers
 install redis
-install nginx
+install tofrodos
+# Database clients
+install mysql
+install postgresql
+#install pgloader
+# Github tools
+install gist
+install hub
+# Docker
+install boot2docker
+install docker
+install docker-compose
+
+# Weepee
+#  - SIP trace viewer
+install sngrep
+#  - STUN viewer
+install stuntman
+#  - SSH with U2F
+tap weepee-org/weepee
+install libu2f-host
+install weepee-org/weepee/openssh --with-u2f --with-ldns
+
 # Extras
+#install figlet
+#install graphviz
 #install ledger
-#install packer
-#install zmap
+#install mercurial
+#install neovim --HEAD
+#install rust
+#install wifi-password
+
 # Games
 #tap Homebrew/homebrew-games
 #install gnu-go
 #install go-gui
-
-## For servo
-#install homebrew/versions/autoconf213
-#install automake libtool pkg-config
 
 # Link apps
 linkapps --local
