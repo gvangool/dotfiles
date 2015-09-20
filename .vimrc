@@ -10,11 +10,14 @@ filetype plugin indent on
 
 syntax on
 
+"set background=light
 set background=dark
 if &term =~ ".*256.*"
     set t_Co=256
 endif
-colorscheme fnaqevan  " mustang solarized
+"color schemes: fnaqevan mustang solarized
+let g:solarized_termtrans = 1
+colorscheme solarized
 
 if has("autocmd")
     " extra filetypes
@@ -73,6 +76,8 @@ autocmd BufWrite .gitconfig :call DeleteTrailingWS()
 " Coffee script
 autocmd FileType coffee setlocal tabstop=2 softtabstop=2 shiftwidth=2
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
+" PHP
+autocmd BufWrite *.php :call DeleteTrailingWS()
 " defaults (Python)
 set tabstop=4
 set shiftwidth=4
@@ -159,10 +164,8 @@ autocmd BufRead,FileReadPost */Downloads/* setlocal nomodeline modelines=0
 " Remap Q to gq -> format line (default: split line on char 80)
 noremap Q gq
 " Formatting
-if filereadable("/usr/bin/xml_pp")
-    " XML pretty printing
-    autocmd FileType xml setlocal formatprg=xml_pp
-endif
+" XML pretty printing
+autocmd FileType xml setlocal formatprg=xmllint\ --format\ --encode\ UTF-8\ -
 
 " Macro's
 let @h = "yypVr"
