@@ -94,7 +94,7 @@ if [ -d /usr/local/etc/bash_completion.d ] && ! shopt -oq posix; then
     source /usr/local/etc/bash_completion.d/*
 fi
 
-for FILE in ~/share/sh/python ~/share/sh/vim ~/.alias ~/share/sh/vimpager ~/share/sh/rvm ~/share/sh/bashrc ~/share/sh/go; do
+for FILE in ~/share/sh/python ~/share/sh/vim ~/.alias ~/share/sh/vimpager ~/share/sh/rvm ~/share/sh/go ~/share/sh/postgres ~/.dockerfunc ~/share/sh/secrets ; do
     if [ -f ${FILE} ]; then
         source ${FILE}
     fi
@@ -120,3 +120,5 @@ if [[ "$OSTYPE" != darwin* ]] ; then
     # this will also fail on other BSD systems
     export GREP_OPTIONS='--exclude-dir=.svn --exclude-dir=.git --exclude-dir=.hg'
 fi
+
+export MTR_OPTIONS="--show-ips --aslookup"
