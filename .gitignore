@@ -61,6 +61,8 @@ bin/*.pyc
 # Screen RCfile
 !.screenrc
 # tmux file
+!.tmux
+!.tmux/*
 !.tmux.conf*
 
 # Fonts

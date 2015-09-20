@@ -38,3 +38,6 @@
 [submodule ".vim/bundle/vim-go"]
 	path = .vim/bundle/vim-go
 	url = https://github.com/fatih/vim-go
+[submodule "/Users/gert/.tmux/plugins/tpm"]
+	path = /Users/gert/.tmux/plugins/tpm
+	url = https://github.com/tmux-plugins/tpm
