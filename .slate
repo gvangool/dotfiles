@@ -51,6 +51,7 @@ bind a:cmd;space push left   bar-resize:screenSizeX/2
 bind w:cmd;space push top    bar-resize:screenSizeY/2
 bind d:cmd;space push right  bar-resize:screenSizeX/2
 bind x:cmd;space push bottom bar-resize:screenSizeY/2
+bind q:cmd;space corner bottom-left ${resize-quarter}
 
 # Grid: cmd+space, space
 bind space:cmd;space grid
