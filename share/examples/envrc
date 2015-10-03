@@ -15,4 +15,4 @@ if [ -f .env ] ; then
     set +a
 fi
 
-eval $(boot2docker shellinit)
+command -v boot2docker > /dev/null && eval $(boot2docker shellinit)
