@@ -41,3 +41,24 @@
 [submodule ".tmux/plugins/tpm"]
 	path = .tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
+[submodule ".config/nvim/bundle/vim-git"]
+	path = .config/nvim/bundle/vim-git
+	url = https://github.com/tpope/vim-git
+[submodule ".config/nvim/bundle/vim-colors-solarized"]
+	path = .config/nvim/bundle/vim-colors-solarized
+	url = https://github.com/altercation/vim-colors-solarized
+[submodule ".config/nvim/bundle/vim-surround"]
+	path = .config/nvim/bundle/vim-surround
+	url = https://github.com/tpope/vim-surround
+[submodule ".config/nvim/bundle/gundo"]
+	path = .config/nvim/bundle/gundo
+	url = https://github.com/sjl/gundo.vim
+[submodule ".config/nvim/bundle/vim-docker"]
+	path = .config/nvim/bundle/vim-docker
+	url = https://github.com/ekalinin/Dockerfile.vim
+[submodule ".config/nvim/bundle/vim-tmux"]
+	path = .config/nvim/bundle/vim-tmux
+	url = https://github.com/tmux-plugins/vim-tmux
+[submodule ".config/nvim/bundle/vim-vagrant"]
+	path = .config/nvim/bundle/vim-vagrant
+	url = https://github.com/markcornick/vim-vagrant
