@@ -39,6 +39,9 @@
 # GNU readline config
 !.inputrc
 
+# psql config
+!.psqlrc
+
 # Vim plugins, ftplugins, syntax etc etc
 !.vim
 # Vim settings
