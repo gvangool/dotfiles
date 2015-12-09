@@ -136,9 +136,9 @@ augroup au_cmd
     " Jump to last known location in file
     autocmd BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|else|exe "norm $"|endif|endif
     " Markdown
-    autocmd BufRead,BufNewFile *.md setlocal filetype=mkd
-    autocmd BufRead,BufNewFile *.mkd setlocal filetype=mkd
-    autocmd FileType mkd setlocal ai comments=n:> textwidth=78
+    autocmd BufRead,BufNewFile *.md setlocal filetype=markdown
+    autocmd BufRead,BufNewFile *.mkd setlocal filetype=markdown
+    autocmd FileType markdown setlocal ai comments=n:> textwidth=78
     " GIT config
     autocmd FileType gitconfig setlocal tabstop=4 shiftwidth=4 noexpandtab
     autocmd FileType gitconfig :call DeleteTrailingWS()
