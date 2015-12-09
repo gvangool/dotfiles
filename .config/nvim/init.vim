@@ -261,6 +261,13 @@ inoremap <down> <C-R>=pumvisible() ? "\<lt>up>" : "\<lt>C-o>gj"<Enter>
 " Remap Q to gq -> format line (default: split line on char 80)
 noremap Q gq
 
+" Make Y match D, http://vimrcfu.com/snippet/88
+map Y y$
+
+" Reselect upon visual block indenting, http://vimrcfu.com/snippet/14
+vnoremap < <gv
+vnoremap > >gv
+
 " Macro's 
 let @h = "yypVr"
 " RST Underline shortcuts {{{
