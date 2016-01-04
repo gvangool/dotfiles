@@ -48,7 +48,6 @@
 # Vim settings
 !.vimrc
 # neovim config
-!.config/*
 !.config/nvim
 !.config/nvim/*
 !.config/nvim/bundle/*
