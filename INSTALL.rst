@@ -22,7 +22,7 @@ CentOS 7
 
 - `Install docker
   <https://docs.docker.com/engine/installation/centos/#install-with-yum>`_
-- Install `direnv <http://direnv.net>`_ and::
+- Install `direnv <http://direnv.net>`_::
 
     git clone https://github.com/direnv/direnv ~/src/direnv
     docker run --rm -v ~/src/direnv:/usr/src/direnv -w /usr/src/direnv golang:1.5 make
@@ -31,11 +31,12 @@ CentOS 7
 Fedora 23
 ---------
 - Install extra packages::
+
     dnf install -y git zsh vim tofrodos
     dnf install -y hfsplus-tools kmod-hfsplus ntfs-3g ntfsprogs
 - `Install docker
   <https://docs.docker.com/engine/installation/fedora/#install-with-yum>`_
-- Install `direnv`_ and::
+- Install `direnv`_::
 
     git clone https://github.com/direnv/direnv ~/src/direnv
     docker run --rm -v ~/src/direnv:/usr/src/direnv -w /usr/src/direnv golang:1.5 make
