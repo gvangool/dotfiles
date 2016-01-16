@@ -10,6 +10,13 @@ if [[ -x /usr/bin/dircolors ]]; then
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
+
+# Auto exclude VCS directories from grep
+if [[ "$OSTYPE" != darwin* ]] ; then
+    # this will also fail on other BSD systems
+    alias grep='grep --exclude-dir=.svn --exclude-dir=.git --exclude-dir=.hg'
+fi
+
 if [[ "$OSTYPE" == darwin* ]]; then
     alias ls='ls -G'
     alias grep='grep --color=auto'

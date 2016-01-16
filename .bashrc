@@ -115,10 +115,4 @@ __git_repo(){
     echo "$(basename $(git rev-parse --show-toplevel)) ";
 }
 
-
-if [[ "$OSTYPE" != darwin* ]] ; then
-    # this will also fail on other BSD systems
-    export GREP_OPTIONS='--exclude-dir=.svn --exclude-dir=.git --exclude-dir=.hg'
-fi
-
 export MTR_OPTIONS="--show-ips --aslookup"
