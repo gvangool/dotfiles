@@ -28,3 +28,15 @@ htop() {
         --name htop \
         jess/htop
 }
+
+nmap() {
+    docker run --rm --net=host gvangool/nmap $@
+}
+
+php() {
+    docker run --rm -v $(pwd):/app --workdir /app gvangool/php $@
+}
+
+phpunit() {
+    docker run --rm -v $(pwd):/app --workdir /app --entrypoint phpunit.phar gvangool/php $@
+}
