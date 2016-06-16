@@ -1,0 +1,6 @@
+*
+!.gitignore
+# neovim config
+!nvim
+!nvim/*
+!nvim/bundle/*

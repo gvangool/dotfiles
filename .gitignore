@@ -7,6 +7,7 @@
 !.tmp/*
 # Generic .config directory
 !.config
+!.config/*
 
 # README with extra information
 !README.rst
