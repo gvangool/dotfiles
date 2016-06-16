@@ -2,7 +2,7 @@
 " properly set to work with the Vim-related packages available in Debian.
 runtime! debian.vim
 
-call pathogen#runtime_append_all_bundles()
+call pathogen#infect()
 " Refresh the filetype plugin to  find everything
 filetype off
 " Filetype based indent rules

@@ -3,4 +3,5 @@
 # neovim config
 !nvim
 !nvim/*
+!nvim/autoload/*
 !nvim/bundle/*
