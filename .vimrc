@@ -49,6 +49,7 @@ set autoindent
 set smartindent
 " Markdown
 autocmd FileType mkd setlocal ai comments=n:> textwidth=78
+autocmd FileType mkd setlocal ai tabstop=2 softtabstop=2 shiftwidth=2
 " ReST
 autocmd FileType rst setlocal ai comments=n:> tabstop=2 softtabstop=2 shiftwidth=2
 autocmd FileType rst setlocal textwidth=78 includeexpr=v:fname.'.rst'
