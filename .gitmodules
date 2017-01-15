@@ -62,3 +62,6 @@
 [submodule ".config/nvim/bundle/vim-vagrant"]
 	path = .config/nvim/bundle/vim-vagrant
 	url = https://github.com/markcornick/vim-vagrant
+[submodule ".vim/bundle/caddy.vim"]
+	path = .vim/bundle/caddy.vim
+	url = https://github.com/zsiciarz/caddy.vim.git
