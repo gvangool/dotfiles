@@ -3,7 +3,11 @@
 #
 # Authors:
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
+#   Gert Van Gool <gertvangool@gmail.com>
 #
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 fpath=(${HOME}/.zprompts $fpath)
 
@@ -39,9 +43,6 @@ if [[ "$OSTYPE" == darwin* ]] ; then
 else
     export PATH="$HOME/bin:$PATH"
 fi
-
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
 
 if (( $+commands[direnv] )) ; then
     eval "$(direnv hook $0)"
