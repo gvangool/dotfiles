@@ -1,5 +1,7 @@
-export PAGER=~/bin/vimpager
-alias less=$PAGER
-alias zless=$PAGER
+if [[ -x ~/.vim/bundle/vimpager/vimpager ]] ; then
+    export PAGER=~/.vim/bundle/vimpager/vimpager
+    alias less=$PAGER
+    alias zless=$PAGER
+fi
 
 # vim: set filetype=sh :

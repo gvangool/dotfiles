@@ -65,3 +65,6 @@
 [submodule ".vim/bundle/caddy.vim"]
 	path = .vim/bundle/caddy.vim
 	url = https://github.com/zsiciarz/caddy.vim.git
+[submodule ".vim/bundle/vimpager"]
+	path = .vim/bundle/vimpager
+	url = https://github.com/rkitover/vimpager.git
