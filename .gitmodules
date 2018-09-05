@@ -68,3 +68,6 @@
 [submodule ".vim/bundle/vimpager"]
 	path = .vim/bundle/vimpager
 	url = https://github.com/rkitover/vimpager.git
+[submodule ".vim/bundle/vim-solarized8"]
+	path = .vim/bundle/vim-solarized8
+	url = https://github.com/lifepillar/vim-solarized8.git
