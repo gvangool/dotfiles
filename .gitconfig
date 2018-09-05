@@ -4,19 +4,19 @@
 [color]
 	ui = auto
 [color "branch"]
-	current = cyan reverse
-	local = cyan
-	remote = green
-[color "diff"]
-	meta = yellow bold
-	frag = magenta bold
-	old = red bold
-	new = green bold
-	whitespace = red reverse
+	current = "#2aa198 reverse"
+	local = "#2aa198"
+	remote = "#859900"
+[color "interactive"]
+	meta = "#b58900 bold"
+	frag = "#d33682 bold"
+	old = "#dc322f bold"
+	new = "#859900 bold"
+	whitespace = "#dc322f reverse"
 [color "status"]
-	added = yellow
-	changed = green
-	untracked = cyan
+	added = "#b58900"
+	changed = "#859900"
+	untracked = "#2aa198"
 [alias]
 	ci = commit
 	s = status -s
