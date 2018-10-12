@@ -1,8 +1,12 @@
 *
 !.gitignore
-!world-clock.zones
+# alacritty
+!alacritty
+!alacritty/alacritty.yml
 # neovim config
 !nvim
 !nvim/*
 !nvim/autoload/*
 !nvim/bundle/*
+#bin/world-clock
+!world-clock.zones
