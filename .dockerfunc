@@ -1,7 +1,13 @@
 #!/bin/bash
+docker-update-images() {
+    declare -a images=($(docker images --format "{{.Repository}}:{{.Tag}}" --filter "dangling=false" | grep -vE "(none)"))
+    for img in ${images} ; do
+        docker pull ${img}
+    done
+}
 
 docker-untagged-images() {
-    docker images | grep "<none>" | sed "s/  */ /g" | cut -f 3 -d " "
+    docker images --filter "dangling=true" --format "{{.ID}}"
 }
 docker-clean-images() {
     docker rmi $(docker-untagged-images)
