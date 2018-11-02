@@ -1,5 +1,6 @@
 *
 !.gitignore
+!world-clock.zones
 # neovim config
 !nvim
 !nvim/*
