@@ -1,5 +1,8 @@
 Dockerfile snippets
 ===================
+Snippets that can be added to a Dockerfile to force certain behavior (e.g.
+during testing).
+
 Set locale
 ----------
 On Debian/Ubuntu
@@ -17,21 +20,28 @@ On Debian/Ubuntu
 
 Set timezone
 ------------
+On Debian, CentOS:
+
 .. code:: Dockerfile
 
   ENV TZ=America/Vancouver
   RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-On Alpine, you have 2 options:
+On Alpine, it's similar except that tzdata is not installed by default. That
+gives you 2 options:
 
-- keep the tzdata package installed (adds 1.33MB)::
+- add the tzdata package and keep it installed (adds 1.33MB):
+
+  .. code:: Dockerfile
 
     ENV TZ=America/Vancouver
     RUN apk add --no-cache tzdata && \
         ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
         echo $TZ > /etc/timezone
 
-- copy the timezone to localtime (adds 0.03MB)::
+- only copy the timezone to ``/etc/localtime`` (adds 0.03MB):
+
+  .. code:: Dockerfile
 
     RUN set -eu \
           && TZ=America/Vancouver
@@ -39,3 +49,5 @@ On Alpine, you have 2 options:
           && cp /usr/share/zoneinfo/$TZ /etc/localtime \
           && echo $TZ > /etc/timezone \
           && apk del tzdata
+
+  In this case it's important that the TZ environment variable is not set.
