@@ -27,6 +27,8 @@
 # The gitignore of this repository itself (!)
 !.gitignore
 !.gitmodules
+# the mailmap file to fix up committer details
+!.mailmap
 
 # Mercurial config
 !.hgrc
