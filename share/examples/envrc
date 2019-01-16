@@ -1,7 +1,7 @@
 # vim: set ts=4 sw=4 tw=0 syntax=sh ft=sh :
 if ! [ -d .direnv/env ]; then
-    virtualenv --no-site-packages --distribute .direnv/env
-    virtualenv --relocatable .direnv/env
+    python -m virtualenv --no-site-packages --distribute .direnv/env
+    python -m virtualenv --relocatable .direnv/env
 fi
 source .direnv/env/bin/activate
 
@@ -10,9 +10,10 @@ if [ ".direnv/env/requirements.txt" -ot "requirements.txt" ] ; then
 fi
 
 if [ -f .env ] ; then
-    set -a
-    . ./.env
-    set +a
+    dotenv .env
+    watch_file .env  # reload env when the file is changed
 fi
 
-command -v boot2docker > /dev/null && eval $(boot2docker shellinit)
+if [ -d .bin ] ; then
+    PATH_add .bin
+fi
