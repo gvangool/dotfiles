@@ -20,12 +20,6 @@
 [submodule ".zprezto"]
 	path = .zprezto
 	url = https://github.com/sorin-ionescu/prezto.git
-[submodule ".vim/bundle/mustache"]
-	path = .vim/bundle/mustache
-	url = git://github.com/juvenn/mustache.vim.git
-[submodule ".vim/bundle/vim-coffee-script"]
-	path = .vim/bundle/vim-coffee-script
-	url = git://github.com/kchmck/vim-coffee-script.git
 [submodule ".vim/bundle/vim-dockerfile"]
 	path = .vim/bundle/vim-dockerfile
 	url = https://github.com/ekalinin/Dockerfile.vim.git
