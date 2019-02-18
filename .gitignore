@@ -50,10 +50,6 @@
 !.vim
 # Vim settings
 !.vimrc
-# neovim config
-!.config/nvim
-!.config/nvim/*
-!.config/nvim/bundle/*
 
 # Bin files (few and far between)
 !bin
