@@ -28,8 +28,6 @@ if has("autocmd")
     " extra filetypes
     au BufRead,BufNewFile *.html set filetype=html
     au BufRead,BufNewFile *.wsgi set filetype=python
-    au BufRead,BufNewFile *.md set filetype=mkd
-    au BufRead,BufNewFile *.mkd set filetype=mkd
     au BufRead,BufNewFile *.rest set filetype=rst
     au BufRead,BufNewFile .tmux.conf set filetype=tmux
     " extra syntax rules
@@ -53,8 +51,7 @@ set smartcase		" Do smart case matching
 set autoindent
 set smartindent
 " Markdown
-autocmd FileType mkd setlocal ai comments=n:> textwidth=78
-autocmd FileType mkd setlocal ai tabstop=2 softtabstop=2 shiftwidth=2
+autocmd FileType markdown :call DeleteTrailingWS()
 " ReST
 autocmd FileType rst setlocal ai comments=n:> tabstop=2 softtabstop=2 shiftwidth=2
 autocmd FileType rst setlocal textwidth=78 includeexpr=v:fname.'.rst'
