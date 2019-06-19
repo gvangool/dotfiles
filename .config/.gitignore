@@ -2,7 +2,6 @@
 !.gitignore
 # alacritty
 !alacritty
-!alacritty/alacritty.yml
 # neovim config
 !nvim
 !nvim/*
