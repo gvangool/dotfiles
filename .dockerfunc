@@ -10,10 +10,17 @@ docker-untagged-images() {
     docker images --filter "dangling=true" --format "{{.ID}}"
 }
 docker-clean-images() {
-    docker rmi $(docker-untagged-images)
+    images=($(docker-untagged-images))
+    [ -n "${images}" ] && docker rmi ${images}
 }
 docker-clean-instances() {
-    docker rm $(docker ps -f status=exited -a -q)
+    instances=($(docker ps -f status=exited -a -q))
+    [ -n "${instances}" ] && docker rm ${instances}
+}
+docker-pull-default-images() {
+    for img in python:{3.7,2.7} debian:{stretch,buster} alpine:3.10 jess/htop ; do
+        docker pull ${img}
+    done
 }
 
 papertrail-cli() {
