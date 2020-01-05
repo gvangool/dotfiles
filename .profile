@@ -24,4 +24,3 @@ fi
 if [ -f "$HOME/.ssh-agent" ] ; then
 	. "$HOME/.ssh-agent" > /dev/null
 fi
-
