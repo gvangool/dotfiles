@@ -26,4 +26,13 @@ if [[ -x ~/.local/bin/pipsi ]] ; then
     export PATH=~/.local/bin:$PATH
 fi
 
+if [ -x ~/.local/bin/pipx ] ; then
+    export PATH=~/.local/bin:$PATH
+    if [[ "$(basename ${SHELL})" == "zsh" ]]; then
+        autoload -U bashcompinit
+        bashcompinit
+    fi
+    eval "$(register-python-argcomplete pipx)"
+fi
+
 # vim: set filetype=sh :
