@@ -2,8 +2,11 @@ Installation
 ============
 OSX
 ---
-- Get Xcode from App store (or online commandline tools)
-- Install Homebrew and install instructions from ``Brewfile``
+Install `Homebrew <https://brew.sh/>`__::
+
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+Run ``brew bundle`` (which will install cli, dmg's and Mac Store apps).
 
 
 CentOS 7
