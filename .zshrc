@@ -17,7 +17,7 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
-FILES=(~/.alias ~/share/sh/python ~/share/sh/vim ~/share/sh/vimpager ~/share/sh/rvm ~/share/sh/postgres ~/share/sh/go ~/.dockerfunc ~/share/sh/secrets ~/.ssh-agent ~/.cargo/env)
+FILES=(~/.alias ~/share/sh/python ~/share/sh/vim ~/share/sh/vimpager ~/share/sh/rvm ~/share/sh/postgres ~/share/sh/go ~/.dockerfunc ~/share/sh/secrets ~/share/sh/node ~/.ssh-agent ~/.cargo/env)
 for FILE in ${FILES} ; do
     if [[ -f ${FILE} ]] ; then
         source ${FILE}
@@ -32,10 +32,6 @@ if [[ "$OSTYPE" == darwin* ]] ; then
         if (( $+commands[reattach-to-user-namespace] )) ; then
             tmux set-option -g default-command "reattach-to-user-namespace -l zsh"
         fi
-    fi
-    if (( $+commands[node] )) ; then
-        export NODE_PATH="/usr/local/lib/node_modules"
-        export PATH="/usr/local/share/npm/bin:${PATH}"
     fi
     if [[ -d "/usr/local/texlive/2013/bin" ]] ; then
         export PATH="/usr/local/texlive/2013/bin/x86_64-darwin:$PATH"

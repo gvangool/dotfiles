@@ -1,0 +1,5 @@
+[ -s $HOME/.nvm/nvm.sh ] && . $HOME/.nvm/nvm.sh
+export YVM_DIR=$HOME/.yvm
+[ -r $YVM_DIR/yvm.sh ] && . $YVM_DIR/yvm.sh
+
+# vim: set filetype=sh :
