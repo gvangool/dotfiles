@@ -1,13 +1,17 @@
-#!/bin/bash -eu
+#!/usr/bin/env bash
 # Command-line world clock
+set -eu
+set -o pipefail
 
 : ${WORLDCLOCK_ZONES:=$HOME/.config/world-clock.zones}
 : ${WORLDCLOCK_FORMAT:='+%Y-%m-%d %H:%M:%S %Z'}
 
-echo -en "\e[7m"
-zone=$(cat /etc/timezone)
-echo $zone '!' $(TZ=$zone date "$WORLDCLOCK_FORMAT") | awk -F '!' '{ printf "%-20s  %s\n", $1, $2;}'
-echo -en "\e[0m"
+if [[ -f /etc/timezone ]] ; then
+    echo -en "\e[7m"
+    zone=$(cat /etc/timezone)
+    echo $zone '!' $(TZ=$zone date "$WORLDCLOCK_FORMAT") | awk -F '!' '{ printf "%-20s  %s\n", $1, $2;}'
+    echo -en "\e[0m"
+fi
 
 while read zone
 do echo $zone '!' $(TZ=$zone date "$WORLDCLOCK_FORMAT")
