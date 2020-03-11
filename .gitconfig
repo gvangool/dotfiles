@@ -34,6 +34,7 @@
 	add-modified= "!f() { git ls-files --modified | sort -u ; }; git add `f`"
 	add-empty-dirs = "!f() { for dir in `find $@ -type d -empty`; do echo \"*\n!.gitignore\" > $dir/.gitignore; git add $dir/.gitignore; done }; f"
 	rm-deleted = "!git rm $(git status | grep deleted | cut -f 2 -d ':' | sed 's/ //g')"
+	tag-date = !GIT_COMMITTER_DATE=$(git show --format=%aD  | head -1) git tag
 	b = branch -vvv
 	l = log --pretty=oneline --abbrev-commit
 [push]
