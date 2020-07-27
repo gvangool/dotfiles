@@ -56,3 +56,5 @@
 	insteadOf = "ghg:"
 [url "git@github.com:"]
 	insteadOf = "ghp:"
+[init]
+	defaultBranch = main
