@@ -25,3 +25,4 @@ Used sources
 - `<https://github.com/mathiasbynens/dotfiles>`_ for ``.wgetrc`` and ``.osx``
 - A CBR to CBZ converter from `<http://www.kingbin.net/blog/2009/11/03/285/>`_
 - `<https://github.com/thoughtbot/dotfiles>`_ for ``.psqlrc``
+- `<https://github.com/tonchis/tmuxify>`_ for ``bin/tmuxify``
