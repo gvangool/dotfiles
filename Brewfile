@@ -7,6 +7,7 @@ tap "homebrew/core"
 # Base
 brew "mas"
 brew "git"
+brew "vim"
 brew "zsh"
 brew "tmux"
 brew "reattach-to-user-namespace"
