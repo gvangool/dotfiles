@@ -37,6 +37,7 @@
 	tag-date = !GIT_COMMITTER_DATE=$(git show --format=%aD  | head -1) git tag
 	b = branch -vvv
 	l = log --pretty=oneline --abbrev-commit
+	update-main = "!git fetch . origin/main:main"
 [push]
 	default = current
 [core]
