@@ -2,7 +2,7 @@
 " properly set to work with the Vim-related packages available in Debian.
 runtime! debian.vim
 
-call pathogen#infect()
+execute pathogen#infect()
 " Refresh the filetype plugin to  find everything
 filetype off
 " Filetype based indent rules
@@ -30,6 +30,7 @@ if has("autocmd")
     au BufRead,BufNewFile *.wsgi set filetype=python
     au BufRead,BufNewFile *.rest set filetype=rst
     au BufRead,BufNewFile .tmux.conf set filetype=tmux
+    au BufRead,BufNewFile .envrc set filetype=bash
     " extra syntax rules
     au BufRead,BufNewFile /etc/apache2/* set syntax=apache
     " Jump to last known location in file
