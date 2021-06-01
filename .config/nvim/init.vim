@@ -6,8 +6,12 @@ set background=dark
 if &term =~ ".*256.*"
     set t_Co=256
 endif
-let g:solarized_termtrans = 1
-colorscheme solarized
+if exists('+termguicolors')
+	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+	set termguicolors
+endif
+colorscheme solarized8 " Switch to true color solarized if it exists
 
 syntax on
 " }}} 
@@ -58,7 +62,7 @@ set foldmethod=indent   " fold based on indent level
 filetype off
 filetype on
 " Filetype based indent rules
-filetype indent on
+filetype plugin indent on
 
 " Indentation
 set autoindent
@@ -108,7 +112,7 @@ augroup END
 " }}}
 
 " Autocmd web {{{
-augroup config_autocmd
+augroup au_html
     autocmd!
     autocmd BufRead,BufNewFile *.html setlocal filetype=html
     " HTML
@@ -122,8 +126,6 @@ augroup config_autocmd
     " Coffee script
     autocmd FileType coffee setlocal tabstop=2 softtabstop=2 shiftwidth=2
     autocmd BufWrite *.coffee :call DeleteTrailingWS()
-    " PHP
-    autocmd BufWrite *.php :call DeleteTrailingWS()
 augroup END
 " }}}
 
@@ -131,6 +133,7 @@ augroup END
 augroup au_cmd
     autocmd!
     " Extra syntax rules
+    autocmd BufRead,BufNewFile .envrc setlocal filetype=bash
     autocmd BufRead,BufNewFile .tmux.conf setlocal filetype=tmux
     autocmd BufRead,BufNewFile /etc/apache2/* setlocal syntax=apache
     " Jump to last known location in file
@@ -140,6 +143,7 @@ augroup au_cmd
     autocmd BufRead,BufNewFile *.mkd setlocal filetype=markdown
     autocmd FileType markdown setlocal ai comments=n:> textwidth=78
     " GIT config
+    autocmd FileType gitcommit let b:EditorConfig_disable = 1
     autocmd FileType gitconfig setlocal tabstop=4 shiftwidth=4 noexpandtab
     autocmd FileType gitconfig :call DeleteTrailingWS()
     autocmd BufWrite .gitconfig :call DeleteTrailingWS()
@@ -152,17 +156,17 @@ set shiftwidth=4
 set expandtab
 
 " Writing commands and marks to .viminfo
-set viminfo='10,f1,<500,:20,%,n~/.config/nvim/viminfo
-"           |   |  |    |   | |
-"           |   |  |    |   | +-- viminfo location
-"           |   |  |    |   +-- the buffer list
-"           |   |  |    +-- number of lines to save from the command line
-"           |   |  |         history
+set viminfo='10,f1,<1000,:20,%,n~/.config/nvim/viminfo
+"           |   |  |     |   | |
+"           |   |  |     |   | +-- viminfo location
+"           |   |  |     |   +-- the buffer list
+"           |   |  |     +-- number of lines to save from the command line
+"           |   |  |          history
 "           |   |  +-- Maximum number of lines saved for each register, large
 "           |   |      number will slow down vim start
 "           |   +-- save global marks
 "           +-- number of marks to save
-set history=1000 " keep a lot of history!
+set history=5000 " keep a lot of history!
 " Error handling
 set noerrorbells
 set visualbell
