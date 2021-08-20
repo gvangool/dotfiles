@@ -14,6 +14,17 @@ Install `Homebrew <https://brew.sh/>`__::
 
 Run ``brew bundle`` (which will install cli, dmg's and Mac Store apps).
 
+Settings: Keyboard
+~~~~~~~~~~~~~~~~~~
+- Keyboard > Modifier Keys > Caps lock (map to Escape)
+- Text:
+
+  - Disable "Correct spelling automatically"
+  - Disable "Capitalize words automatically"
+  - Disable "Add period with double-space"
+  - Disable "Use smart quotes and dashes"
+- Shortcuts > Spotlight (disable or remap, want to use cmd + space for Alfred)
+
 CentOS 7
 --------
 - Configure papertrail (with TLS!)
