@@ -2,6 +2,9 @@
 !.gitignore
 # alacritty
 !alacritty
+# terminal.app
+!terminal.app
+!terminal.app/*.terminal
 # neovim config
 !nvim
 !nvim/*

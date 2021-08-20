@@ -10,9 +10,13 @@ OSX
 ---
 Install `Homebrew <https://brew.sh/>`__::
 
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-Run ``brew bundle`` (which will install cli, dmg's and Mac Store apps).
+Run ``brew doctor`` to check that everything is as expected
+(``/usr/local/share/zsh`` was not writeable for current user on Big Sur).
+
+Run ``brew bundle``, this will install cli tooling, dmg's and Mac Store apps
+(from ``Brewfile``).
 
 Settings: Keyboard
 ~~~~~~~~~~~~~~~~~~
@@ -74,10 +78,13 @@ Ubuntu 18.04
 - Extra fonts::
 
     apt-get install fonts-firacode -y
-- Rust setup::
+- Rust setup:
 
-    curl https://sh.rustup.rs -sSf | sh
-    source ~/.cargo/env
+  .. code-block:: bash
+
+     curl https://sh.rustup.rs -sSf | sh
+     source ~/.cargo/env
+
   - Alacritty setup::
 
       cd ~/src
@@ -85,6 +92,7 @@ Ubuntu 18.04
       cd alacritty
       sudo apt-get install cmake libfreetype6-dev libfontconfig1-dev xclip -y
       cargo build release
+
   - Tools from cargo::
 
       cargo install watchexec ripgrep fd-find
