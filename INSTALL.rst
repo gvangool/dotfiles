@@ -6,14 +6,16 @@ dotfiles
 
   cd ~ && git clone https://github.com/gvangool/dotfiles.git && mv dotfiles/.git . && git reset --hard && git submodule update --init --recursive
 
-OSX
----
+MacOS/OSX
+---------
 Install `Homebrew <https://brew.sh/>`__::
 
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 Run ``brew doctor`` to check that everything is as expected
 (``/usr/local/share/zsh`` was not writeable for current user on Big Sur).
+
+Sign into App Store (before running the rest of the Homebrew commands).
 
 Run ``brew bundle``, this will install cli tooling, dmg's and Mac Store apps
 (from ``Brewfile``).
@@ -95,7 +97,7 @@ Ubuntu 18.04
 
   - Tools from cargo::
 
-      cargo install watchexec ripgrep fd-find
+      cargo install watchexec-cli ripgrep fd-find
 - Extra python configuration:
 
   - pyenv::
