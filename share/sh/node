@@ -1,5 +1,11 @@
-[ -s $HOME/.nvm/nvm.sh ] && . $HOME/.nvm/nvm.sh
+# vim: set filetype=sh :
+# NVM
+if [ -s $HOME/.nvm/nvm.sh ] ; then
+    . $HOME/.nvm/nvm.sh
+elif [ -s "/usr/local/opt/nvm/nvm.sh" ] ; then
+    . "/usr/local/opt/nvm/nvm.sh"
+fi
+
+# YVM
 export YVM_DIR=$HOME/.yvm
 [ -r $YVM_DIR/yvm.sh ] && . $YVM_DIR/yvm.sh
-
-# vim: set filetype=sh :
