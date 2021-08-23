@@ -24,8 +24,8 @@ for FILE in ${FILES} ; do
     fi
 done
 
+export PATH="$HOME/bin:$PATH"
 if [[ "$OSTYPE" == darwin* ]] ; then
-    export PATH="$HOME/bin:/usr/local/bin:/usr/local/sbin:$PATH"
     # Fix tmux support :)
     if [[ "x$TMUX" != "x" ]] ; then
         # Only if it's installed
@@ -36,8 +36,6 @@ if [[ "$OSTYPE" == darwin* ]] ; then
     if [[ -d "/usr/local/texlive/2013/bin" ]] ; then
         export PATH="/usr/local/texlive/2013/bin/x86_64-darwin:$PATH"
     fi
-else
-    export PATH="$HOME/bin:$PATH"
 fi
 
 if (( $+commands[direnv] )) ; then
