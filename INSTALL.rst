@@ -31,22 +31,40 @@ Settings: Keyboard
   - Disable "Use smart quotes and dashes"
 - Shortcuts > Spotlight (disable or remap, want to use cmd + space for Alfred)
 
-CentOS 7
---------
-- Configure papertrail (with TLS!)
+Rocky Linux 8
+-------------
 - Install extra packages::
 
-    yum install -y git zsh epel-release
-    yum install -y hfsplus-tools kmod-hfsplus
-    yum install -y ntfs-3g ntfsprogs
-    yum install -y tofrodos
-- Install VLC::
-
-    sudo rpm -Uvh http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-5.el7.nux.noarch.rpm
-    sudo yum install -y vlc
-
+    sudo dnf install -y git zsh epel-release
+    sudo dnf install -y tofrodos
+    sudo chsh -s $(which zsh) ${USERNAME:-root}
+- Configure papertrail (with TLS!)
 - `Install docker
   <https://docs.docker.com/install/linux/docker-ce/centos/>`__
+
+Desktop/laptop
+~~~~~~~~~~~~~~
+- Install NTFS tools::
+
+    sudo dnf install -y ntfs-3g ntfsprogs
+- Extra fonts::
+
+    sudo dnf install -y fira-code-fonts
+- Install VLC::
+
+    sudo dnf install https://download1.rpmfusion.org/free/el/rpmfusion-free-release-8.noarch.rpm
+    sudo dnf install -y vlc
+
+Amazon Linux 2
+--------------
+- Install base packages::
+
+    sudo yum install -y git zsh util-linux-user
+
+- Switch to zsh::
+
+    sudo chsh -s $(which zsh) ec2-user
+
 
 Fedora 23
 ---------
@@ -109,3 +127,28 @@ Ubuntu 18.04
         libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
         libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev \
         liblzma-dev python-openssl
+
+Cargo
+-----
+.. code-block:: bash
+
+   curl https://sh.rustup.rs -sSf | sh
+   source ~/.cargo/env
+
+Tools
+~~~~~
+.. code-block:: bash
+
+   cargo install watchexec-cli ripgrep fd-find
+
+Alacritty
+~~~~~~~~~
+Getting the `dependencies
+<https://github.com/alacritty/alacritty/blob/master/INSTALL.md#dependencies>`__ installed.
+
+.. code-block:: bash
+
+    cd ~/src
+    git clone https://github.com/alacritty/alacritty.git
+    cd alacritty
+    cargo build --release
