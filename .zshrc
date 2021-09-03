@@ -43,3 +43,6 @@ if (( $+commands[direnv] )) ; then
 fi
 
 export MTR_OPTIONS="--show-ips --aslookup"
+if [ -d "/Applications/YubiKey Manager.app/Contents/MacOS/" ] ; then
+    export PATH="/Applications/YubiKey Manager.app/Contents/MacOS/:$PATH"
+fi
