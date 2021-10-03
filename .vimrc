@@ -23,6 +23,7 @@ endif
 colorscheme fnaqevan " always exists because it's in .vim/colors
 silent! colorscheme solarized " Switch to solarized if submodules are loaded
 silent! colorscheme solarized8 " Switch to true color solarized if it exists
+silent! colorscheme dracula
 
 if has("autocmd")
     " extra filetypes
