@@ -30,9 +30,9 @@ brew "rustup-init"
 brew "shellcheck"
 brew "gh"
 cask "font-fira-code"
-# Docker
-cask "docker"
-brew "docker-compose"
+## Docker
+#cask "docker"
+#brew "docker-compose"
 
 # Apps
 cask "adobe-acrobat-reader"
@@ -46,9 +46,11 @@ cask "signal"
 cask "spotify"
 cask "vlc"
 cask "wireshark"
+mas "ISO8601", id: 1505772375
 mas "Microsoft Remote Desktop", id: 1295203466
 mas "Moom", id: 419330170
 mas "Shush", id: 496437906
 mas "Slack", id: 803453959
+mas "Tailscale", id: 1475387142
 mas "Telegram", id: 747648890
 mas "WireGuard", id: 1451685025
