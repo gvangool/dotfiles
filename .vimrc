@@ -209,6 +209,10 @@ function! AppendModeline()
   call append(line("$"), l:modeline)
 endfunction
 
+" For git commit messages, always move back to top.
+" Shown in https://twitter.com/OCP001/status/1468512856052281346
+autocmd BufReadPost COMMIT_EDITMSG exe "normal! gg"
+
 " Extra Vim behaviour
 set spell spelllang=en_us spellfile=~/.vim/spellfile.add
 set nospell
