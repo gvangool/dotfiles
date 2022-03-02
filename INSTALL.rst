@@ -139,7 +139,7 @@ Tools
 ~~~~~
 .. code-block:: bash
 
-   cargo install watchexec-cli ripgrep fd-find
+   cargo install watchexec-cli ripgrep fd-find sd
 
 Alacritty
 ~~~~~~~~~
