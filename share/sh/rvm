@@ -2,7 +2,7 @@
 
 if [ -d "${HOME}/.rvm/bin" ] ;  then
     if [[ $PATH == *"${HOME}/.rvm/bin"* ]] ; then
-        # already included
+        : # already included
     else
         export PATH="$HOME/.rvm/bin:$PATH" # Add RVM to PATH for scripting
     fi

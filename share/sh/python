@@ -24,7 +24,7 @@ fi
 
 if [ -d "${HOME}/.local/bin" ] ;  then
     if [[ $PATH == *"${HOME}/.local/bin:"* ]] ; then
-        # already included
+        : # already included
     else
         export PATH="${HOME}/.local/bin:$PATH"
     fi
