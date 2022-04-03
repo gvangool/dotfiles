@@ -24,3 +24,7 @@ fi
 if [ -f "$HOME/.ssh-agent" ] ; then
 	. "$HOME/.ssh-agent" > /dev/null
 fi
+
+if [ -f "$HOME/.cargo/env" ] ; then
+    . "$HOME/.cargo/env"
+fi
