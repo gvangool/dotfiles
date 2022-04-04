@@ -152,3 +152,13 @@ Getting the `dependencies
     git clone https://github.com/alacritty/alacritty.git
     cd alacritty
     cargo build --release
+
+pipx
+----
+After installing a recent Python (``pyenv install 3.10``), you should also
+install pipx
+
+.. code-block:: bash
+
+    pyenv exec python -m pip install pipx
+    pipx install aws-shell black httpie isort pip-tools pyupgrade
