@@ -2,6 +2,9 @@
 !.gitignore
 # alacritty
 !alacritty
+# gh (https://cli.github.com)
+!gh
+!gh/config.yml
 # terminal.app
 !terminal.app
 !terminal.app/*.terminal
