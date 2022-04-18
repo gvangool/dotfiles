@@ -89,3 +89,6 @@
 [submodule ".vim/bundle/dracula"]
 	path = .vim/bundle/dracula
 	url = https://github.com/dracula/vim.git
+[submodule ".vim/bundle/vim-terraform"]
+	path = .vim/bundle/vim-terraform
+	url = https://github.com/hashivim/vim-terraform.git
