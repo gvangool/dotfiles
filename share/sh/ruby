@@ -1,4 +1,4 @@
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+test -s "$HOME/.rvm/scripts/rvm" && . "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 if [ -d "${HOME}/.rvm/bin" ] ;  then
     if [[ $PATH == *"${HOME}/.rvm/bin"* ]] ; then
@@ -6,6 +6,10 @@ if [ -d "${HOME}/.rvm/bin" ] ;  then
     else
         export PATH="$HOME/.rvm/bin:$PATH" # Add RVM to PATH for scripting
     fi
+fi
+
+if [ "x$(which rbenv)" != "x" ] ; then
+    eval "$(rbenv init -)"
 fi
 
 # vim: set filetype=sh :
