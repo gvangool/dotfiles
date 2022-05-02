@@ -9,10 +9,6 @@ if [[ -n $(command -v pip > /dev/null) ]]; then
     eval "$(pip completion --$(basename ${SHELL}))"
     export PIP_DOWNLOAD_CACHE=~/.tmp/pip
 fi
-function pip_upgrade_all() {
-    pip list --outdated | cut -f 1 -d " " | xargs pip install -U
-}
-alias pip-upgrade-all=pip_upgrade_all
 
 WRAPPER=$(command -v virtualenvwrapper.sh)
 if [[ -n ${WRAPPER} ]]; then
