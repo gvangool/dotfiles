@@ -35,9 +35,6 @@
 [submodule ".tmux/plugins/tpm"]
 	path = .tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm
-[submodule ".vim/bundle/caddy.vim"]
-	path = .vim/bundle/caddy.vim
-	url = https://github.com/zsiciarz/caddy.vim.git
 [submodule ".vim/bundle/vimpager"]
 	path = .vim/bundle/vimpager
 	url = https://github.com/rkitover/vimpager.git
@@ -92,3 +89,6 @@
 [submodule ".vim/bundle/vim-terraform"]
 	path = .vim/bundle/vim-terraform
 	url = https://github.com/hashivim/vim-terraform.git
+[submodule ".vim/bundle/vim-caddyfile"]
+	path = .vim/bundle/vim-caddyfile
+	url = https://github.com/isobit/vim-caddyfile.git
