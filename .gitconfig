@@ -56,8 +56,10 @@
 	autosetuprebase = always
 [url "https://github.com/"]
 	insteadOf = "gh:"
-[url "git://github.com/"]
+[url "https://github.com/"]
 	insteadOf = "ghg:"
+[url "https://github.com/"]
+	insteadOf = "git://github.com/"
 [url "git@github.com:"]
 	insteadOf = "ghp:"
 [init]
