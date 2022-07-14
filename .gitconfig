@@ -43,6 +43,7 @@
 	diff-branch-only = !git diff $(git merge-base $(git branch --show-current) main) $(git branch --show-current)
 [push]
 	default = current
+	autoSetupRemote = true
 [core]
 	autocrlf = input
 [diff]
