@@ -51,3 +51,7 @@ fi
 if [ -d /home/linuxbrew/.linuxbrew ] ; then
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
+
+if (( $+commands[gh] )) ; then
+    eval "$(gh completion -s zsh)"
+fi
