@@ -4,6 +4,8 @@ if [ -s $HOME/.nvm/nvm.sh ] ; then
     . $HOME/.nvm/nvm.sh
 elif [ -s "/usr/local/opt/nvm/nvm.sh" ] ; then
     . "/usr/local/opt/nvm/nvm.sh"
+elif [ -s "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh" ] ; then
+    . "/home/linuxbrew/.linuxbrew/opt/nvm/nvm.sh"
 fi
 
 # YVM
