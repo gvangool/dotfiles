@@ -1,3 +1,3 @@
 #!/bin/bash -eu
-branches=$(git branch -vv | grep 'origin/.*: gone]' | awk '{print $1}')
+branches=$(git branch -vv | grep -Ev '^\* ' | grep 'origin/.*: gone]' | awk '{print $1}')
 [ -n "${branches}" ] && echo ${branches} | xargs git branch -D
