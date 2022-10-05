@@ -79,7 +79,7 @@ Fedora 23
     sudo su -c 'dnf install http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm'
     sudo dnf install -y vlc
 
-Ubuntu 18.04
+Ubuntu 20.04
 ------------
 - Install extra packages::
 
@@ -87,46 +87,32 @@ Ubuntu 18.04
 - Switch to zsh::
 
     chsh -s $(which zsh)
-- `Install docker
-  <https://docs.docker.com/install/linux/docker-ce/ubuntu/>`__
-- Install tmux (3.0a)::
-
-    wget https://github.com/tmux/tmux/releases/download/3.0a/tmux-3.0a.tar.gz -O tmux-3.0a.tar.gz
-    tar -xzf tmux-3.0a.tar.gz
-    cd tmux-3.0a
-    ./configure && make
-- Extra fonts::
-
-    apt-get install fonts-firacode -y
-- Rust setup:
+- Install `Homebrew <https://brew.sh/>`__:
 
   .. code-block:: bash
 
-     curl https://sh.rustup.rs -sSf | sh
-     source ~/.cargo/env
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-  - Alacritty setup::
+  Run ``brew doctor`` to check that everything is as expected.
 
-      cd ~/src
-      git clone https://github.com/jwilm/alacritty.git
-      cd alacritty
-      sudo apt-get install cmake libfreetype6-dev libfontconfig1-dev xclip -y
-      cargo build release
+  Run ``brew bundle install --file=Brewfile.linux``, this will install cli tooling (from ``Brewfile.linux``).
 
-  - Tools from cargo::
+- Extra fonts::
 
-      cargo install watchexec-cli ripgrep fd-find
-- Extra python configuration:
+    sudo apt install fonts-firacode -y
 
-  - pyenv::
+- Extra python pyenv (installed through ``brew install pyenv``):
 
-      git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-      # Build environment
-      sudo apt-get install -y \
-        make build-essential libssl-dev zlib1g-dev \
-        libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
-        libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev \
-        liblzma-dev python-openssl
+  .. code-block:: bash
+
+     # Build environment
+     sudo apt-get install -y \
+       make build-essential libssl-dev zlib1g-dev \
+       libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+       libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+
+     brew install bzip2 libffi libxml2 libxmlsec1 openssl readline sqlite xz zlib
+
 
 Cargo
 -----
@@ -140,6 +126,8 @@ Tools
 .. code-block:: bash
 
    cargo install watchexec-cli ripgrep fd-find sd
+   cargo install tfdoc --git https://github.com/gvangool/tfdoc --branch bin-name
+   cargo install modenv
 
 Alacritty
 ~~~~~~~~~
