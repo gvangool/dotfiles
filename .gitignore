@@ -93,5 +93,6 @@ bin/*.pyc
 # More RC files
 !.wgetrc
 !.macos
-!Brewfile
+!Brewfile.macos
+!Brewfile.linux
 !.dockerfunc

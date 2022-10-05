@@ -1,0 +1,46 @@
+tap "github/gh"
+tap "hashicorp/tap"
+tap "homebrew/aliases"
+tap "homebrew/bundle"
+tap "homebrew/core"
+tap "homebrew/services"
+
+# Base
+brew "git"
+brew "tmux"
+brew "vim"
+brew "zsh"
+# network tools
+brew "mosh", args: ["HEAD"]
+brew "mtr"
+# Tooling
+brew "curl"
+brew "direnv"
+brew "glow"
+brew "htop"
+brew "jq"
+brew "rclone"
+brew "restic"
+brew "xz"
+brew "zstd"
+# Programming
+brew "gh"
+brew "nvm"
+brew "pandoc"
+brew "postgresql@14"
+brew "pyenv"
+brew "zola"
+# Providers
+brew "akamai"
+brew "aws-vault"
+brew "awscli"
+brew "doctl"
+brew "kubernetes-cli"
+brew "rustup-init"
+brew "scw"
+brew "shellcheck"
+# Hashicorp
+brew "consul"
+brew "packer"
+brew "terraform"
+brew "vault"
