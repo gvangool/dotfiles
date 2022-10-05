@@ -92,3 +92,6 @@
 [submodule ".vim/bundle/vim-caddyfile"]
 	path = .vim/bundle/vim-caddyfile
 	url = https://github.com/isobit/vim-caddyfile.git
+[submodule ".vim/bundle/vim-varnish"]
+	path = .vim/bundle/vim-varnish
+	url = https://github.com/varnishcache-friends/vim-varnish
