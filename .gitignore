@@ -87,8 +87,8 @@ bin/*.pyc
 !.zpreztorc
 !.zprofile
 !.zshenv
-!.zprompts
-!.zprompts/*
+!.zsh
+!.zsh/*
 
 # More RC files
 !.wgetrc
