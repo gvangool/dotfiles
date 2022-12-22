@@ -52,6 +52,13 @@ if [ -d /home/linuxbrew/.linuxbrew ] ; then
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
+# Setting up extra autocompletions
+# - just
+if (( $+commands[just] )) ; then
+    autoload -Uz _just
+    compdef _just just
+fi
+# - gh
 if (( $+commands[gh] )) ; then
     eval "$(gh completion -s zsh)"
 fi
