@@ -31,29 +31,29 @@ Settings: Keyboard
   - Disable "Use smart quotes and dashes"
 - Shortcuts > Spotlight (disable or remap, want to use cmd + space for Alfred)
 
-Rocky Linux 8
+Rocky Linux 9
 -------------
 - Install extra packages::
 
-    sudo dnf install -y git zsh epel-release
-    sudo dnf install -y tofrodos
+    sudo dnf install -y epel-release
+    sudo dnf install -y vim zsh git mtr bind-utils wget curl htop tar bzip2 gzip xz
+    sudo dnf install -y util-linux-user glibc-langpack-en
     sudo chsh -s $(which zsh) ${USERNAME:-root}
-- Configure papertrail (with TLS!)
-- `Install docker
-  <https://docs.docker.com/install/linux/docker-ce/centos/>`__
+- Install pyenv::
 
-Desktop/laptop
-~~~~~~~~~~~~~~
-- Install NTFS tools::
+    curl https://pyenv.run | bash
+    sudo dnf install -y \
+      make gcc zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel \
+      openssl-devel tk-devel libffi-devel xz-devel libuuid-devel
+- Install GitHub CLI::
 
-    sudo dnf install -y ntfs-3g ntfsprogs
-- Extra fonts::
+    sudo dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
+    sudo dnf install -y gh
+- `Install Tailscale <https://pkgs.tailscale.com/stable/#rhel-9>`_ and mark it
+  as a trusted interface::
 
-    sudo dnf install -y fira-code-fonts
-- Install VLC::
+    firewall-cmd --add-interface=tailscale0 --zone=trusted
 
-    sudo dnf install https://download1.rpmfusion.org/free/el/rpmfusion-free-release-8.noarch.rpm
-    sudo dnf install -y vlc
 
 Amazon Linux 2
 --------------
@@ -65,19 +65,6 @@ Amazon Linux 2
 
     sudo chsh -s $(which zsh) ec2-user
 
-
-Fedora 23
----------
-- Install extra packages::
-
-    dnf install -y git zsh vim tofrodos
-    dnf install -y hfsplus-tools kmod-hfsplus ntfs-3g ntfsprogs
-- `Install docker
-  <https://docs.docker.com/install/linux/docker-ce/fedora/>`__
-- Install VLC (from `rpmfusion <http://rpmfusion.org>`_)::
-
-    sudo su -c 'dnf install http://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm http://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm'
-    sudo dnf install -y vlc
 
 Ubuntu 20.04
 ------------
@@ -118,7 +105,7 @@ Cargo
 -----
 .. code-block:: bash
 
-   curl https://sh.rustup.rs -sSf | sh
+   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
    source ~/.cargo/env
 
 Tools
