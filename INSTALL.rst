@@ -126,8 +126,9 @@ Tools
 .. code-block:: bash
 
    cargo install watchexec-cli ripgrep fd-find sd
+   cargo install just rage
    cargo install tfdoc --git https://github.com/gvangool/tfdoc --branch bin-name
-   cargo install modenv
+   cargo install --git https://github.com/ogham/dog dog
 
 Alacritty
 ~~~~~~~~~

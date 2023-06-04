@@ -3,54 +3,86 @@ tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/cask-fonts"
 tap "homebrew/core"
+tap "homebrew/services"
 tap "github/gh"
 
 # Base
-brew "mas"
 brew "git"
+brew "mas"
+brew "reattach-to-user-namespace"
+brew "tmux"
 brew "vim"
 brew "zsh"
-brew "tmux"
-brew "reattach-to-user-namespace"
+# Backup
+brew "rclone"
+brew "restic"
 # Network tools
-brew "mosh"
+brew "mosh", args: ["HEAD"]
 brew "mtr"
 # Tooling
-brew "direnv"
 brew "curl"
-brew "wget"
-brew "xz"
-brew "jq"
-brew "zstd"
+brew "direnv"
 brew "htop"
+brew "ipcalc"
+brew "jq"
 brew "wifi-password"
+brew "xz"
+brew "zstd"
 # Programming
+#brew "caddy"
+#brew "ffmpeg"
+brew "gh"
+brew "glow"
+brew "lima"
+brew "make"
+brew "nvm"
+brew "postgresql@15"
 brew "pyenv"
+brew "redis"
 brew "rustup-init"
 brew "shellcheck"
-brew "gh"
-cask "font-fira-code"
-## Docker
-#cask "docker"
-#brew "docker-compose"
+brew "zola"
+# Providers
+brew "aws-vault"
+brew "doctl"
+brew "flarectl"
+brew "kubernetes-cli"
+# Hashicorp tools
+tap "hashicorp/tap"
+brew "consul"
+brew "nomad"
+brew "packer"
+brew "terraform"
+brew "vault"
+# Heroku
+tap "heroku/brew"
+brew "heroku/brew/heroku"
 
 # Apps
 cask "adobe-acrobat-reader"
 cask "aerial"
 cask "alfred"
 cask "firefox"
+cask "font-fira-code"
 cask "google-chrome"
 cask "iterm2"
 cask "itsycal"
+cask "keepassx"
+cask "keepingyouawake"
 cask "signal"
 cask "spotify"
 cask "vlc"
 cask "wireshark"
+mas "Gifski", id: 1351639930
 mas "ISO8601", id: 1505772375
+mas "Keynote", id: 409183694
+mas "Kindle", id: 405399194
 mas "Microsoft Remote Desktop", id: 1295203466
 mas "Moom", id: 419330170
+mas "Piccolo", id: 1561230039
 mas "Shush", id: 496437906
 mas "Slack", id: 803453959
 mas "Tailscale", id: 1475387142
 mas "Telegram", id: 747648890
+mas "Toggl Track", id: 1291898086
 mas "WireGuard", id: 1451685025

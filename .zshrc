@@ -36,6 +36,8 @@ if [[ "$OSTYPE" == darwin* ]] ; then
     if [[ -d "/usr/local/texlive/2013/bin" ]] ; then
         export PATH="/usr/local/texlive/2013/bin/x86_64-darwin:$PATH"
     fi
+    export HOMEBREW_BUNDLE_FILE="${HOME}/Brewfile.macos"
+    export HOMEBREW_BUNDLE_NO_LOCK=1
 fi
 
 if (( $+commands[direnv] )) ; then
