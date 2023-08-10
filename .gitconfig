@@ -39,8 +39,18 @@
 	tag-date = !GIT_COMMITTER_DATE=$(git show --format=%aD  | head -1) git tag
 	b = branch -vvv
 	l = log --pretty=oneline --abbrev-commit
-	update-main = !test "$(git branch --show-current)" = 'main' && git merge origin/main --ff-only || git fetch . origin/main:main
-	diff-branch-only = !git diff $(git merge-base $(git branch --show-current) main) $(git branch --show-current)
+	update-main = "!test \"$(git branch --show-current)\" = \"$(git main-branch-name)\" && git merge origin/$(git main-branch-name) --ff-only || git fetch . origin/$(git main-branch-name):$(git main-branch-name)"
+	main-branch-name = "!f() { \
+		git_heads_dir=\"$(git rev-parse --show-toplevel)/.git/refs/heads\" ; \
+		if [ -f \"${git_heads_dir}/main\" ] ; then \
+			echo 'main'; \
+		elif [ -f \"${git_heads_dir}/master\" ] ; then \
+			echo 'master'; \
+		else \
+			git remote show origin | grep 'HEAD branch' | sed -e 's/HEAD branch://g' -e 's/ //g'; \
+		fi \
+	}; f"
+	diff-branch-only = !git diff $(git merge-base $(git branch --show-current) $(git main-branch-name)) $(git branch --show-current)
 [push]
 	default = current
 	autoSetupRemote = true
