@@ -1,0 +1,24 @@
+#!/bin/bash -eu
+
+if [ $# == 2 ] ; then
+    BASE="${1:-main}"
+    ISSUE=${2}
+elif [ $# == 1 ] ; then
+    BASE="main"
+    ISSUE=${1}
+else
+    cat <<EOF
+Usage:
+    $0 <branch-name> <issue>
+EOF
+    exit 1
+fi
+branch_name="issues/${ISSUE}"
+
+if [ "$(git branch --show-current)" != "${branch_name}" ] ; then
+    # if branch doesn't exist
+    git checkout ${BASE} && git checkout -b ${branch_name} && git ci -m "trigger" --allow-empty
+    git push
+fi
+# create new PR
+gh api repos/:owner/:repo/pulls -f "head=${branch_name}" -f "base=${BASE}" -F "issue=${ISSUE}"
