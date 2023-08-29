@@ -113,7 +113,8 @@ Tools
 .. code-block:: bash
 
    cargo install watchexec-cli ripgrep fd-find sd
-   cargo install just rage
+   cargo install just rage xh
+   cargo install github-workflows-update cargo-update
    cargo install tfdoc --git https://github.com/gvangool/tfdoc --branch bin-name
    cargo install --git https://github.com/ogham/dog dog
 
