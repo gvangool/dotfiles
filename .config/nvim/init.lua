@@ -35,7 +35,7 @@ require('lazy').setup({
     lazy = false,    -- make sure we load this during startup
     priority = 1000, -- load this before all the other start plugins
     config = function()
-      vim.cmd([[colorscheme dracula]])
+      vim.cmd.colorscheme('dracula')
     end,
   },
 
@@ -145,8 +145,8 @@ vim.o.mouse = ''
 -- Enable break indent
 vim.o.breakindent = true
 
--- Save undo history
-vim.o.undofile = true
+-- Don't save undo history (closing file resets undo steps)
+vim.o.undofile = false
 
 -- Decrease update time
 vim.o.updatetime = 250
@@ -397,6 +397,81 @@ mason_lspconfig.setup_handlers {
     }
   end,
 }
+
+local aug_loadview = vim.api.nvim_create_augroup('LoadView', { clear = true })
+vim.api.nvim_create_autocmd('BufWinLeave', {
+  callback = function()
+    vim.cmd('mkview')
+  end,
+  group = aug_loadview,
+  pattern = '*.*',
+})
+vim.api.nvim_create_autocmd('BufWinEnter', {
+  callback = function()
+    vim.cmd('silent! loadview')
+  end,
+  group = aug_loadview,
+  pattern = '*.*',
+})
+
+local aug_cleanTrailingWhitespaces = vim.api.nvim_create_augroup('CleanTrailingWhitespaces', { clear = true })
+vim.api.nvim_create_autocmd('BufWrite', {
+  callback = function()
+    vim.cmd('call DeleteTrailingWS()')
+  end,
+  group = aug_cleanTrailingWhitespaces,
+  pattern = '*.py,*.html,*.css,*.js',
+})
+
+local aug_Django = vim.api.nvim_create_augroup('Django', { clear = true })
+vim.api.nvim_create_autocmd('BufWrite', {
+  pattern = '*.html,*.txt,*.md',
+  callback = function()
+    local manage_py = vim.fs.find('manage.py', {
+      upward = true,
+      stop = '../../..',
+      path = vim.fs.dirname(vim.api.nvim_buf_get_name(0)),
+    })
+    if manage_py then
+      vim.cmd('call DeleteTrailingWS()')
+      vim.cmd('call CleanDjangoTags()')
+    end
+  end,
+  group = aug_Django,
+})
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
+  group = aug_Django,
+  pattern = '*.html,*.txt',
+  callback = function()
+    local manage_py = vim.fs.find('manage.py', {
+      upward = true,
+      stop = '../../..',
+      path = vim.fs.dirname(vim.api.nvim_buf_get_name(0)),
+    })
+    if manage_py then
+      vim.api.nvim_set_option_value('syntax', 'htmldjango', { scope = 'local' })
+    end
+  end,
+})
+
+local vimScript = [[
+  " Remove trailing whitespaces
+  func! DeleteTrailingWS()
+      exe "normal mz"
+      %s/\s\+$//ge
+      exe "normal `z"
+  endfunc
+
+  " Django config
+  " add a space after/before an opening/closing Django template tag
+  func! CleanDjangoTags()
+      exe "normal mz"
+      %s/{\([{%#]\)\(\|  \+\)\([a-z0-9"']\)/{\1 \3/gei
+      %s/\([a-z0-9"']\)\(\|  \+\)\([}%#]\)}/\1 \3}/gei
+      exe "normal `z"
+  endfunc
+]]
+vim.cmd(vimScript)
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
