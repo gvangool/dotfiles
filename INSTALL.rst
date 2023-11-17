@@ -66,14 +66,26 @@ Amazon Linux 2
     sudo chsh -s $(which zsh) ec2-user
 
 
-Ubuntu 20.04
+Ubuntu 22.04
 ------------
 - Install extra packages::
 
-    sudo apt install -y vim git tofrodos curl zsh
+    sudo apt update
+    sudo apt install -y vim git curl zsh bind9-utils htop tar bzip2 gzip xz-utils zstd
+    sudo apt install -y mtr-tiny  # mtr exists in Debian but not Ubuntu?
 - Switch to zsh::
 
     chsh -s $(which zsh)
+- Extra Python (pyenv):
+
+  .. code-block:: bash
+
+     curl https://pyenv.run | bash
+     # Build environment
+     sudo apt install -y \
+      build-essential libssl-dev zlib1g-dev \
+      libbz2-dev libreadline-dev libsqlite3-dev curl llvm \
+      libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
 - Install `Homebrew <https://brew.sh/>`__:
 
   .. code-block:: bash
@@ -83,22 +95,6 @@ Ubuntu 20.04
   Run ``brew doctor`` to check that everything is as expected.
 
   Run ``brew bundle install --file=Brewfile.linux``, this will install cli tooling (from ``Brewfile.linux``).
-
-- Extra fonts::
-
-    sudo apt install fonts-firacode -y
-
-- Extra python pyenv (installed through ``brew install pyenv``):
-
-  .. code-block:: bash
-
-     # Build environment
-     sudo apt-get install -y \
-       make build-essential libssl-dev zlib1g-dev \
-       libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
-       libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
-
-     brew install bzip2 libffi libxml2 libxmlsec1 openssl readline sqlite xz zlib
 
 
 Cargo
