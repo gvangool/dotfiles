@@ -4,6 +4,10 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+-- Configuring netrw
+vim.g.netrw_banner = 0
+vim.g.netrw_keepdir = 0 -- Change working directory while navigating netrw.
+
 -- Install package manager
 --    https://github.com/folke/lazy.nvim
 --    `:help lazy.nvim.txt` for more info
@@ -124,49 +128,54 @@ require('lazy').setup({
     },
     build = ':TSUpdate',
   },
+
+  {
+    dir = vim.fn.stdpath('data') .. ('/dracula_pro'),
+    config = function()
+      vim.g.dracula_colorterm = 0
+      vim.cmd.colorscheme('dracula_pro')
+    end
+  },
+
 }, {})
 
 -- [[ Setting options ]]
 -- See `:help vim.o`
--- NOTE: You can change these options as you wish!
-
 -- Set highlight on search
-vim.o.hlsearch = true
+vim.opt.hlsearch = true
 -- Case-insensitive searching UNLESS \C or capital in search
-vim.o.ignorecase = true
-vim.o.smartcase = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
 
 -- Make line numbers default
 vim.wo.number = true
+-- Always use block cursor.
+vim.opt.guicursor = ""
 
 -- Enable mouse mode
-vim.o.mouse = ''
+vim.opt.mouse = ''
 
 -- Enable break indent
-vim.o.breakindent = true
+vim.opt.breakindent = true
 
 -- Don't save undo history (closing file resets undo steps)
-vim.o.undofile = false
+vim.opt.undofile = false
 
 -- Decrease update time
-vim.o.updatetime = 250
-vim.o.timeoutlen = 300
+vim.opt.updatetime = 250
+vim.opt.timeoutlen = 300
 
 -- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
+vim.opt.completeopt = 'menuone,noselect'
 
 -- NOTE: You should make sure your terminal supports this
-vim.o.termguicolors = true
+vim.opt.termguicolors = true
 
 -- [[ Basic Keymaps ]]
 
 -- Keymaps for better default experience
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
-
--- Remap for dealing with word wrap
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
@@ -363,7 +372,7 @@ require('mason-lspconfig').setup()
 local servers = {
   -- clangd = {},
   -- gopls = {},
-  -- pyright = {},
+  pyright = {},
   -- rust_analyzer = {},
   -- tsserver = {},
   html = { filetypes = { 'html' } },
@@ -424,7 +433,7 @@ vim.api.nvim_create_autocmd('BufWrite', {
 })
 
 local aug_Django = vim.api.nvim_create_augroup('Django', { clear = true })
-vim.api.nvim_create_autocmd('BufWrite', {
+vim.api.nvim_create_autocmd({ 'BufWrite' }, {
   pattern = '*.html,*.txt,*.md',
   callback = function()
     local manage_py = vim.fs.find('manage.py', {
