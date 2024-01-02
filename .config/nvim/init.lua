@@ -125,31 +125,8 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
       'nvim-treesitter/nvim-treesitter-textobjects',
-      'grafana/tree-sitter-river',
     },
     build = ':TSUpdate',
-    config = function()
-      local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
-      parser_configs.river = {
-        install_info = {
-          url = vim.fn.stdpath("data") .. "/lazy" .. "/tree-sitter-river",
-          files = {
-            "src/parser.c",
-          },
-          branch = "main",
-          generate_requires_npm = false,      -- if stand-alone parser without npm dependencies
-          requires_generate_from_grammar = false, -- if folder contains pre-generated src/parser.c
-        },
-        filetype = "river",                   -- if filetype does not match the parser name
-      }
-
-      vim.treesitter.language.register('river', 'river')
-      vim.filetype.add({
-        extension = {
-          river = 'river'
-        },
-      })
-    end
   },
 
   {
@@ -159,11 +136,6 @@ require('lazy').setup({
       vim.cmd.colorscheme('dracula_pro')
     end
   },
-
-  -- {
-  --   -- river language (for Grafana Agent)
-  --   'rfratto/vim-river'
-  -- },
 
 }, {})
 
@@ -255,13 +227,10 @@ vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = 
 -- See `:help nvim-treesitter`
 -- Defer Treesitter setup after first render to improve startup time of 'nvim {filename}'
 vim.defer_fn(function()
-  require('nvim-treesitter.configs').setup({
+  require('nvim-treesitter.configs').setup {
     modules = {},
     -- Add languages to be installed here that you want installed for treesitter
-    ensure_installed = {
-      'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash',
-      'river'
-    },
+    ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'javascript', 'typescript', 'vimdoc', 'vim', 'bash' },
 
     -- Install parsers synchronously (only applied to `ensure_installed`)
     sync_install = false,
@@ -324,7 +293,7 @@ vim.defer_fn(function()
         },
       },
     },
-  })
+  }
 end, 0)
 
 -- Diagnostic keymaps
