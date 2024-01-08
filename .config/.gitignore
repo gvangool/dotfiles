@@ -2,6 +2,7 @@
 !.gitignore
 # alacritty
 !alacritty
+!alacritty/*
 # gh (https://cli.github.com)
 !gh
 !gh/config.yml
