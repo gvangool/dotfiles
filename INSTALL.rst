@@ -6,9 +6,9 @@ dotfiles
 
   cd ~ && git clone https://github.com/gvangool/dotfiles.git && mv dotfiles/.git . && git reset --hard && git submodule update --init --recursive
 
-MacOS/OSX
----------
-Install `Homebrew <https://brew.sh/>`__::
+Mac OS/OSX
+----------
+Install `Homebrew <https://brew.sh/>`_::
 
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
@@ -49,21 +49,14 @@ Rocky Linux 9
 
     sudo dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
     sudo dnf install -y gh
-- `Install Tailscale <https://pkgs.tailscale.com/stable/#rhel-9>`_ and mark it
-  as a trusted interface::
 
-    firewall-cmd --add-interface=tailscale0 --zone=trusted
+- Install `Homebrew`_:
 
+  .. code-block:: bash
 
-Amazon Linux 2
---------------
-- Install base packages::
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    brew bundle install --file=Brewfile.linux  # this will install cli tooling (from ``Brewfile.linux``).
 
-    sudo yum install -y git zsh util-linux-user
-
-- Switch to zsh::
-
-    sudo chsh -s $(which zsh) ec2-user
 
 
 Ubuntu 22.04
@@ -86,7 +79,7 @@ Ubuntu 22.04
       build-essential libssl-dev zlib1g-dev \
       libbz2-dev libreadline-dev libsqlite3-dev curl llvm \
       libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
-- Install `Homebrew <https://brew.sh/>`__:
+- Install `Homebrew`_:
 
   .. code-block:: bash
 
@@ -135,3 +128,13 @@ install pipx
 
     pyenv exec python -m pip install pipx
     pipx install aws-shell black httpie isort pip-tools pyupgrade
+
+Tailscale
+---------
+Install `Tailscale <https://tailscale.com>`_ (`RHEL 9 <https://pkgs.tailscale.com/stable/#rhel-9>`_)
+
+Configure firewall for Tailscale (allow incoming connection on all ports and using it as an exit-node)::
+
+    firewall-cmd --add-interface=tailscale0 --zone=trusted --permanent
+    firewall-cmd --add-masquerade --zone=public --permanent
+    firewall-cmd --add-rich-rule='rule family=ipv6 masquerade --permanent
