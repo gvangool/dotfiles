@@ -6,9 +6,9 @@ dotfiles
 
   cd ~ && git clone https://github.com/gvangool/dotfiles.git && mv dotfiles/.git . && git reset --hard && git submodule update --init --recursive
 
-MacOS/OSX
----------
-Install `Homebrew <https://brew.sh/>`__::
+Mac OS/OSX
+----------
+Install `Homebrew <https://brew.sh/>`_::
 
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
@@ -39,31 +39,21 @@ Rocky Linux 9
     sudo dnf install -y vim zsh git mtr bind-utils wget curl htop tar bzip2 gzip xz
     sudo dnf install -y util-linux-user glibc-langpack-en
     sudo chsh -s $(which zsh) ${USERNAME:-root}
-- Install pyenv::
+- Install build-tools (needed for rust)::
 
-    curl https://pyenv.run | bash
-    sudo dnf install -y \
-      make gcc zlib-devel bzip2 bzip2-devel readline-devel sqlite sqlite-devel \
-      openssl-devel tk-devel libffi-devel xz-devel libuuid-devel
+    sudo dnf groupinstall -y "Development Tools"
 - Install GitHub CLI::
 
     sudo dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
     sudo dnf install -y gh
-- `Install Tailscale <https://pkgs.tailscale.com/stable/#rhel-9>`_ and mark it
-  as a trusted interface::
 
-    firewall-cmd --add-interface=tailscale0 --zone=trusted
+- Install `Homebrew`_:
 
+  .. code-block:: bash
 
-Amazon Linux 2
---------------
-- Install base packages::
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    brew bundle install --file=Brewfile.linux  # this will install cli tooling (from ``Brewfile.linux``).
 
-    sudo yum install -y git zsh util-linux-user
-
-- Switch to zsh::
-
-    sudo chsh -s $(which zsh) ec2-user
 
 
 Ubuntu 22.04
@@ -86,7 +76,7 @@ Ubuntu 22.04
       build-essential libssl-dev zlib1g-dev \
       libbz2-dev libreadline-dev libsqlite3-dev curl llvm \
       libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
-- Install `Homebrew <https://brew.sh/>`__:
+- Install `Homebrew`_:
 
   .. code-block:: bash
 
@@ -97,22 +87,24 @@ Ubuntu 22.04
   Run ``brew bundle install --file=Brewfile.linux``, this will install cli tooling (from ``Brewfile.linux``).
 
 
-Cargo
------
-.. code-block:: bash
+OS Agnostic
+-----------
+Rust/cargo
+~~~~~~~~~~
+- Install rustup (with default stable toolchain)
 
-   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-   source ~/.cargo/env
+  .. code-block:: bash
 
-Tools
-~~~~~
-.. code-block:: bash
+     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+     source ~/.cargo/env
+- Install tooling from `crates.io <https://crates.io/>`_:
+  .. code-block:: bash
 
-   cargo install watchexec-cli ripgrep fd-find sd
-   cargo install just rage xh
-   cargo install github-workflows-update cargo-update
-   cargo install tfdoc --git https://github.com/gvangool/tfdoc --branch bin-name
-   cargo install --git https://github.com/ogham/dog dog
+     cargo install watchexec-cli ripgrep fd-find sd
+     cargo install just rage xh
+     cargo install github-workflows-update cargo-update
+     cargo install tfdoc --git https://github.com/gvangool/tfdoc --branch bin-name
+     cargo install --git https://github.com/ogham/dog dog
 
 Alacritty
 ~~~~~~~~~
@@ -126,12 +118,33 @@ Getting the `dependencies
     cd alacritty
     cargo build --release
 
-pipx
-----
-After installing a recent Python (``pyenv install 3.10``), you should also
-install pipx
+uv
+~~
+``uv`` replaces ``pyenv`` and ``pipx``.
+
+- `Install uv <https://docs.astral.sh/uv/getting-started/installation/>`_
+
+- Install extra tools (pick which you need, e.g. isort is in most project
+  replaced with `ruff <https://docs.astral.sh/ruff/>`_:
+
+  .. code-block:: bash
+
+    uv tool install aws-shell
+    uv tool install black
+    uv tool install docutils
+    uv tool install httpie
+    uv tool install isort
+    uv tool install pyupgrade
+
+
+Tailscale
+~~~~~~~~~
+Install `Tailscale <https://tailscale.com>`_ (`RHEL 9 <https://pkgs.tailscale.com/stable/#rhel-9>`_)
+
+Configure firewall for Tailscale (allow incoming connection on all ports and using it as an exit-node):
 
 .. code-block:: bash
 
-    pyenv exec python -m pip install pipx
-    pipx install aws-shell black httpie isort pip-tools pyupgrade
+   firewall-cmd --add-interface=tailscale0 --zone=trusted --permanent
+   firewall-cmd --add-masquerade --zone=public --permanent
+   firewall-cmd --add-rich-rule='rule family=ipv6 masquerade --permanent
