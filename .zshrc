@@ -45,6 +45,9 @@ if (( $+commands[direnv] )) ; then
 fi
 
 export MTR_OPTIONS="--show-ips --aslookup"
+if [ -d "$HOME/.tmux/layouts" ] ; then
+    export TMUXIFIER_LAYOUT_PATH="$HOME/.tmux/layouts"
+fi
 
 if [ -d "/Applications/YubiKey Manager.app/Contents/MacOS/" ] ; then
     export PATH="/Applications/YubiKey Manager.app/Contents/MacOS/:$PATH"
