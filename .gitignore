@@ -74,6 +74,8 @@ bin/*.pyc
 !.tmux/*
 !.tmux.conf
 !.tmux.*.conf
+!.tmuxifier
+!.tmuxifier/*
 
 # Fonts
 !.fonts

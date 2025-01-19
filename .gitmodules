@@ -98,3 +98,6 @@
 [submodule ".vim/bundle/vim-just"]
 	path = .vim/bundle/vim-just
 	url = https://github.com/NoahTheDuke/vim-just.git
+[submodule ".tmuxifier"]
+	path = .tmuxifier
+	url = https://github.com/jimeh/tmuxifier.git
