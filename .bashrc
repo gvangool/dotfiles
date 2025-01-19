@@ -116,3 +116,10 @@ __git_repo(){
 }
 
 export MTR_OPTIONS="--show-ips --aslookup"
+if [ -d "${HOME}/.tmuxifier/bin" ] ; then
+    export PATH="${HOME}/.tmuxifier/bin:$PATH"
+    eval "$(tmuxifier init -)"
+    if [ -d "$HOME/.tmux/layouts" ] ; then
+        export TMUXIFIER_LAYOUT_PATH="$HOME/.tmux/layouts"
+    fi
+fi
