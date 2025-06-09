@@ -56,26 +56,26 @@ Rocky Linux 9
 
 
 
-Ubuntu 22.04
+Ubuntu 24.04
 ------------
 - Install extra packages::
 
     sudo apt update
     sudo apt install -y vim git curl zsh bind9-utils htop tar bzip2 gzip xz-utils zstd
-    sudo apt install -y mtr-tiny  # mtr exists in Debian but not Ubuntu?
+    sudo apt install -y mtr-tiny  # mtr exists (but includes gtk)
 - Switch to zsh::
 
     chsh -s $(which zsh)
-- Extra Python (pyenv):
+- Extra development dependencies (needed for `pyenv
+  <https://github.com/pyenv/pyenv>`_):
 
   .. code-block:: bash
 
-     curl https://pyenv.run | bash
-     # Build environment
+     sudo apt install -y build-essential
      sudo apt install -y \
-      build-essential libssl-dev zlib1g-dev \
-      libbz2-dev libreadline-dev libsqlite3-dev curl llvm \
-      libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+      libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev curl \
+      llvm libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev \
+      libffi-dev liblzma-dev
 - Install `Homebrew`_:
 
   .. code-block:: bash
@@ -98,6 +98,7 @@ Rust/cargo
      curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
      source ~/.cargo/env
 - Install tooling from `crates.io <https://crates.io/>`_:
+
   .. code-block:: bash
 
      cargo install watchexec-cli ripgrep fd-find sd
@@ -124,6 +125,9 @@ uv
 
 - `Install uv <https://docs.astral.sh/uv/getting-started/installation/>`_
 
+  .. code-block:: bash
+
+     curl -LsSf https://astral.sh/uv/install.sh | sh
 - Install extra tools (pick which you need, e.g. isort is in most project
   replaced with `ruff <https://docs.astral.sh/ruff/>`_:
 
