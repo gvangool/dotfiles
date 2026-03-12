@@ -9,47 +9,19 @@ docker-update-images() {
 docker-untagged-images() {
     docker images --filter "dangling=true" --format "{{.ID}}"
 }
+
 docker-clean-images() {
     images=($(docker-untagged-images))
     [ -n "${images}" ] && docker rmi ${images}
 }
+
 docker-clean-instances() {
     instances=($(docker ps -f status=exited -a -q))
     [ -n "${instances}" ] && docker rm ${instances}
 }
+
 docker-pull-default-images() {
-    for img in python:{3.7,2.7} debian:{stretch,buster} alpine:3.10 jess/htop ; do
+    for img in rockylinux/rockylinux:10 debian:trixie alpine:3.23 ; do
         docker pull ${img}
     done
-}
-
-papertrail-cli() {
-    docker run -e PAPERTRAIL_API_TOKEN=${PAPERTRAIL_API_TOKEN} --rm gvangool/papertrail-cli $@
-}
-
-pt() {
-    papertrail-cli $@ | perl -pe 's/^(.{15})(.)([\S]+)(.)([\S]+)/\e[1;32m\1\e[0m\2\e[34m\3\e[0m\4\e[36m\5\e[0m/g'
-}
-
-pt-default() {
-    pt -f -- "-collectd -dhcp -NetworkManager"
-}
-
-htop() {
-    docker run --rm -it \
-        --pid host \
-        --name htop \
-        jess/htop
-}
-
-nmap() {
-    docker run --rm --net=host gvangool/nmap $@
-}
-
-php() {
-    docker run --rm -v $(pwd):/app --workdir /app gvangool/php $@
-}
-
-phpunit() {
-    docker run --rm -v $(pwd):/app --workdir /app --entrypoint phpunit.phar gvangool/php $@
 }
