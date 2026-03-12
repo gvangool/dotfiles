@@ -31,12 +31,12 @@ Settings: Keyboard
   - Disable "Use smart quotes and dashes"
 - Shortcuts > Spotlight (disable or remap, want to use cmd + space for Alfred)
 
-Rocky Linux 9
--------------
+Rocky Linux 10
+--------------
 - Install extra packages::
 
     sudo dnf install -y epel-release
-    sudo dnf install -y vim zsh git mtr bind-utils wget curl htop tar bzip2 gzip xz
+    sudo dnf install -y vim zsh git mtr bind-utils wget curl htop tar bzip2 gzip xz zstd
     sudo dnf install -y util-linux-user glibc-langpack-en
     sudo chsh -s $(which zsh) ${USERNAME:-root}
 - Install build-tools (needed for rust)::
@@ -143,7 +143,7 @@ uv
 
 Tailscale
 ~~~~~~~~~
-Install `Tailscale <https://tailscale.com>`_ (`RHEL 9 <https://pkgs.tailscale.com/stable/#rhel-9>`_)
+Install `Tailscale <https://tailscale.com>`_ (`RHEL 10 <https://pkgs.tailscale.com/stable/#rhel-10>`_)
 
 Configure firewall for Tailscale (allow incoming connection on all ports and using it as an exit-node):
 
