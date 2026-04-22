@@ -119,10 +119,15 @@ __git_repo(){
 export GH_TELEMETRY=false
 
 export MTR_OPTIONS="--show-ips --aslookup"
+
 if [ -d "${HOME}/.tmuxifier/bin" ] ; then
     export PATH="${HOME}/.tmuxifier/bin:$PATH"
     eval "$(tmuxifier init -)"
     if [ -d "$HOME/.tmux/layouts" ] ; then
         export TMUXIFIER_LAYOUT_PATH="$HOME/.tmux/layouts"
     fi
+fi
+
+if [ -f "$HOME/.local/bin/env" ]; then
+    . "$HOME/.local/bin/env"
 fi

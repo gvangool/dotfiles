@@ -36,17 +36,24 @@ if [[ "$OSTYPE" == darwin* ]] ; then
     if [[ -d "/usr/local/texlive/2013/bin" ]] ; then
         export PATH="/usr/local/texlive/2013/bin/x86_64-darwin:$PATH"
     fi
+    if [ -x "/Applications/Tailscale.app/Contents/MacOS/Tailscale" ] ; then
+        alias tailscale=/Applications/Tailscale.app/Contents/MacOS/Tailscale
+    fi
     export HOMEBREW_BUNDLE_FILE="${HOME}/Brewfile.macos"
     export HOMEBREW_BUNDLE_NO_LOCK=1
 fi
 
+export MTR_OPTIONS="--show-ips --aslookup"
+
 export DO_NOT_TRACK=true
+
+if [ -d /home/linuxbrew/.linuxbrew ] ; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
 
 if (( $+commands[direnv] )) ; then
     eval "$(direnv hook $0)"
 fi
-
-export MTR_OPTIONS="--show-ips --aslookup"
 
 if [ -d "${HOME}/.tmuxifier/bin" ] ; then
     export PATH="${HOME}/.tmuxifier/bin:$PATH"
@@ -58,10 +65,6 @@ fi
 
 if [ -d "/Applications/YubiKey Manager.app/Contents/MacOS/" ] ; then
     export PATH="/Applications/YubiKey Manager.app/Contents/MacOS/:$PATH"
-fi
-
-if [ -d /home/linuxbrew/.linuxbrew ] ; then
-    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
 # Setting up extra autocompletions
@@ -76,6 +79,6 @@ if (( $+commands[gh] )) ; then
     export GH_TELEMETRY=false
 fi
 
-if [ -x "/Applications/Tailscale.app/Contents/MacOS/Tailscale" ] ; then
-    alias tailscale=/Applications/Tailscale.app/Contents/MacOS/Tailscale
+if [ -f "$HOME/.local/bin/env" ]; then
+    . "$HOME/.local/bin/env"
 fi
