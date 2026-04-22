@@ -40,6 +40,8 @@ if [[ "$OSTYPE" == darwin* ]] ; then
     export HOMEBREW_BUNDLE_NO_LOCK=1
 fi
 
+export DO_NOT_TRACK=true
+
 if (( $+commands[direnv] )) ; then
     eval "$(direnv hook $0)"
 fi
@@ -71,6 +73,7 @@ fi
 # - gh
 if (( $+commands[gh] )) ; then
     eval "$(gh completion -s zsh)"
+    export GH_TELEMETRY=false
 fi
 
 if [ -x "/Applications/Tailscale.app/Contents/MacOS/Tailscale" ] ; then

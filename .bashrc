@@ -106,6 +106,8 @@ else
     export PATH="$HOME/bin:$PATH"
 fi
 
+export DO_NOT_TRACK=true
+
 # git stuff
 __git_branch(){
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1 /';
@@ -114,6 +116,7 @@ __git_branch(){
 __git_repo(){
     echo "$(basename $(git rev-parse --show-toplevel)) ";
 }
+export GH_TELEMETRY=false
 
 export MTR_OPTIONS="--show-ips --aslookup"
 if [ -d "${HOME}/.tmuxifier/bin" ] ; then

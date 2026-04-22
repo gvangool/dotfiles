@@ -14,3 +14,4 @@ aliases:
     url: repo view --json id,url --jq .url
 # The path to a unix socket through which send HTTP connections. If blank, HTTP traffic will be handled by net/http.DefaultTransport.
 http_unix_socket:
+telemetry: disabled
