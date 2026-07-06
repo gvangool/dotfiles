@@ -1,0 +1,11 @@
+[Unit]
+Description=Backup weekly on Sunday at 20:12
+
+[Timer]
+Unit=backup.service
+OnCalendar=Sun *-*-* 20:12:00
+Persistent=true
+AccuracySec=1h
+
+[Install]
+WantedBy=timers.target

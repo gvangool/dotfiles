@@ -1,0 +1,7 @@
+[Unit]
+Description=Backup cleanup (forget old ones)
+
+[Service]
+Type=oneshot
+EnvironmentFile=%h/.config/systemd/secrets/backup.env
+ExecStart=/home/linuxbrew/.linuxbrew/bin/restic forget --dry-run --keep-hourly 24 --keep-daily 30 --keep-weekly 12 --keep-monthly 24 --host %H

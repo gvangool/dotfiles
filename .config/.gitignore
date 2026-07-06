@@ -14,5 +14,8 @@
 !nvim/*
 !nvim/autoload/*
 !nvim/bundle/*
+# systemd
+!systemd
+!systemd/*
 #bin/world-clock
 !world-clock.zones

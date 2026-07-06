@@ -1,0 +1,9 @@
+[Unit]
+Description=Backup
+
+[Service]
+Type=oneshot
+EnvironmentFile=%h/.config/systemd/secrets/backup.env
+# Add /home/linuxbrew/.linuxbrew/bin/ to path
+Environment="PATH=/home/linuxbrew/.linuxbrew/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+ExecStart=%h/bin/backup

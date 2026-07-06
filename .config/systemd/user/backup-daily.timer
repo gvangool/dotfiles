@@ -1,0 +1,11 @@
+[Unit]
+Description=Backup daily at 09:54
+
+[Timer]
+Unit=backup.service
+OnCalendar=*-*-* 09:54:00
+Persistent=true
+AccuracySec=1min
+
+[Install]
+WantedBy=timers.target

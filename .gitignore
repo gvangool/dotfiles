@@ -92,6 +92,9 @@ bin/*.pyc
 !.zsh
 !.zsh/*
 
+# Restic/backup helpers
+!backup-exclude
+
 # More RC files
 !.wgetrc
 !.macos

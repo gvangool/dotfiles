@@ -1,0 +1,3 @@
+#!/bin/bash -eu
+set -o pipefail
+restic backup --exclude-file ~/backup-exclude --exclude-caches ~  --skip-if-unchanged --ignore-ctime --ignore-inode
