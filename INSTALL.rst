@@ -18,11 +18,13 @@ Run ``brew doctor`` to check that everything is as expected
 Sign into App Store (before running the rest of the Homebrew commands).
 
 Run ``brew bundle``, this will install cli tooling, dmg's and Mac Store apps
-(from ``Brewfile``).
+(from ``Brewfile.macos``).
 
 Settings: Keyboard
 ~~~~~~~~~~~~~~~~~~
-- Keyboard > Modifier Keys > Caps lock (map to Escape)
+- Go to Keyboard > Keyboard Shortcuts > Modifier Keys
+
+  For each connected keyboard ("Select Keyboard), remap Caps Lock to Escape
 - Text:
 
   - Disable "Correct spelling automatically"

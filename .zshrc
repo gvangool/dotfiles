@@ -17,7 +17,7 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
-FILES=(~/.alias ~/share/sh/python ~/share/sh/vim ~/share/sh/vimpager ~/share/sh/rvm ~/share/sh/postgres ~/share/sh/go ~/.dockerfunc ~/share/sh/secrets ~/share/sh/node ~/.ssh-agent ~/.cargo/env)
+FILES=(~/.alias ~/share/sh/python ~/share/sh/vim ~/share/sh/vimpager ~/share/sh/rvm ~/share/sh/postgres ~/share/sh/go ~/.dockerfunc ~/share/sh/secrets ~/share/sh/node ~/.ssh-agent)
 for FILE in ${FILES} ; do
     if [[ -f ${FILE} ]] ; then
         source ${FILE}
@@ -50,6 +50,19 @@ export DO_NOT_TRACK=true
 if [ -d /home/linuxbrew/.linuxbrew ] ; then
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
+
+# rustup/cargo
+if [ -d "/opt/homebrew/opt/rustup/bin" ] ; then
+    export PATH="/opt/homebrew/opt/rustup/bin:${PATH}"
+fi
+if (( $+commands[cargo] )) ; then
+    if [ -f "${HOME}/.cargo/env" ] ; then
+        source "${HOME}/.cargo/env"
+    else
+        export PATH="${HOME}/.cargo/bin:${PATH}"
+    fi
+fi
+
 
 if (( $+commands[direnv] )) ; then
     eval "$(direnv hook $0)"

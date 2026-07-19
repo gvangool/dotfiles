@@ -1,88 +1,78 @@
-tap "homebrew/aliases"
-tap "homebrew/bundle"
-tap "homebrew/cask"
-tap "homebrew/cask-fonts"
-tap "homebrew/core"
-tap "homebrew/services"
+#tap "homebrew/cask"
+#tap "homebrew/cask-fonts"
 tap "github/gh"
 
-# Base
+# Tools: base
+brew "curl"
 brew "git"
 brew "mas"
-brew "reattach-to-user-namespace"
 brew "tmux"
+#brew "reattach-to-user-namespace"
 brew "vim"
 brew "zsh"
-# Backup
-brew "rclone"
-brew "restic"
-# Network tools
+# Tools: network
 brew "mosh", args: ["HEAD"]
 brew "mtr"
-# Tooling
-brew "curl"
+# Tools: daily comforts
 brew "direnv"
+brew "glow"
 brew "htop"
-brew "ipcalc"
 brew "jq"
-brew "wifi-password"
+brew "lima"
+brew "rclone"
+brew "restic"
 brew "xz"
 brew "zstd"
-# Programming
+# Tools: programming
 #brew "caddy"
 #brew "ffmpeg"
-brew "gh"
-brew "glow"
-brew "lima"
-brew "make"
+#brew "make"
+brew "github/gh/gh"
 brew "nvm"
-brew "postgresql@15"
-brew "pyenv"
-brew "redis"
+brew "pandoc"
+brew "postgresql@18", restart_service: :changed, link: true
+brew "redis", restart_service: :changed
 brew "rustup-init"
 brew "shellcheck"
 brew "zola"
 # Providers
 brew "aws-vault"
-brew "doctl"
-brew "flarectl"
+brew "awscli"
+#brew "doctl"  # Digital Ocean
+#brew "flarectl"  # CloudFlare
 brew "kubernetes-cli"
-# Hashicorp tools
-tap "hashicorp/tap"
-brew "consul"
-brew "nomad"
-brew "packer"
-brew "terraform"
-brew "vault"
-# Heroku
-tap "heroku/brew"
-brew "heroku/brew/heroku"
+brew "scw"
+## Heroku
+#tap "heroku/brew"
+#brew "heroku/brew/heroku"
 
-# Apps
-cask "adobe-acrobat-reader"
-cask "aerial"
+# Hashicorp tools are no longer open source, currently only needing a Terraform replacement
+brew "opentofu"
+
+# Desktop Apps
+#cask "adobe-acrobat-reader" # TODO: better PDF reader
+#cask "aerial"
 cask "alfred"
-cask "firefox"
+#cask "firefox"
 cask "font-fira-code"
+cask "ghostty"
 cask "google-chrome"
-cask "iterm2"
 cask "itsycal"
-cask "keepassx"
+#cask "keepassx"
 cask "keepingyouawake"
 cask "signal"
 cask "spotify"
 cask "vlc"
-cask "wireshark"
-mas "Gifski", id: 1351639930
+cask "wireshark-app"
+
+# Mac Store
 mas "ISO8601", id: 1505772375
-mas "Keynote", id: 409183694
-mas "Kindle", id: 405399194
-mas "Microsoft Remote Desktop", id: 1295203466
-mas "Moom", id: 419330170
-mas "Piccolo", id: 1561230039
-mas "Shush", id: 496437906
+mas "Keynote", id: 361285480
+mas "Moom Classic", id: 419330170
+mas "Numbers", id: 361304891
+mas "Pages", id: 361309726
 mas "Slack", id: 803453959
 mas "Tailscale", id: 1475387142
 mas "Telegram", id: 747648890
 mas "Toggl Track", id: 1291898086
-mas "WireGuard", id: 1451685025
+mas "Windows App", id: 1295203466

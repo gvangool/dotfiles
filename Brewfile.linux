@@ -20,20 +20,19 @@ brew "xz"
 brew "zstd"
 # Programming
 brew "gh"
+brew "kubernetes-cli"
 brew "nvm"
 brew "pandoc"
 brew "postgresql@16", link: false
 brew "postgresql@17", restart_service: :changed, link: true
 brew "redis", restart_service: :changed
+brew "shellcheck"
 brew "zola"
-#brew "fzf"
 # Providers
 brew "aws-vault"
 brew "awscli"
 brew "doctl"
-brew "kubernetes-cli"
 brew "rustup-init"
 brew "scw"
-brew "shellcheck"
 # Hashicorp tools are no longer open source, currently only using Terraform
 brew "opentofu"
