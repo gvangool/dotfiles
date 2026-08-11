@@ -39,8 +39,9 @@ if [[ "$OSTYPE" == darwin* ]] ; then
     if [ -x "/Applications/Tailscale.app/Contents/MacOS/Tailscale" ] ; then
         alias tailscale=/Applications/Tailscale.app/Contents/MacOS/Tailscale
     fi
-    export HOMEBREW_BUNDLE_FILE="${HOME}/Brewfile.macos"
+    export HOMEBREW_BUNDLE_FILE_GLOBAL="${HOME}/Brewfile.macos"
     export HOMEBREW_BUNDLE_NO_LOCK=1
+    export HOMEBREW_NO_AUTO_UPDATE=1
 fi
 
 export MTR_OPTIONS="--show-ips --aslookup"
