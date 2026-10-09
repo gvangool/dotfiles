@@ -25,3 +25,12 @@ docker-pull-default-images() {
         docker pull ${img}
     done
 }
+
+podman-untagged-images() {
+    podman images --filter "dangling=true" --format "{{.ID}}"
+}
+
+podman-clean-images() {
+    images=($(podman-untagged-images))
+    [ -n "${images}" ] && podman rmi ${images}
+}
